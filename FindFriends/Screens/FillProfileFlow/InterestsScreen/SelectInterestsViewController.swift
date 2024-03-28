@@ -7,27 +7,20 @@
 
 import UIKit
 
-
-
-
 class SelectInterestsViewController: UIViewController {
-
-    private (set) var selectInterestsView = SelectInterestsView()
+    private(set) var selectInterestsView = SelectInterestsView()
     
     override func loadView() {
-        view = selectInterestsView
+        self.view = selectInterestsView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         selectInterestsView.loadData()
     }
 }
-
-
-
-
-
-
-

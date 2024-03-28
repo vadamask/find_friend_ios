@@ -36,7 +36,6 @@
 		D854012A2B91F6940088C1E9 /* SelectInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85401292B91F6940088C1E9 /* SelectInterestsViewController.swift */; };
 		D854012C2B9312080088C1E9 /* TagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D854012B2B9312080088C1E9 /* TagsCollectionViewCell.swift */; };
 		D854012E2B93125A0088C1E9 /* CellReusingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D854012D2B93125A0088C1E9 /* CellReusingUtils.swift */; };
-		D85401302B95C7D80088C1E9 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D854012F2B95C7D80088C1E9 /* NavigationBarView.swift */; };
 		D85401322B95D5720088C1E9 /* BaseFillProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85401312B95D5720088C1E9 /* BaseFillProfileView.swift */; };
 		D85401342B95DA890088C1E9 /* SelectInterestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85401332B95DA890088C1E9 /* SelectInterestsView.swift */; };
 		D86387C32B87A16400692535 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86387BE2B87A16400692535 /* NetworkClient.swift */; };
@@ -52,7 +51,7 @@
 		D87ED9262B97BC8C00B185FB /* InterestsServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ED9252B97BC8C00B185FB /* InterestsServiceProvider.swift */; };
 		D87ED9282B97BDDD00B185FB /* InterestsDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ED9272B97BDDD00B185FB /* InterestsDto.swift */; };
 		D87ED92A2B97C44B00B185FB /* SelectInterestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ED9292B97C44B00B185FB /* SelectInterestViewModel.swift */; };
-		D87ED92C2B9A1B2300B185FB /* SelectInterestsView+tagCollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ED92B2B9A1B2300B185FB /* SelectInterestsView+tagCollectionViewExtensions.swift */; };
+		D87ED92C2B9A1B2300B185FB /* CustomViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ED92B2B9A1B2300B185FB /* CustomViewFlowLayout.swift */; };
 		DD0412DE2B90E31E00984BA7 /* SearchFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0412DD2B90E31E00984BA7 /* SearchFriendsViewController.swift */; };
 		DD0412E02B90E32B00984BA7 /* SearchFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0412DF2B90E32B00984BA7 /* SearchFriendsView.swift */; };
 		DD0412E22B90E33600984BA7 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0412E12B90E33600984BA7 /* SearchFriendsViewModel.swift */; };
@@ -70,6 +69,8 @@
 		DD64AB742BB346720011E7D4 /* CreateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD64AB732BB346720011E7D4 /* CreateUserResponse.swift */; };
 		DD64AB762BB3469E0011E7D4 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD64AB752BB3469E0011E7D4 /* LoginResponse.swift */; };
 		DD64AB782BB346CA0011E7D4 /* SuccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD64AB772BB346CA0011E7D4 /* SuccessResponse.swift */; };
+		DD64AB7A2BB5EBFF0011E7D4 /* InterestsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD64AB792BB5EBFF0011E7D4 /* InterestsRequest.swift */; };
+		DD64AB7C2BB5F84A0011E7D4 /* InterestsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD64AB7B2BB5F84A0011E7D4 /* InterestsCellViewModel.swift */; };
 		DDC2551B2BA2249F0037FA7E /* RegistrationErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC2551A2BA2249F0037FA7E /* RegistrationErrorModel.swift */; };
 		DDCAC7C42B83C0BF00EC7D15 /* WhiteBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7C32B83C0BF00EC7D15 /* WhiteBorderButton.swift */; };
 		DDCAC7C72B84FB7900EC7D15 /* UIFont+CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7C62B84FB7900EC7D15 /* UIFont+CustomFonts.swift */; };
@@ -142,7 +143,6 @@
 		D85401292B91F6940088C1E9 /* SelectInterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsViewController.swift; sourceTree = "<group>"; };
 		D854012B2B9312080088C1E9 /* TagsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCollectionViewCell.swift; sourceTree = "<group>"; };
 		D854012D2B93125A0088C1E9 /* CellReusingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReusingUtils.swift; sourceTree = "<group>"; };
-		D854012F2B95C7D80088C1E9 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		D85401312B95D5720088C1E9 /* BaseFillProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFillProfileView.swift; sourceTree = "<group>"; };
 		D85401332B95DA890088C1E9 /* SelectInterestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestsView.swift; sourceTree = "<group>"; };
 		D86387BE2B87A16400692535 /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 		D87ED9252B97BC8C00B185FB /* InterestsServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsServiceProvider.swift; sourceTree = "<group>"; };
 		D87ED9272B97BDDD00B185FB /* InterestsDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsDto.swift; sourceTree = "<group>"; };
 		D87ED9292B97C44B00B185FB /* SelectInterestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInterestViewModel.swift; sourceTree = "<group>"; };
-		D87ED92B2B9A1B2300B185FB /* SelectInterestsView+tagCollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectInterestsView+tagCollectionViewExtensions.swift"; sourceTree = "<group>"; };
+		D87ED92B2B9A1B2300B185FB /* CustomViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewFlowLayout.swift; sourceTree = "<group>"; };
 		DD0412DD2B90E31E00984BA7 /* SearchFriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewController.swift; sourceTree = "<group>"; };
 		DD0412DF2B90E32B00984BA7 /* SearchFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsView.swift; sourceTree = "<group>"; };
 		DD0412E12B90E33600984BA7 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
@@ -175,6 +175,8 @@
 		DD64AB732BB346720011E7D4 /* CreateUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserResponse.swift; sourceTree = "<group>"; };
 		DD64AB752BB3469E0011E7D4 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		DD64AB772BB346CA0011E7D4 /* SuccessResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessResponse.swift; sourceTree = "<group>"; };
+		DD64AB792BB5EBFF0011E7D4 /* InterestsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsRequest.swift; sourceTree = "<group>"; };
+		DD64AB7B2BB5F84A0011E7D4 /* InterestsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsCellViewModel.swift; sourceTree = "<group>"; };
 		DDC2551A2BA2249F0037FA7E /* RegistrationErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationErrorModel.swift; sourceTree = "<group>"; };
 		DDCAC7C32B83C0BF00EC7D15 /* WhiteBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBorderButton.swift; sourceTree = "<group>"; };
 		DDCAC7C62B84FB7900EC7D15 /* UIFont+CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFonts.swift"; sourceTree = "<group>"; };
@@ -364,13 +366,13 @@
 		D85401282B91F3EE0088C1E9 /* InterestsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				D87ED92D2B9A1CF200B185FB /* tmp */,
 				D85401312B95D5720088C1E9 /* BaseFillProfileView.swift */,
+				D87ED92B2B9A1B2300B185FB /* CustomViewFlowLayout.swift */,
 				D85401332B95DA890088C1E9 /* SelectInterestsView.swift */,
-				D87ED92B2B9A1B2300B185FB /* SelectInterestsView+tagCollectionViewExtensions.swift */,
 				D85401292B91F6940088C1E9 /* SelectInterestsViewController.swift */,
 				D87ED9292B97C44B00B185FB /* SelectInterestViewModel.swift */,
 				D854012B2B9312080088C1E9 /* TagsCollectionViewCell.swift */,
+				DD64AB7B2BB5F84A0011E7D4 /* InterestsCellViewModel.swift */,
 			);
 			path = InterestsScreen;
 			sourceTree = "<group>";
@@ -386,14 +388,6 @@
 				D86387BF2B87A16400692535 /* NetworkTask.swift */,
 			);
 			path = NetworkClient;
-			sourceTree = "<group>";
-		};
-		D87ED92D2B9A1CF200B185FB /* tmp */ = {
-			isa = PBXGroup;
-			children = (
-				D854012F2B95C7D80088C1E9 /* NavigationBarView.swift */,
-			);
-			path = tmp;
 			sourceTree = "<group>";
 		};
 		DD0412DC2B90E29400984BA7 /* SearchFriendsScreen */ = {
@@ -548,6 +542,7 @@
 				F33B4C882B8FB989002D27B5 /* NewPasswordRequest.swift */,
 				4CB304C02BADAE5500D08003 /* ProfileRequest.swift */,
 				DD64AB6E2BB33C420011E7D4 /* ValidateCodeRequest.swift */,
+				DD64AB792BB5EBFF0011E7D4 /* InterestsRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -764,6 +759,7 @@
 				D86387D42B8A7E4F00692535 /* TokenStorageService.swift in Sources */,
 				D86387C72B87A16400692535 /* NetworkRequestProtocol.swift in Sources */,
 				F30170692B8CDF5C00A6921A /* UsersRequest.swift in Sources */,
+				DD64AB7C2BB5F84A0011E7D4 /* InterestsCellViewModel.swift in Sources */,
 				F301707E2B8CF32500A6921A /* AlertButton.swift in Sources */,
 				F30170852B8D191000A6921A /* FriendsRequest.swift in Sources */,
 				DD0412EA2B9105BC00984BA7 /* RecomendationFriend.swift in Sources */,
@@ -787,7 +783,6 @@
 				CECC80EB2B98988200F4312B /* SelectCityViewController.swift in Sources */,
 				DD64AB762BB3469E0011E7D4 /* LoginResponse.swift in Sources */,
 				F30170832B8CF6EB00A6921A /* SplashView.swift in Sources */,
-				D85401302B95C7D80088C1E9 /* NavigationBarView.swift in Sources */,
 				DD3A2EA82B7E9836006A3B8E /* CaptionButton.swift in Sources */,
 				DDCAC7D22B852B7B00EC7D15 /* RegistrationViewController.swift in Sources */,
 				F311112A2B9692CC00A97B80 /* ResetPasswordViewController.swift in Sources */,
@@ -797,8 +792,9 @@
 				DD3A2E9F2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift in Sources */,
 				D5E980BA2B8F0D5D00A17E0A /* BirthdayView.swift in Sources */,
 				F36F40932B864B2300B2082B /* NewPasswordViewController.swift in Sources */,
+				DD64AB7A2BB5EBFF0011E7D4 /* InterestsRequest.swift in Sources */,
 				F33B4C8E2B8FBA19002D27B5 /* NewPasswordDto.swift in Sources */,
-				D87ED92C2B9A1B2300B185FB /* SelectInterestsView+tagCollectionViewExtensions.swift in Sources */,
+				D87ED92C2B9A1B2300B185FB /* CustomViewFlowLayout.swift in Sources */,
 				D85401322B95D5720088C1E9 /* BaseFillProfileView.swift in Sources */,
 				DD64AB6F2BB33C420011E7D4 /* ValidateCodeRequest.swift in Sources */,
 				D854012E2B93125A0088C1E9 /* CellReusingUtils.swift in Sources */,

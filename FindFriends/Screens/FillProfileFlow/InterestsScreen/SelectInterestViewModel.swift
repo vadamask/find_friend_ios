@@ -5,35 +5,22 @@
 //  Created by Vitaly on 06.03.2024.
 //
 
+import Combine
 import Foundation
-typealias Interest = InterestsdDto
 
-protocol SelectInterestsViewModelDelegate: AnyObject {
-    func didUpdateInterests()
-}
-
-protocol SelectInterestsViewModelProtocol {
-    var delegate: SelectInterestsViewModelDelegate? { get set }
-    var interests: [Interest] { get }
-    var showInterests: [Interest] { get }
+final class SelectInterestsViewModel {
+    @Published var interestsDidLoad = false
+    @Published var interestsIsSelected = false
     
-    func getInterests()
-}
-
-final class SelectInterestsViewModel: SelectInterestsViewModelProtocol {
+    private(set) var showInterests: [InterestsCellViewModel] = []
     private var defaultCountIntrerests = 15
-    weak var delegate: SelectInterestsViewModelDelegate?
     private (set) var interestsProvider: InterestsServiceProviderProtocol?
-    
-    private (set) var showInterests: [Interest] = [] {
-        didSet {
-            delegate?.didUpdateInterests()
-        }
-    }
 
-    private (set) var interests: [Interest] = [] {
+    private var interests: [InterestsdDto] = [] {
         didSet {
             showInterests = Array(interests.prefix(upTo: min(interests.count, defaultCountIntrerests)))
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name)}
+            interestsDidLoad = true
         }
     }
     
@@ -45,11 +32,20 @@ final class SelectInterestsViewModel: SelectInterestsViewModelProtocol {
         interestsProvider?.getInterests() { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .success(data):
-                self.interests = data.map( { Interest(id: $0.id, name: $0.name) })
+            case let .success(interests):
+                self.interests = interests
             case let .failure(error):
                 print("getInterests error: \(error)")
             }
         }
+    }
+    
+    func cellDidTappedAt(_ indexPath: IndexPath) {
+        showInterests[indexPath.row].isSelected.toggle()
+        countSelected()
+    }
+    
+    private func countSelected() {
+        interestsIsSelected = showInterests.contains { $0.isSelected }
     }
 }
