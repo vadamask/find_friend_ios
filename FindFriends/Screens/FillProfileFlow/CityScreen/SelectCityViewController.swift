@@ -16,7 +16,7 @@ final class SelectCityViewController: UIViewController {
         viewModel.filteredCitiesList = viewModel.citiesList
     }
     
-    init(viewModel: CityViewModelProtocol = CityViewModel()) {
+    init(viewModel: CityViewModel = CityViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,26 +26,11 @@ final class SelectCityViewController: UIViewController {
     }
     
     weak var delegate: ModalViewControllerDelegate?
+    var viewModel = CityViewModel()
     
-    private var viewModel: CityViewModelProtocol
-
-    private lazy var searchCityTextField: UISearchBar = {
-        let textField = UISearchBar()
-        textField.placeholder = "Поиск"
-        textField.searchBarStyle = UISearchBar.Style.minimal
-        textField.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск", attributes: [
-            .foregroundColor: UIColor.searchBar,
-            .font: UIFont.Regular.medium
-        ])
-        textField.layer.cornerRadius = 12
-        textField.layer.masksToBounds = true
-        textField.searchTextField.textColor = .black
+    private lazy var searchCityTextField: SearchBar = {
+        let textField = SearchBar()
         textField.searchTextField.addTarget(self, action: #selector(searchCities(_:)), for: .editingChanged)
-        textField.backgroundColor = .searchTextFieldBackground
-        for subview in textField.searchTextField.subviews {
-            subview.backgroundColor = .clear
-            subview.alpha = 0
-        }
         return textField
     }()
     
