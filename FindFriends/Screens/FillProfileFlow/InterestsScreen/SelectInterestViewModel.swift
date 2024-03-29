@@ -5,36 +5,29 @@
 //  Created by Vitaly on 06.03.2024.
 //
 
+import Combine
 import Foundation
-typealias Interest = InterestsdDto
 
-protocol SelectInterestsViewModelDelegate: AnyObject {
-    func didUpdateInterests()
-}
-
-protocol SelectInterestsViewModelProtocol {
-    var delegate: SelectInterestsViewModelDelegate? { get set }
-    var interests: [Interest] { get }
-    var showInterests: [Interest] { get }
+final class SelectInterestsViewModel {
+    @Published var interestsIsSelected = false
+    var interestsDidLoadPublisher = PassthroughSubject<Void, Never>()
     
-    func getInterests()
-}
+    private var visibleCount = 15
+    private var visibleInterests: [InterestsCellViewModel] = []
+    private var choosenInterests: [InterestsCellViewModel] = []
+    private var interestsProvider: InterestsServiceProviderProtocol?
 
-final class SelectInterestsViewModel: SelectInterestsViewModelProtocol {
-    private var defaultCountIntrerests = 15
-    weak var delegate: SelectInterestsViewModelDelegate?
-    private (set) var interestsProvider: InterestsServiceProviderProtocol?
-    
-    private (set) var showInterests: [Interest] = [] {
+    private var allInterests: [InterestsdDto] = [] {
         didSet {
-            delegate?.didUpdateInterests()
+            visibleInterests = allInterests
+                .prefix(upTo: visibleCount)
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+            interestsDidLoadPublisher.send()
         }
     }
-
-    private (set) var interests: [Interest] = [] {
-        didSet {
-            showInterests = Array(interests.prefix(upTo: min(interests.count, defaultCountIntrerests)))
-        }
+    
+    var numberOfItems: Int {
+        visibleInterests.count
     }
     
     init(interestsProvider: InterestsServiceProviderProtocol? = InterestsServiceProvider()) {
@@ -45,11 +38,51 @@ final class SelectInterestsViewModel: SelectInterestsViewModelProtocol {
         interestsProvider?.getInterests() { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .success(data):
-                self.interests = data.map( { Interest(id: $0.id, name: $0.name) })
+            case let .success(interests):
+                self.allInterests = interests
             case let .failure(error):
                 print("getInterests error: \(error)")
             }
         }
+    }
+    
+    func cellDidTappedAt(_ indexPath: IndexPath) {
+        let interest = visibleInterests[indexPath.row]
+        interest.isSelected.toggle()
+        if interest.isSelected {
+            choosenInterests.append(interest)
+        } else {
+            choosenInterests.removeAll { $0.id == interest.id }
+        }
+        checkSelected()
+    }
+    
+    func modelFor(_ indexPath: IndexPath) -> InterestsCellViewModel {
+        visibleInterests[indexPath.row]
+    }
+    
+    func searchFieldDidChanged(_ searchText: String) {
+        if searchText.isEmpty {
+            visibleInterests = Array(allInterests
+                .prefix(upTo: min(allInterests.count, visibleCount)))
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+        } else {
+            visibleInterests = allInterests
+                .filter { $0.name.hasPrefix(searchText) }
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+        }
+        interestsDidLoadPublisher.send()
+    }
+    
+    func nextButtonTapped() {
+        
+    }
+    
+    func passButtonTapped() {
+        
+    }
+    
+    private func checkSelected() {
+        interestsIsSelected = visibleInterests.contains { $0.isSelected }
     }
 }

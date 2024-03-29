@@ -33,9 +33,9 @@ final class NewPasswordViewModel {
             let dto = NewPasswordDto(token: token, password: confirmPassword)
             resetPasswordService.setNewPassword(dto) { [unowned self] result in
                 switch result {
-                case .success(let model):
+                case .success(_):
                     isSuccess = true
-                case .failure(let error):
+                case .failure(_):
                     isSuccess = false
                 }
                 isLoading = false

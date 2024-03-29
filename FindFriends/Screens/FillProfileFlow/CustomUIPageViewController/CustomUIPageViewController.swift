@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 final class CustomUIPageViewController: UIPageViewController {
 
     private lazy var firstPageVC = GenderViewController(genderView: GenderView())
@@ -36,8 +37,8 @@ final class CustomUIPageViewController: UIPageViewController {
     }()
 
     override init(
-        transitionStyle: UIPageViewController.TransitionStyle,
-        navigationOrientation: UIPageViewController.NavigationOrientation,
+        transitionStyle: UIPageViewController.TransitionStyle = .scroll,
+        navigationOrientation: UIPageViewController.NavigationOrientation = .horizontal,
         options: [UIPageViewController.OptionsKey: Any]? = nil
     ) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: options)
@@ -67,7 +68,7 @@ final class CustomUIPageViewController: UIPageViewController {
         customPageControl.delegate = self
         firstPageVC.genderView.delegate = self
         secondPageVC.birthdayView.delegate = self
-        thirdPageVC.selectInterestsView.delegate = self
+        //thirdPageVC.selectInterestsView.delegate = self
         fourthPageVC.delegate = self
         fifthPageVC.delegate = self
     }
