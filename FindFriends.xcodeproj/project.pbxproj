@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C81E09D2BB5A963007FCB4E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81E09C2BB5A963007FCB4E /* SearchBar.swift */; };
+		4C81E09F2BB5ACCF007FCB4E /* CityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81E09E2BB5ACCF007FCB4E /* CityManager.swift */; };
 		4CB304BB2BAC471D00D08003 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304BA2BAC471C00D08003 /* WelcomeViewController.swift */; };
 		4CB304BD2BAC49C900D08003 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304BC2BAC49C900D08003 /* WelcomeViewModel.swift */; };
 		4CB304C12BADAE5500D08003 /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304C02BADAE5500D08003 /* ProfileRequest.swift */; };
@@ -112,6 +114,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C81E09C2BB5A963007FCB4E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		4C81E09E2BB5ACCF007FCB4E /* CityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityManager.swift; sourceTree = "<group>"; };
 		4CB304BA2BAC471C00D08003 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4CB304BC2BAC49C900D08003 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		4CB304C02BADAE5500D08003 /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 			isa = PBXGroup;
 			children = (
 				CECC80E52B98988200F4312B /* Cell */,
+				4C81E09C2BB5A963007FCB4E /* SearchBar.swift */,
+				4C81E09E2BB5ACCF007FCB4E /* CityManager.swift */,
 				CECC80E92B98988200F4312B /* CityViewController.swift */,
 				CECC80E82B98988200F4312B /* SelectCityViewController.swift */,
 				CECC80F82B989D6800F4312B /* CityViewModel.swift */,
@@ -765,6 +771,7 @@
 				D86387C72B87A16400692535 /* NetworkRequestProtocol.swift in Sources */,
 				F30170692B8CDF5C00A6921A /* UsersRequest.swift in Sources */,
 				F301707E2B8CF32500A6921A /* AlertButton.swift in Sources */,
+				4C81E09F2BB5ACCF007FCB4E /* CityManager.swift in Sources */,
 				F30170852B8D191000A6921A /* FriendsRequest.swift in Sources */,
 				DD0412EA2B9105BC00984BA7 /* RecomendationFriend.swift in Sources */,
 				D5E980BC2B8F0D6700A17E0A /* BirthdayViewController.swift in Sources */,
@@ -837,6 +844,7 @@
 				DD0412E22B90E33600984BA7 /* SearchFriendsViewModel.swift in Sources */,
 				CECC80F92B989D6800F4312B /* CityViewModel.swift in Sources */,
 				F3BC5D402B853D1C00562C08 /* LoginViewController.swift in Sources */,
+				4C81E09D2BB5A963007FCB4E /* SearchBar.swift in Sources */,
 				F30170812B8CF57800A6921A /* SplashViewController.swift in Sources */,
 				DD0412E02B90E32B00984BA7 /* SearchFriendsView.swift in Sources */,
 				F30DA5A42B8E862300E6571B /* NewPasswordViewModel.swift in Sources */,

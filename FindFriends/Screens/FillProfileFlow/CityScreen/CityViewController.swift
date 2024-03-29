@@ -9,7 +9,7 @@ final class CityViewController: UIViewController {
         applyConstraints()
     }
     
-    init(viewModel: CityViewModelProtocol = CityViewModel()) {
+    init(viewModel: CityViewModel = CityViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -19,8 +19,7 @@ final class CityViewController: UIViewController {
     }
     
     weak var delegate: CustomUIPageControlProtocol?
-    
-    private var viewModel: CityViewModelProtocol
+    var viewModel = CityViewModel()
     
     private lazy var firstLabel: UILabel = {
         let label = UILabel()
@@ -38,17 +37,9 @@ final class CityViewController: UIViewController {
         return label
     }()
     
-    private lazy var searchCityTextField: UISearchBar = {
-        let textField = UISearchBar()
+    private lazy var searchCityTextField: SearchBar = {
+        let textField = SearchBar()
         textField.placeholder = "Поиск по названию"
-        textField.searchBarStyle = UISearchBar.Style.minimal
-        textField.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск по названию", attributes: [
-            .foregroundColor: UIColor.searchBar,
-            .font: UIFont.Regular.medium
-        ])
-        textField.setShowsCancelButton(false, animated: false)
-        textField.backgroundColor = .systemBackground
-        textField.searchTextField.textColor = .black
         textField.delegate = self
         return textField
     }()
@@ -110,10 +101,12 @@ final class CityViewController: UIViewController {
     }
     
     @objc private func didTapSearchCityText() {
-        let vc = SelectCityViewController()
-        vc.delegate = self
-        modalPresentationStyle = .currentContext
-        present(vc, animated: true)
+        if presentedViewController == nil {
+            let vc = SelectCityViewController(viewModel: viewModel)
+            vc.delegate = self
+            modalPresentationStyle = .currentContext
+            present(vc, animated: true)
+        }
     }
 }
 
@@ -145,5 +138,3 @@ extension CityViewController: ModalViewControllerDelegate {
         }
     }
 }
-
-
