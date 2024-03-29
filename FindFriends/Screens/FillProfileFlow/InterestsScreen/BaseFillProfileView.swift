@@ -37,7 +37,7 @@ class BaseFillProfileView: UIView {
     required init(header: String, screenPosition: Int, subheader: String = "") {
         super.init(frame: .zero)
     
-        self.backgroundColor = .white
+        backgroundColor = .white
         screenHeader.text = header
         screenSubheader.text = subheader
         setConstraits()

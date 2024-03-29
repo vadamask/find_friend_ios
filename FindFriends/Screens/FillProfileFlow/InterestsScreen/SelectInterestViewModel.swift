@@ -9,19 +9,25 @@ import Combine
 import Foundation
 
 final class SelectInterestsViewModel {
-    @Published var interestsDidLoad = false
     @Published var interestsIsSelected = false
+    var interestsDidLoadPublisher = PassthroughSubject<Void, Never>()
     
-    private(set) var showInterests: [InterestsCellViewModel] = []
-    private var defaultCountIntrerests = 15
-    private (set) var interestsProvider: InterestsServiceProviderProtocol?
+    private var visibleCount = 15
+    private var visibleInterests: [InterestsCellViewModel] = []
+    private var choosenInterests: [InterestsCellViewModel] = []
+    private var interestsProvider: InterestsServiceProviderProtocol?
 
-    private var interests: [InterestsdDto] = [] {
+    private var allInterests: [InterestsdDto] = [] {
         didSet {
-            showInterests = Array(interests.prefix(upTo: min(interests.count, defaultCountIntrerests)))
-                .map { InterestsCellViewModel(id: $0.id, name: $0.name)}
-            interestsDidLoad = true
+            visibleInterests = allInterests
+                .prefix(upTo: visibleCount)
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+            interestsDidLoadPublisher.send()
         }
+    }
+    
+    var numberOfItems: Int {
+        visibleInterests.count
     }
     
     init(interestsProvider: InterestsServiceProviderProtocol? = InterestsServiceProvider()) {
@@ -33,7 +39,7 @@ final class SelectInterestsViewModel {
             guard let self = self else { return }
             switch result {
             case let .success(interests):
-                self.interests = interests
+                self.allInterests = interests
             case let .failure(error):
                 print("getInterests error: \(error)")
             }
@@ -41,11 +47,42 @@ final class SelectInterestsViewModel {
     }
     
     func cellDidTappedAt(_ indexPath: IndexPath) {
-        showInterests[indexPath.row].isSelected.toggle()
-        countSelected()
+        let interest = visibleInterests[indexPath.row]
+        interest.isSelected.toggle()
+        if interest.isSelected {
+            choosenInterests.append(interest)
+        } else {
+            choosenInterests.removeAll { $0.id == interest.id }
+        }
+        checkSelected()
     }
     
-    private func countSelected() {
-        interestsIsSelected = showInterests.contains { $0.isSelected }
+    func modelFor(_ indexPath: IndexPath) -> InterestsCellViewModel {
+        visibleInterests[indexPath.row]
+    }
+    
+    func searchFieldDidChanged(_ searchText: String) {
+        if searchText.isEmpty {
+            visibleInterests = Array(allInterests
+                .prefix(upTo: min(allInterests.count, visibleCount)))
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+        } else {
+            visibleInterests = allInterests
+                .filter { $0.name.hasPrefix(searchText) }
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+        }
+        interestsDidLoadPublisher.send()
+    }
+    
+    func nextButtonTapped() {
+        
+    }
+    
+    func passButtonTapped() {
+        
+    }
+    
+    private func checkSelected() {
+        interestsIsSelected = visibleInterests.contains { $0.isSelected }
     }
 }

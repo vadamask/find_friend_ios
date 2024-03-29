@@ -21,17 +21,16 @@ struct CollectionLayout {
 final class  SelectInterestsView: BaseFillProfileView {
     
     let interestsViewModel = SelectInterestsViewModel()
-    weak var delegate: CustomUIPageControlProtocol?
     
     private lazy var tagsSearchBar: UISearchBar = {
         var bar  = UISearchBar()
         bar.placeholder = "Поиск интересов"
-        bar.searchBarStyle = UISearchBar.Style.minimal
         bar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск интересов", attributes: [
             .foregroundColor: UIColor.searchBar,
             .font: UIFont.Regular.medium
         ])
-        bar.backgroundColor = .clear
+        bar.backgroundColor = .white
+        bar.searchTextField.backgroundColor = .white
         bar.searchTextField.textColor = UIColor.searchBar
         return bar
     }()
@@ -49,6 +48,7 @@ final class  SelectInterestsView: BaseFillProfileView {
         super.init(header: "Интересы", screenPosition: 3, subheader: "Выберете свои увлечения, чтобы найти единомышленников")
         setupViews()
         setupConstraints()
+        setupCollectionView()
         bind()
     }
     
@@ -64,12 +64,8 @@ final class  SelectInterestsView: BaseFillProfileView {
         interestsViewModel.getInterests()
     }
     
-    @objc private func nextButtonTapped() {
-        delegate?.sendPage(number: 3)
-    }
-    
     private func bind() {
-        interestsViewModel.$interestsDidLoad
+        interestsViewModel.interestsDidLoadPublisher
             .sink { [unowned self] _ in
                 tagsCollectionView.reloadData()
             }
@@ -83,7 +79,13 @@ final class  SelectInterestsView: BaseFillProfileView {
     }
 
     private func setupViews() {
-        
+        backgroundColor = .white
+        tagsSearchBar.delegate = self
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        passButton.addTarget(self, action: #selector(passButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupCollectionView() {
         let columnLayout = CustomViewFlowLayout()
         columnLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         tagsCollectionView.collectionViewLayout = columnLayout
@@ -91,12 +93,6 @@ final class  SelectInterestsView: BaseFillProfileView {
         tagsCollectionView.delegate = self
         tagsCollectionView.dataSource = self
         tagsCollectionView.register(TagsCollectionViewCell.self)
- 
-        nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTapped),
-            for: .touchUpInside
-        )
     }
     
     private func setupConstraints() {
@@ -115,13 +111,21 @@ final class  SelectInterestsView: BaseFillProfileView {
             tagsSearchBar.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
+    
+    @objc private func nextButtonTapped() {
+        interestsViewModel.nextButtonTapped()
+    }
+    
+    @objc private func passButtonTapped() {
+        interestsViewModel.passButtonTapped()
+    }
 }
 
 // MARK: - Collection data source
 
 extension SelectInterestsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return interestsViewModel.showInterests.count
+        return interestsViewModel.numberOfItems
     }
     
     func collectionView(
@@ -130,7 +134,7 @@ extension SelectInterestsView: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         
         let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setupCell(with: interestsViewModel.showInterests[indexPath.row])
+        cell.setupCell(with: interestsViewModel.modelFor(indexPath))
         return cell
     }
 }
@@ -178,5 +182,14 @@ extension SelectInterestsView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         interestsViewModel.cellDidTappedAt(indexPath)
+    }
+}
+
+
+// MARK: - UISearchBarDelegate
+
+extension SelectInterestsView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        interestsViewModel.searchFieldDidChanged(searchText)
     }
 }

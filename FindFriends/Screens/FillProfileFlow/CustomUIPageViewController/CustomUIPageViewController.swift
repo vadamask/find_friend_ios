@@ -68,7 +68,7 @@ final class CustomUIPageViewController: UIPageViewController {
         customPageControl.delegate = self
         firstPageVC.genderView.delegate = self
         secondPageVC.birthdayView.delegate = self
-        thirdPageVC.selectInterestsView.delegate = self
+        //thirdPageVC.selectInterestsView.delegate = self
         fourthPageVC.delegate = self
         fifthPageVC.delegate = self
     }
