@@ -46,6 +46,7 @@ open class TabBarController: UITabBarController  {
         super.viewDidLoad()
         self.setValue(customTabBar, forKey: "tabBar")
         createTabBar()
+        selectedIndex = 1
     }
 
     open override func viewDidAppear(_ animated: Bool) {

@@ -10,9 +10,22 @@ import Foundation
 final class BirthdayViewModel {
     @Published var textFieldText: String = ""
     @Published var buttonAndError: Bool = false
+    private weak var delegate: FillProfileDelegate?
+    
+    init(delegate: FillProfileDelegate) {
+        self.delegate = delegate
+    }
     
     func shouldHideKeyboard() -> Bool {
         return buttonAndError
+    }
+    
+    func nextButtonTapped(_ date: String) {
+        let components = date.components(separatedBy: ".")
+        let formatted = components.reversed().joined(separator: "-")
+        
+        delegate?.birthdayIsSelect(formatted)
+        delegate?.showControllerWithIndex(2)
     }
     
     func shouldChangeCharactersIn(text: String?, range: NSRange, replacementString: String) -> Bool {

@@ -7,14 +7,7 @@
 
 import UIKit
 
-protocol CustomUIPageControlProtocol: AnyObject {
-    func sendPage(number: Int)
-    func currentPage(number: Int)
-}
-
-final class CustomUIPageControl: UIPageControl {
-
-    weak var delegate: CustomUIPageControlProtocol?
+final class FillProfilePageControl: UIPageControl {
 
     private let buttonHeight: CGFloat = 4.0
     private let buttonLeading: CGFloat = 0
@@ -29,7 +22,6 @@ final class CustomUIPageControl: UIPageControl {
     override var currentPage: Int {
         didSet {
             updateButtonSelection()
-            delegate?.currentPage(number: currentPage)
         }
     }
 
@@ -38,6 +30,7 @@ final class CustomUIPageControl: UIPageControl {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isUserInteractionEnabled = false
     }
 
     required init?(coder: NSCoder) {
@@ -53,7 +46,6 @@ final class CustomUIPageControl: UIPageControl {
         for _ in 0 ..< numberOfPages {
             let button = UIButton()
             button.backgroundColor = .clear
-            button.addTarget(self, action: #selector(buttonTapped(_ :)), for: .touchUpInside)
             buttons.append(button)
             addSubview(button)
             let buttonView = UIView()
@@ -97,15 +89,6 @@ final class CustomUIPageControl: UIPageControl {
     private func updateButtonSelection() {
         for (index, buttonViews) in buttonsViews.enumerated() {
             buttonViews.backgroundColor = (index == currentPage) ? UIColor(named: "lightOrange") : UIColor(named: "secondaryOrange")
-        }
-    }
-
-    @objc
-    private func buttonTapped(_ sender: UIButton) {
-        if let index = buttons.firstIndex(of: sender) {
-            currentPage = index
-            delegate?.sendPage(number: currentPage)
-            sendActions(for: .valueChanged)
         }
     }
 

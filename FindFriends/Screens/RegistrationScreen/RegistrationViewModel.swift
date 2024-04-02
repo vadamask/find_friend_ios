@@ -144,7 +144,7 @@ final class RegistrationViewModel {
             let window = scene.windows.first
         else { fatalError("Invalid Configuration") }
         
-        let fillProfile = CustomUIPageViewController()
+        let fillProfile = FillProfilePageViewController()
         window.rootViewController = fillProfile
     }
 }
