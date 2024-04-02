@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 protocol ModalViewControllerDelegate: AnyObject {
@@ -6,27 +7,9 @@ protocol ModalViewControllerDelegate: AnyObject {
 }
 
 final class SelectCityViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstraints()
-        setupButtonStack()
-        viewModel.filteredCitiesList = viewModel.citiesList
-    }
-    
-    init(viewModel: CityViewModel = CityViewModel()) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     weak var delegate: ModalViewControllerDelegate?
-    var viewModel = CityViewModel()
+    var viewModel: CityViewModel
+    private var cancellables: Set<AnyCancellable> = []
     
     private lazy var searchCityTextField: SearchBar = {
         let textField = SearchBar()
@@ -92,6 +75,39 @@ final class SelectCityViewController: UIViewController {
         return buttonStackView
     }()
     
+    init(viewModel: CityViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstraints()
+        setupButtonStack()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadCities()
+    }
+    
+    private func bind() {
+        viewModel.$visibleCities
+            .sink { [unowned self] _ in
+                DispatchQueue.main.async {
+                    tableView.reloadData()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     private func setupButtonStack() {
         borderView.addSubview(buttonStackView)
         buttonStackView.addArrangedSubview(cancelButton)
@@ -131,10 +147,10 @@ final class SelectCityViewController: UIViewController {
     
     @objc func searchCities(_ textfield: UITextField) {
         if let searchText = textfield.text {
-            viewModel.filteredCitiesList = searchText.isEmpty ? viewModel.citiesList :
-            viewModel.citiesList.filter{$0.lowercased().contains(searchText.lowercased())}
+            viewModel.textDidChanged(searchText)
+   
             tableView.reloadData()
-            if viewModel.filteredCitiesList.isEmpty {
+            if viewModel.visibleCities.isEmpty {
                 warningLabel.isHidden = false
                 searchCityTextField.layer.borderColor = UIColor.red.cgColor
                 searchCityTextField.layer.borderWidth = 1
@@ -150,7 +166,7 @@ final class SelectCityViewController: UIViewController {
     
     @objc private func didTapAcceptButton() {
         delegate?.modalControllerWillDisapear(self, withDismiss: true)
-        delegate?.updateSearchTextField(name: viewModel.selectCity, withDismiss: true)
+        delegate?.updateSearchTextField(name: viewModel.selectCity?.name ?? "", withDismiss: true)
         dismiss(animated: true)
     }
     
@@ -163,22 +179,19 @@ final class SelectCityViewController: UIViewController {
 
 extension SelectCityViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.filteredCitiesList.count
+        let count = viewModel.visibleCities.count
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectCityTableViewCell.identifier, for: indexPath) as? SelectCityTableViewCell else { return UITableViewCell() }
         let model = viewModel
-        cell.configureCells(name: model.filteredCitiesList[indexPath.row])
+        cell.configureCells(name: model.visibleCities[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? SelectCityTableViewCell else {
-            return
-        }
-        viewModel.selectCity = cell.label.text ?? ""
+        viewModel.didSelectCityAt(indexPath)
         acceptButton.backgroundColor = .mainOrange
         acceptButton.isEnabled = true
     }

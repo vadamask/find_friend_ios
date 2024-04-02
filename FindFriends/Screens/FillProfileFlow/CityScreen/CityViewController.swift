@@ -2,24 +2,7 @@ import UIKit
 
 final class CityViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstraints()
-    }
-    
-    init(viewModel: CityViewModel = CityViewModel()) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    weak var delegate: CustomUIPageControlProtocol?
-    var viewModel = CityViewModel()
+    private let viewModel: CityViewModel
     
     private lazy var firstLabel: UILabel = {
         let label = UILabel()
@@ -58,6 +41,22 @@ final class CityViewController: UIViewController {
         return button
     }()
     
+    init(viewModel: CityViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstraints()
+    }
+    
     private func addView() {
         [firstLabel, secondLabel, searchCityTextField, continueButton, skipButton].forEach(view.addSubviewWithoutAutoresizingMask(_:))
     }
@@ -73,6 +72,7 @@ final class CityViewController: UIViewController {
             searchCityTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             searchCityTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchCityTextField.topAnchor.constraint(equalTo: secondLabel.bottomAnchor, constant: 20),
+            searchCityTextField.heightAnchor.constraint(equalToConstant: 36),
             skipButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             continueButton.bottomAnchor.constraint(equalTo: skipButton.topAnchor, constant: -10),
@@ -91,11 +91,11 @@ final class CityViewController: UIViewController {
     }
     
     @objc private func didTapContinueButton() {
-        delegate?.sendPage(number: 4)
+        viewModel.nextButtonTapped()
     }
     
     @objc private func didTapSkipButton() {
-        delegate?.sendPage(number: 4)
+        viewModel.skipButtonTapped()
         continueButton.backgroundColor = .lightOrange
         continueButton.isEnabled = false
     }

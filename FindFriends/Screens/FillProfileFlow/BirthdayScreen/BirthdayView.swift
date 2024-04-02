@@ -9,8 +9,7 @@ import UIKit
 import Combine
 
 final class BirthdayView: UIView {
-    weak var delegate: CustomUIPageControlProtocol?
-    let viewModel = BirthdayViewModel()
+    private let viewModel: BirthdayViewModel
     
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
@@ -30,8 +29,10 @@ final class BirthdayView: UIView {
     private let nextButton = PrimeOrangeButton(text: "Продолжить")
     private var cancellables: Set<AnyCancellable> = []
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: BirthdayViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        
         bind()
         setupViews()
         setupLayout()
@@ -52,7 +53,7 @@ private extension BirthdayView {
         datePickTextField.hideWarningLabel()
         
         nextButton.isEnabled = false
-        nextButton.addTarget(self, action: #selector(nexButtonTap), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextButtonTap), for: .touchUpInside)
     }
     
     func setupLayout() {
@@ -108,8 +109,8 @@ private extension BirthdayView {
     }
     
     @objc
-    func nexButtonTap() {
-        delegate?.sendPage(number: 2)
+    func nextButtonTap() {
+        viewModel.nextButtonTapped(datePickTextField.text ?? "")
     }
 }
 

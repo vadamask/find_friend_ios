@@ -8,7 +8,16 @@
 import UIKit
 
 class SelectInterestsViewController: UIViewController {
-    private(set) var selectInterestsView = SelectInterestsView()
+    private(set) var selectInterestsView: SelectInterestsView
+    
+    init(selectInterestsView: SelectInterestsView) {
+        self.selectInterestsView = selectInterestsView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = selectInterestsView

@@ -20,7 +20,7 @@ struct CollectionLayout {
 
 final class  SelectInterestsView: BaseFillProfileView {
     
-    let interestsViewModel = SelectInterestsViewModel()
+    private let viewModel: SelectInterestsViewModel
     
     private lazy var tagsSearchBar: UISearchBar = {
         var bar  = UISearchBar()
@@ -44,7 +44,8 @@ final class  SelectInterestsView: BaseFillProfileView {
     
     private var cancellables: Set<AnyCancellable> = []
     
-    required init() {
+    init(viewModel: SelectInterestsViewModel) {
+        self.viewModel = viewModel
         super.init(header: "Интересы", screenPosition: 3, subheader: "Выберете свои увлечения, чтобы найти единомышленников")
         setupViews()
         setupConstraints()
@@ -61,17 +62,17 @@ final class  SelectInterestsView: BaseFillProfileView {
     }
     
     func loadData() {
-        interestsViewModel.getInterests()
+        viewModel.getInterests()
     }
     
     private func bind() {
-        interestsViewModel.interestsDidLoadPublisher
+        viewModel.interestsDidLoadPublisher
             .sink { [unowned self] _ in
                 tagsCollectionView.reloadData()
             }
             .store(in: &cancellables)
         
-        interestsViewModel.$interestsIsSelected
+        viewModel.$interestsIsSelected
             .sink { [unowned self] isSelected in
                 nextButton.setEnabled(isSelected)
             }
@@ -113,11 +114,11 @@ final class  SelectInterestsView: BaseFillProfileView {
     }
     
     @objc private func nextButtonTapped() {
-        interestsViewModel.nextButtonTapped()
+        viewModel.nextButtonTapped()
     }
     
     @objc private func passButtonTapped() {
-        interestsViewModel.passButtonTapped()
+        viewModel.passButtonTapped()
     }
 }
 
@@ -125,7 +126,7 @@ final class  SelectInterestsView: BaseFillProfileView {
 
 extension SelectInterestsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return interestsViewModel.numberOfItems
+        return viewModel.numberOfItems
     }
     
     func collectionView(
@@ -134,7 +135,7 @@ extension SelectInterestsView: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         
         let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setupCell(with: interestsViewModel.modelFor(indexPath))
+        cell.setupCell(with: viewModel.modelFor(indexPath))
         return cell
     }
 }
@@ -177,11 +178,11 @@ extension SelectInterestsView: UICollectionViewDelegateFlowLayout {
 
 extension SelectInterestsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        interestsViewModel.cellDidTappedAt(indexPath)
+        viewModel.cellDidTappedAt(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        interestsViewModel.cellDidTappedAt(indexPath)
+        viewModel.cellDidTappedAt(indexPath)
     }
 }
 
@@ -190,6 +191,6 @@ extension SelectInterestsView: UICollectionViewDelegate {
 
 extension SelectInterestsView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        interestsViewModel.searchFieldDidChanged(searchText)
+        viewModel.searchFieldDidChanged(searchText)
     }
 }

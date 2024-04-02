@@ -15,9 +15,10 @@ final class SelectInterestsViewModel {
     private var visibleCount = 15
     private var visibleInterests: [InterestsCellViewModel] = []
     private var choosenInterests: [InterestsCellViewModel] = []
-    private var interestsProvider: InterestsServiceProviderProtocol?
+    private var interestsProvider: InterestsServiceProtocol
+    private weak var delegate: FillProfileDelegate?
 
-    private var allInterests: [InterestsdDto] = [] {
+    private var allInterests: [InterestsdResponse] = [] {
         didSet {
             visibleInterests = allInterests
                 .prefix(upTo: visibleCount)
@@ -30,12 +31,13 @@ final class SelectInterestsViewModel {
         visibleInterests.count
     }
     
-    init(interestsProvider: InterestsServiceProviderProtocol? = InterestsServiceProvider()) {
+    init(interestsProvider: InterestsServiceProtocol = InterestsService(), delegate: FillProfileDelegate) {
         self.interestsProvider = interestsProvider
+        self.delegate = delegate
     }
     
     func getInterests() {
-        interestsProvider?.getInterests() { [weak self] result in
+        interestsProvider.getInterests() { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(interests):
@@ -75,11 +77,13 @@ final class SelectInterestsViewModel {
     }
     
     func nextButtonTapped() {
-        
+        delegate?.interestsIsSelect(choosenInterests.map { $0.id })
+        delegate?.showControllerWithIndex(3)
     }
     
     func passButtonTapped() {
-        
+        delegate?.interestsIsSelect([])
+        delegate?.showControllerWithIndex(3)
     }
     
     private func checkSelected() {
