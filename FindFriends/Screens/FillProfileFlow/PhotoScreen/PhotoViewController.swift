@@ -1,38 +1,8 @@
 import UIKit
 
 final class PhotoViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstraints()
-        avatarView.image = loadImage()
-        updateUI()
-    }
-    
-    weak var delegate: CustomUIPageControlProtocol?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        avatarView.image = loadImage()
-    }
-    
-    private func loadImage() -> UIImage {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let imageUrl = documentsURL.appendingPathComponent("avatar.png")
-        avatarView.layer.borderWidth = 0
-        continueButton.isEnabled = true
-        continueButton.backgroundColor = .mainOrange
-        guard fileManager.fileExists(atPath: imageUrl.path) else {
-            avatarView.layer.borderWidth = 4
-            continueButton.isEnabled = false
-            continueButton.backgroundColor = .lightOrange
-            return UIImage(named: "plugPhoto")!
-        }
-        return UIImage(contentsOfFile: imageUrl.path)!
-    }
+
+    private weak var delegate: FillProfileDelegate?
     
     private lazy var firstLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +20,6 @@ final class PhotoViewController: UIViewController {
         label.text = "Добавьте фото, чтобы другим было\n проще вас узнать"
         return label
     }()
-    
     
     private lazy var avatarView: UIImageView = {
         let view = UIImageView()
@@ -95,6 +64,15 @@ final class PhotoViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapCancelPhotoButton), for: .touchUpInside)
         return button
     }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstraints()
+        updateUI()
+    }
     
     private func addView() {
         [firstLabel, secondLabel, avatarView, addPhotoButton, continueButton, skipButton, cancelPhotoButton].forEach(view.addSubviewWithoutAutoresizingMask(_:))
@@ -148,17 +126,11 @@ final class PhotoViewController: UIViewController {
     }
     
     @objc private func didTapContinueButton() {
-        guard
-            let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let window = scene.windows.first
-        else { fatalError("Invalid Configuration") }
-        let tabBar = TabBar()
-        let tabBarController = TabBarController(customTabBar: tabBar)
-        window.rootViewController = tabBarController
+        delegate?.finishFlow()
     }
     
     @objc private func didTapSkipButton() {
-        
+        delegate?.avatarIsSelect(nil)
     }
     
     @objc private func didTapCancelPhotoButton() {

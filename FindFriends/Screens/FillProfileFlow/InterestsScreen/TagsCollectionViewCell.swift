@@ -5,24 +5,35 @@
 //  Created by Vitaly on 02.03.2024.
 //
 
+import Combine
 import UIKit
 
-
-
-
-final class tagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
+final class TagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
     
-    var tagLabel = UILabel()
-    
-    override var isSelected: Bool {
+    private let tagLabel = UILabel()
+    private var viewModel: InterestsCellViewModel? {
         didSet {
-            contentView.backgroundColor = isSelected ? .selectedTag : .backgroundLaunchScreen
+            bind()
         }
     }
-    
+    private var cancellables: Set<AnyCancellable> = []
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupCell(with model: InterestsCellViewModel) {
+        tagLabel.text = model.name
+        viewModel = model
+    }
+    
+    private func setupViews() {
         contentView.backgroundColor = .backgroundLaunchScreen
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
@@ -32,20 +43,23 @@ final class tagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
         
         tagLabel.textAlignment = .center
         tagLabel.font = UIFont.Regular.medium16
-        contentView.addSubview(tagLabel)
-        tagLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        tagLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
-        tagLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor).isActive = true
-        tagLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
-        tagLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
-         
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setupConstraints() {
+        contentView.addSubviewWithoutAutoresizingMask(tagLabel)
+        NSLayoutConstraint.activate([
+            tagLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            tagLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            tagLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            tagLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor)
+        ])
+    }
+    
+    private func bind() {
+        viewModel?.$isSelected
+            .sink { [weak self] isSelected in
+                self?.contentView.backgroundColor = isSelected ? .selectedTag : .backgroundLaunchScreen
+            }
+            .store(in: &cancellables)
     }
 }
-
-
-

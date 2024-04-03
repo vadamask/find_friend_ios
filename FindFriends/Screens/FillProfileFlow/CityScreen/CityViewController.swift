@@ -2,6 +2,7 @@ import UIKit
 
 final class CityViewController: UIViewController {
     
+<<<<<<< HEAD
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -22,6 +23,10 @@ final class CityViewController: UIViewController {
    
     private var viewModel: CityViewModelProtocol
 
+=======
+    private let viewModel: CityViewModel
+    
+>>>>>>> develop
     private lazy var firstLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
@@ -38,17 +43,9 @@ final class CityViewController: UIViewController {
         return label
     }()
     
-    private lazy var searchCityTextField: UISearchBar = {
-        let textField = UISearchBar()
+    private lazy var searchCityTextField: SearchBar = {
+        let textField = SearchBar()
         textField.placeholder = "Поиск по названию"
-        textField.searchBarStyle = UISearchBar.Style.minimal
-        textField.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск по названию", attributes: [
-            .foregroundColor: UIColor.searchBar,
-            .font: UIFont.Regular.medium
-        ])
-        textField.setShowsCancelButton(false, animated: false)
-        textField.backgroundColor = .systemBackground
-        textField.searchTextField.textColor = .black
         textField.delegate = self
         return textField
     }()
@@ -67,6 +64,22 @@ final class CityViewController: UIViewController {
         return button
     }()
     
+    init(viewModel: CityViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstraints()
+    }
+    
     private func addView() {
         [firstLabel, secondLabel, searchCityTextField, continueButton, skipButton].forEach(view.addSubviewWithoutAutoresizingMask(_:))
     }
@@ -82,6 +95,7 @@ final class CityViewController: UIViewController {
             searchCityTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             searchCityTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchCityTextField.topAnchor.constraint(equalTo: secondLabel.bottomAnchor, constant: 20),
+            searchCityTextField.heightAnchor.constraint(equalToConstant: 36),
             skipButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             continueButton.bottomAnchor.constraint(equalTo: skipButton.topAnchor, constant: -10),
@@ -100,20 +114,22 @@ final class CityViewController: UIViewController {
     }
     
     @objc private func didTapContinueButton() {
-        delegate?.sendPage(number: 4)
+        viewModel.nextButtonTapped()
     }
     
     @objc private func didTapSkipButton() {
-        delegate?.sendPage(number: 4)
+        viewModel.skipButtonTapped()
         continueButton.backgroundColor = .lightOrange
         continueButton.isEnabled = false
     }
     
     @objc private func didTapSearchCityText() {
-        let vc = SelectCityViewController()
-        vc.delegate = self
-        modalPresentationStyle = .currentContext
-        present(vc, animated: true)
+        if presentedViewController == nil {
+            let vc = SelectCityViewController(viewModel: viewModel)
+            vc.delegate = self
+            modalPresentationStyle = .currentContext
+            present(vc, animated: true)
+        }
     }
 }
 
@@ -145,5 +161,3 @@ extension CityViewController: ModalViewControllerDelegate {
         }
     }
 }
-
-

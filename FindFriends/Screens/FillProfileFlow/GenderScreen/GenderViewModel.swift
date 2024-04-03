@@ -9,18 +9,24 @@ import Foundation
 
 final class GenderViewModel {
     @Published var selectedGender: SelectedGender?
+    private weak var delegate: FillProfileDelegate?
+    
+    init(delegate: FillProfileDelegate) {
+        self.delegate = delegate
+    }
     
     func change(gender: SelectedGender) {
-        switch gender {
-        case.man:
-            selectedGender = .man
-        case .woman:
-            selectedGender = .woman
-        }
+        selectedGender = gender
     }
     
-    enum SelectedGender {
-        case man
-        case woman
+    func nextButtonTapped() {
+        delegate?.genderIsSelect(selectedGender?.rawValue ?? "")
+        delegate?.showControllerWithIndex(1)
+    }
+    
+    enum SelectedGender: String {
+        case man = "М"
+        case woman = "Ж"
     }
 }
+

@@ -9,8 +9,7 @@ import UIKit
 import Combine
 
 final class GenderView: UIView {
-    weak var delegate: CustomUIPageControlProtocol?
-    private let viewModel = GenderViewModel()
+    private let viewModel: GenderViewModel
     
     private var mainLabel: UILabel = {
         let label = UILabel()
@@ -48,8 +47,10 @@ final class GenderView: UIView {
     private let nextButton = PrimeOrangeButton(text: "Продолжить")
     private var cancellables: Set<AnyCancellable> = []
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: GenderViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        
         setupViews()
         setupLayout()
         bind()
@@ -97,7 +98,7 @@ private extension GenderView {
     
     @objc
     private func nextButtonTap() {
-        delegate?.sendPage(number: 1)
+        viewModel.nextButtonTapped()
     }
     
     func setupViews() {

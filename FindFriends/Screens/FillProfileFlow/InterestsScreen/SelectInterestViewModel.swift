@@ -5,56 +5,88 @@
 //  Created by Vitaly on 06.03.2024.
 //
 
+import Combine
 import Foundation
-typealias Interest = InterestsdDto
 
-protocol SelectInterestsViewModelDelegate: AnyObject {
-    func didUpdateInterests()
-}
+final class SelectInterestsViewModel {
+    @Published var interestsIsSelected = false
+    var interestsDidLoadPublisher = PassthroughSubject<Void, Never>()
+    
+    private var visibleCount = 15
+    private var visibleInterests: [InterestsCellViewModel] = []
+    private var choosenInterests: [InterestsCellViewModel] = []
+    private var interestsProvider: InterestsServiceProtocol
+    private weak var delegate: FillProfileDelegate?
 
-protocol SelectInterestsViewModelProtocol {
-    var delegate: SelectInterestsViewModelDelegate? {get set}
-    var interests: [Interest] {get} // список всех интересов
-    var showInterests: [Interest] {get} // список интересов для показа
-    
-    func getInterests()
-}
-
-final class SelectInterestsViewModel: SelectInterestsViewModelProtocol {
-    private var defaultCountIntrerests = 15
-    
-    weak var delegate: SelectInterestsViewModelDelegate?
-    
-    private (set) var interestsProvider: InterestsServiceProviderProtocol?
-    
-    private (set) var showInterests: [Interest] = [] {
+    private var allInterests: [InterestsdResponse] = [] {
         didSet {
-            delegate?.didUpdateInterests()
-        }
-    }
-
-
-    private (set) var interests: [Interest] = [] {
-        didSet {
-            showInterests = Array(interests.prefix(upTo: min(interests.count, defaultCountIntrerests)))
+            visibleInterests = allInterests
+                .prefix(upTo: visibleCount)
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+            interestsDidLoadPublisher.send()
         }
     }
     
-    init(interestsProvider: InterestsServiceProviderProtocol? = InterestsServiceProvider()) {
+    var numberOfItems: Int {
+        visibleInterests.count
+    }
+    
+    init(interestsProvider: InterestsServiceProtocol = InterestsService(), delegate: FillProfileDelegate) {
         self.interestsProvider = interestsProvider
-        
+        self.delegate = delegate
     }
     
     func getInterests() {
-        interestsProvider?.getInterests() { [weak self] result in
+        interestsProvider.getInterests() { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .success(data):
-                self.interests = data.compactMap( { Interest($0) })   // конечно можно написать просто   self.currencies = data, но так как-то "правильнее"
+            case let .success(interests):
+                self.allInterests = interests
             case let .failure(error):
                 print("getInterests error: \(error)")
             }
         }
     }
     
+    func cellDidTappedAt(_ indexPath: IndexPath) {
+        let interest = visibleInterests[indexPath.row]
+        interest.isSelected.toggle()
+        if interest.isSelected {
+            choosenInterests.append(interest)
+        } else {
+            choosenInterests.removeAll { $0.id == interest.id }
+        }
+        checkSelected()
+    }
+    
+    func modelFor(_ indexPath: IndexPath) -> InterestsCellViewModel {
+        visibleInterests[indexPath.row]
+    }
+    
+    func searchFieldDidChanged(_ searchText: String) {
+        if searchText.isEmpty {
+            visibleInterests = Array(allInterests
+                .prefix(upTo: min(allInterests.count, visibleCount)))
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+        } else {
+            visibleInterests = allInterests
+                .filter { $0.name.hasPrefix(searchText) }
+                .map { InterestsCellViewModel(id: $0.id, name: $0.name) }
+        }
+        interestsDidLoadPublisher.send()
+    }
+    
+    func nextButtonTapped() {
+        delegate?.interestsIsSelect(choosenInterests.map { $0.id })
+        delegate?.showControllerWithIndex(3)
+    }
+    
+    func passButtonTapped() {
+        delegate?.interestsIsSelect([])
+        delegate?.showControllerWithIndex(3)
+    }
+    
+    private func checkSelected() {
+        interestsIsSelected = visibleInterests.contains { $0.isSelected }
+    }
 }

@@ -12,7 +12,7 @@ protocol ResetPasswordViewModelProtocol {
     var onEmailErrorStateChange: Binding<String>? { get set }
     var email: String { get set }
 
-    func resetPassword(completion: @escaping (Result<ResetPasswordDto, Error>) -> Void)
+    func resetPassword(completion: @escaping (Result<Void, NetworkClientError>) -> Void)
     func validateEmail() -> Bool
 }
 
@@ -28,17 +28,21 @@ final class ResetPasswordViewModel: ResetPasswordViewModelProtocol {
         }
     }
 
-    private let registrationService: RegistrationServiceProtocol
+    private let resetPasswordService: ResetPasswordServiceProtocol
 
-    init(registrationService: RegistrationServiceProtocol = RegistrationService()) {
-        self.registrationService = registrationService
+    init(resetPasswordService: ResetPasswordServiceProtocol = ResetPasswordService()) {
+        self.resetPasswordService = resetPasswordService
     }
 
-    func resetPassword(completion: @escaping (Result<ResetPasswordDto, Error>) -> Void) {
-        registrationService.resetPassword(ResetPasswordDto(email: email)) { result in
+    func resetPassword(completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
+        resetPasswordService.resetPassword(ResetPasswordRequestDto(email: email)) { result in
             switch result {
-            case .success(let model):
-                completion(.success(model))
+            case .success(let response):
+                if response.status == "OK" {
+                    completion(.success(Void()))
+                } else {
+                    completion(.failure(.parsingError))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -46,7 +50,7 @@ final class ResetPasswordViewModel: ResetPasswordViewModelProtocol {
     }
 
     func validateEmail() -> Bool {
-        switch TextValidator.validate(email, with: .email) {
+        switch ValidationService.validate(email, type: .email) {
         case .success:
             onEmailErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
             return true
