@@ -19,9 +19,9 @@ final class CityViewController: UIViewController {
     }
     
     weak var delegate: CustomUIPageControlProtocol?
-    
+   
     private var viewModel: CityViewModelProtocol
-    
+
     private lazy var firstLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)

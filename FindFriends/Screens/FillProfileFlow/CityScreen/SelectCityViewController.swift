@@ -13,7 +13,7 @@ final class SelectCityViewController: UIViewController {
         addView()
         applyConstraints()
         setupButtonStack()
-        viewModel.filteredCitiesList = viewModel.citiesList
+        bind()
     }
     
     init(viewModel: CityViewModelProtocol = CityViewModel()) {
@@ -24,10 +24,16 @@ final class SelectCityViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     weak var delegate: ModalViewControllerDelegate?
-    
     private var viewModel: CityViewModelProtocol
+    
+    private func bind() {
+        viewModel.citiesObservable.bind { [weak self] _ in
+            guard let self else { return }
+            viewModel.filteredCitiesList = viewModel.cities
+            tableView.reloadData()
+        }
+    }
 
     private lazy var searchCityTextField: UISearchBar = {
         let textField = UISearchBar()
@@ -48,6 +54,8 @@ final class SelectCityViewController: UIViewController {
         }
         return textField
     }()
+                                            
+   private let searchController = UISearchController(searchResultsController: nil)
     
     private lazy var warningLabel: UILabel = {
         let label = UILabel()
@@ -144,10 +152,11 @@ final class SelectCityViewController: UIViewController {
         ])
     }
     
-    @objc func searchCities(_ textfield: UITextField) {
+        @objc func searchCities(_ textfield: UITextField) {
         if let searchText = textfield.text {
-            viewModel.filteredCitiesList = searchText.isEmpty ? viewModel.citiesList :
-            viewModel.citiesList.filter{$0.lowercased().contains(searchText.lowercased())}
+            viewModel.filteredCitiesList = viewModel.cities.filter({ (drug: CitiesModel) -> Bool in
+                return drug.name.lowercased().contains(searchText.lowercased())
+            })
             tableView.reloadData()
             if viewModel.filteredCitiesList.isEmpty {
                 warningLabel.isHidden = false
@@ -164,12 +173,16 @@ final class SelectCityViewController: UIViewController {
     }
     
     @objc private func didTapAcceptButton() {
+//        viewModel.stateButton = .select
+//        print(viewModel.stateButton)
         delegate?.modalControllerWillDisapear(self, withDismiss: true)
-        delegate?.updateSearchTextField(name: viewModel.selectCity, withDismiss: true)
+        delegate?.updateSearchTextField(name: viewModel.selectedCity, withDismiss: true)
         dismiss(animated: true)
     }
     
     @objc private func didTapCancelButton() {
+//        viewModel.stateButton = .nonSelect
+//        print(viewModel.stateButton)
         delegate?.modalControllerWillDisapear(self, withDismiss: false)
         delegate?.updateSearchTextField(name: "Поиск по названию", withDismiss: false)
         dismiss(animated: true)
@@ -178,14 +191,13 @@ final class SelectCityViewController: UIViewController {
 
 extension SelectCityViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.filteredCitiesList.count
-        return count
+        return viewModel.filteredCitiesList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectCityTableViewCell.identifier, for: indexPath) as? SelectCityTableViewCell else { return UITableViewCell() }
         let model = viewModel
-        cell.configureCells(name: model.filteredCitiesList[indexPath.row])
+        cell.configureCells(name: model.filteredCitiesList[indexPath.row].name)
         return cell
     }
     
@@ -193,7 +205,8 @@ extension SelectCityViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) as? SelectCityTableViewCell else {
             return
         }
-        viewModel.selectCity = cell.label.text ?? ""
+        viewModel.selectedCity = cell.label.text ?? ""
+        print(viewModel.selectedCity)
         acceptButton.backgroundColor = .mainOrange
         acceptButton.isEnabled = true
     }

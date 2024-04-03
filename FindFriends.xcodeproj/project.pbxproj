@@ -14,6 +14,10 @@
 		84CCA1BD2B95B6A6000BDC28 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 84CCA1BC2B95B6A6000BDC28 /* ProgressHUD */; };
 		84CCA1BF2B96409D000BDC28 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCA1BE2B96409D000BDC28 /* GenderView.swift */; };
 		84CCA1C12B9640A4000BDC28 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCA1C02B9640A4000BDC28 /* GenderViewModel.swift */; };
+		CE07C5B42BBC3E7F001EEF0F /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */; };
+		CE07C5BB2BBD91E4001EEF0F /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5BA2BBD91E4001EEF0F /* ProfileModel.swift */; };
+		CE07C5BE2BBD9213001EEF0F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5BD2BBD9213001EEF0F /* ProfileViewModel.swift */; };
+		CE07C5C02BBDA149001EEF0F /* ProfileCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */; };
 		CECC80EA2B98988200F4312B /* SelectCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC80E62B98988200F4312B /* SelectCityTableViewCell.swift */; };
 		CECC80EB2B98988200F4312B /* SelectCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC80E82B98988200F4312B /* SelectCityViewController.swift */; };
 		CECC80EC2B98988200F4312B /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC80E92B98988200F4312B /* CityViewController.swift */; };
@@ -22,6 +26,10 @@
 		CECC81062BA319F400F4312B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC81022BA319F300F4312B /* TabBarController.swift */; };
 		CECC81072BA319F400F4312B /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC81032BA319F400F4312B /* TabBarButton.swift */; };
 		CECC81082BA319F400F4312B /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC81042BA319F400F4312B /* TabBar.swift */; };
+		CECC810B2BAC72C700F4312B /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC810A2BAC72C700F4312B /* MyProfileViewController.swift */; };
+		CECC81192BADAF7900F4312B /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC81182BADAF7900F4312B /* Observable.swift */; };
+		CECC811B2BADCD0D00F4312B /* SelectCityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC811A2BADCD0D00F4312B /* SelectCityService.swift */; };
+		CECC81262BADEB3200F4312B /* UILabel+AddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC81252BADEB3200F4312B /* UILabel+AddImage.swift */; };
 		D5E980BA2B8F0D5D00A17E0A /* BirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E980B92B8F0D5D00A17E0A /* BirthdayView.swift */; };
 		D5E980BC2B8F0D6700A17E0A /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E980BB2B8F0D6700A17E0A /* BirthdayViewController.swift */; };
 		D5E980BE2B8F0D7800A17E0A /* BirthdayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E980BD2B8F0D7800A17E0A /* BirthdayViewModel.swift */; };
@@ -108,6 +116,10 @@
 		84531D192B94C450002289C6 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		84CCA1BE2B96409D000BDC28 /* GenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderView.swift; sourceTree = "<group>"; };
 		84CCA1C02B9640A4000BDC28 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
+		CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
+		CE07C5BA2BBD91E4001EEF0F /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		CE07C5BD2BBD9213001EEF0F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomView.swift; sourceTree = "<group>"; };
 		CECC80E62B98988200F4312B /* SelectCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCityTableViewCell.swift; sourceTree = "<group>"; };
 		CECC80E82B98988200F4312B /* SelectCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCityViewController.swift; sourceTree = "<group>"; };
 		CECC80E92B98988200F4312B /* CityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +128,10 @@
 		CECC81022BA319F300F4312B /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CECC81032BA319F400F4312B /* TabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		CECC81042BA319F400F4312B /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		CECC810A2BAC72C700F4312B /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		CECC81182BADAF7900F4312B /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		CECC811A2BADCD0D00F4312B /* SelectCityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCityService.swift; sourceTree = "<group>"; };
+		CECC81252BADEB3200F4312B /* UILabel+AddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AddImage.swift"; sourceTree = "<group>"; };
 		D5E980B92B8F0D5D00A17E0A /* BirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayView.swift; sourceTree = "<group>"; };
 		D5E980BB2B8F0D6700A17E0A /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		D5E980BD2B8F0D7800A17E0A /* BirthdayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewModel.swift; sourceTree = "<group>"; };
@@ -241,6 +257,40 @@
 			path = GenderScreen;
 			sourceTree = "<group>";
 		};
+		CE07C5B72BBD91A9001EEF0F /* MyProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				CE07C5BC2BBD9206001EEF0F /* ViewModel */,
+				CE07C5B92BBD91CF001EEF0F /* Model */,
+				CE07C5B82BBD91C6001EEF0F /* View */,
+			);
+			path = MyProfileScreen;
+			sourceTree = "<group>";
+		};
+		CE07C5B82BBD91C6001EEF0F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CECC810A2BAC72C700F4312B /* MyProfileViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CE07C5B92BBD91CF001EEF0F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CE07C5BA2BBD91E4001EEF0F /* ProfileModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CE07C5BC2BBD9206001EEF0F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CE07C5BD2BBD9213001EEF0F /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CECC80E42B98984B00F4312B /* CityScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +326,15 @@
 				CECC81022BA319F300F4312B /* TabBarController.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		CECC81092BAC72A100F4312B /* MyProfileFlow */ = {
+			isa = PBXGroup;
+			children = (
+				CE07C5B72BBD91A9001EEF0F /* MyProfileScreen */,
+				CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */,
+			);
+			path = MyProfileFlow;
 			sourceTree = "<group>";
 		};
 		D5E980B82B8F0D0A00A17E0A /* BirthdayScreen */ = {
@@ -319,6 +378,7 @@
 		D853CC392B756BB500DA58D5 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				CECC81092BAC72A100F4312B /* MyProfileFlow */,
 				F301707F2B8CF55E00A6921A /* SplashScreen */,
 				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
 				F31111282B9690F800A97B80 /* BaseRegistration */,
@@ -384,6 +444,8 @@
 				DDCAC7C62B84FB7900EC7D15 /* UIFont+CustomFonts.swift */,
 				F36F40792B85562800B2082B /* UIViewController+Extensions.swift */,
 				F36F40862B86287D00B2082B /* UITapGestureRecognizer+Extensions.swift */,
+				CECC81252BADEB3200F4312B /* UILabel+AddImage.swift */,
+				CECC81182BADAF7900F4312B /* Observable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -398,6 +460,7 @@
 				DDCAC7CB2B851EF500EC7D15 /* RegistrationTextField.swift */,
 				F30170882B8D290700A6921A /* UIBlockingProgressHUD.swift */,
 				D854012D2B93125A0088C1E9 /* CellReusingUtils.swift */,
+				CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -513,6 +576,7 @@
 				D86387CC2B89FD2200692535 /* FriendsNetworkService.swift */,
 				D86387D12B8A754100692535 /* RegistrationService.swift */,
 				D87ED9252B97BC8C00B185FB /* InterestsServiceProvider.swift */,
+				CECC811A2BADCD0D00F4312B /* SelectCityService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -733,6 +797,7 @@
 				D86387C42B87A16400692535 /* NetworkTask.swift in Sources */,
 				D5E980BE2B8F0D7800A17E0A /* BirthdayViewModel.swift in Sources */,
 				DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */,
+				CECC811B2BADCD0D00F4312B /* SelectCityService.swift in Sources */,
 				D854012A2B91F6940088C1E9 /* SelectInterestsViewController.swift in Sources */,
 				F30170892B8D290700A6921A /* UIBlockingProgressHUD.swift in Sources */,
 				DD0412DE2B90E31E00984BA7 /* SearchFriendsViewController.swift in Sources */,
@@ -744,12 +809,14 @@
 				D86387D92B8A7FF500692535 /* LoginUserDto.swift in Sources */,
 				D854012C2B9312080088C1E9 /* TagsCollectionViewCell.swift in Sources */,
 				CECC80EB2B98988200F4312B /* SelectCityViewController.swift in Sources */,
+				CECC810B2BAC72C700F4312B /* MyProfileViewController.swift in Sources */,
 				F30170832B8CF6EB00A6921A /* SplashView.swift in Sources */,
 				D85401302B95C7D80088C1E9 /* NavigationBarView.swift in Sources */,
 				DD3A2EA82B7E9836006A3B8E /* CaptionButton.swift in Sources */,
 				DDCAC7D22B852B7B00EC7D15 /* RegistrationViewController.swift in Sources */,
 				F311112A2B9692CC00A97B80 /* ResetPasswordViewController.swift in Sources */,
 				D86387CA2B89F9A600692535 /* FriendDto.swift in Sources */,
+				CE07C5BE2BBD9213001EEF0F /* ProfileViewModel.swift in Sources */,
 				84CCA1BF2B96409D000BDC28 /* GenderView.swift in Sources */,
 				DD3A2E9F2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift in Sources */,
 				D5E980BA2B8F0D5D00A17E0A /* BirthdayView.swift in Sources */,
@@ -767,6 +834,7 @@
 				D86387CD2B89FD2200692535 /* FriendsNetworkService.swift in Sources */,
 				D87ED9282B97BDDD00B185FB /* InterestsDto.swift in Sources */,
 				F33B4C892B8FB989002D27B5 /* NewPasswordRequest.swift in Sources */,
+				CE07C5C02BBDA149001EEF0F /* ProfileCustomView.swift in Sources */,
 				DDCAC7C42B83C0BF00EC7D15 /* WhiteBorderButton.swift in Sources */,
 				D87ED9262B97BC8C00B185FB /* InterestsServiceProvider.swift in Sources */,
 				F36F40852B861AE400B2082B /* CheckEmailViewController.swift in Sources */,
@@ -779,6 +847,7 @@
 				F30170732B8CED2C00A6921A /* LoginViewModel.swift in Sources */,
 				CECC80F02B9898D600F4312B /* PhotoViewController.swift in Sources */,
 				D86387D22B8A754100692535 /* RegistrationService.swift in Sources */,
+				CECC81262BADEB3200F4312B /* UILabel+AddImage.swift in Sources */,
 				84531D1A2B94C450002289C6 /* GenderViewController.swift in Sources */,
 				DDC2551B2BA2249F0037FA7E /* RegistrationErrorModel.swift in Sources */,
 				D853CC282B7567AF00DA58D5 /* SceneDelegate.swift in Sources */,
@@ -788,10 +857,12 @@
 				DD0412E72B91056C00984BA7 /* SearchFriendCell.swift in Sources */,
 				DD0412E22B90E33600984BA7 /* SearchFriendsViewModel.swift in Sources */,
 				CECC80F92B989D6800F4312B /* CityViewModel.swift in Sources */,
+				CECC81192BADAF7900F4312B /* Observable.swift in Sources */,
 				F3BC5D402B853D1C00562C08 /* LoginViewController.swift in Sources */,
 				F30DA5A62B8E86D200E6571B /* NewPasswordModel.swift in Sources */,
 				F30170812B8CF57800A6921A /* SplashViewController.swift in Sources */,
 				DD0412E02B90E32B00984BA7 /* SearchFriendsView.swift in Sources */,
+				CE07C5BB2BBD91E4001EEF0F /* ProfileModel.swift in Sources */,
 				F30DA5A42B8E862300E6571B /* NewPasswordViewModel.swift in Sources */,
 				F3BC5D392B8514D700562C08 /* BaseRegistrationView.swift in Sources */,
 				84531D182B94C41F002289C6 /* CustomUIPageControl.swift in Sources */,
@@ -799,6 +870,7 @@
 				F36F40872B86287D00B2082B /* UITapGestureRecognizer+Extensions.swift in Sources */,
 				F36F40782B85503F00B2082B /* RegistrationNavigationController.swift in Sources */,
 				F33B4C872B8FB8DA002D27B5 /* ResetPasswordRequest.swift in Sources */,
+				CE07C5B42BBC3E7F001EEF0F /* EditMyProfileViewController.swift in Sources */,
 				F3BC5D3D2B8514F700562C08 /* LoginView.swift in Sources */,
 				DDCAC7C72B84FB7900EC7D15 /* UIFont+CustomFonts.swift in Sources */,
 			);
@@ -958,7 +1030,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta0;
 				PRODUCT_NAME = FindFriends;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -991,7 +1063,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta0;
 				PRODUCT_NAME = FindFriends;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

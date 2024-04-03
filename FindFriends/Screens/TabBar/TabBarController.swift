@@ -109,7 +109,7 @@ open class TabBarController: UITabBarController  {
             generateVC(UIViewController(), "Сообщения", UIImage(resource: .messagesWithoutNotification)),
             generateVC(SearchFriendsViewController(), "Поиск друзей", UIImage(resource: .searchFriends)),
             generateVC(UIViewController(), "Мероприятия", UIImage(resource: .events)),
-            generateVC(UIViewController(), "Мой профиль", UIImage(resource: .myProfile))
+            generateVC(MyProfileViewController(), "Мой профиль", UIImage(resource: .myProfile))
         ]
     }
 
