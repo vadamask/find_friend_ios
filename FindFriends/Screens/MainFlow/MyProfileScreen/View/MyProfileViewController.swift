@@ -10,20 +10,6 @@ final class MyProfileViewController: UIViewController {
         profileImageView.image = loadImage()
     }
     
-    private var viewModel: CityViewModelProtocol
-    
-    private var profileViewModel: ProfileViewModelProtocol
-    
-    init(viewModel: CityViewModelProtocol = CityViewModel(), profileViewModel: ProfileViewModelProtocol = ProfileViewModel()) {
-        self.viewModel = viewModel
-        self.profileViewModel = profileViewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private var contentSize: CGSize {
         CGSize(width: view.frame.width, height: view.frame.height + 440)
     }
@@ -225,7 +211,7 @@ final class MyProfileViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(tagsCollectionViewCell.self)
+        collectionView.register(TagsCollectionViewCell.self)
         return collectionView
     }()
     
@@ -350,11 +336,7 @@ final class MyProfileViewController: UIViewController {
         profileYearOld.textColor = .white
         return UIImage(contentsOfFile: imageUrl.path)!
     }
-    
-    private func setupUI() {
-        locationLabel.text = "\(profileViewModel.profileUser?.location ?? "Астана")"
-    }
-    
+
     @objc private func didTapEditButton() {
         print("didTapEditButton")
         let vc = EditMyProfileViewController()
@@ -386,10 +368,10 @@ extension MyProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: tagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
+        let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
 
 
-        cell.tagLabel.text = "Спорт"
+        cell.setupCell(with: InterestsCellViewModel(id: 0, name: "Спорт"))
         cell.isUserInteractionEnabled = false
         cell.contentView.layer.borderWidth = 0
         cell.isSelected = false

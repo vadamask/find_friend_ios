@@ -7,55 +7,12 @@ protocol ModalViewControllerDelegate: AnyObject {
 }
 
 final class SelectCityViewController: UIViewController {
-<<<<<<< HEAD
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstraints()
-        setupButtonStack()
-        bind()
-    }
-    
-    init(viewModel: CityViewModelProtocol = CityViewModel()) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    weak var delegate: ModalViewControllerDelegate?
-    private var viewModel: CityViewModelProtocol
-    
-    private func bind() {
-        viewModel.citiesObservable.bind { [weak self] _ in
-            guard let self else { return }
-            viewModel.filteredCitiesList = viewModel.cities
-            tableView.reloadData()
-        }
-    }
-
-    private lazy var searchCityTextField: UISearchBar = {
-        let textField = UISearchBar()
-        textField.placeholder = "Поиск"
-        textField.searchBarStyle = UISearchBar.Style.minimal
-        textField.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск", attributes: [
-            .foregroundColor: UIColor.searchBar,
-            .font: UIFont.Regular.medium
-        ])
-        textField.layer.cornerRadius = 12
-        textField.layer.masksToBounds = true
-        textField.searchTextField.textColor = .black
-=======
     weak var delegate: ModalViewControllerDelegate?
     var viewModel: CityViewModel
     private var cancellables: Set<AnyCancellable> = []
     
     private lazy var searchCityTextField: SearchBar = {
         let textField = SearchBar()
->>>>>>> develop
         textField.searchTextField.addTarget(self, action: #selector(searchCities(_:)), for: .editingChanged)
         return textField
     }()
@@ -190,16 +147,10 @@ final class SelectCityViewController: UIViewController {
         ])
     }
     
-        @objc func searchCities(_ textfield: UITextField) {
+    @objc func searchCities(_ textfield: UITextField) {
         if let searchText = textfield.text {
-<<<<<<< HEAD
-            viewModel.filteredCitiesList = viewModel.cities.filter({ (drug: CitiesModel) -> Bool in
-                return drug.name.lowercased().contains(searchText.lowercased())
-            })
-=======
             viewModel.textDidChanged(searchText)
    
->>>>>>> develop
             tableView.reloadData()
             if viewModel.visibleCities.isEmpty {
                 warningLabel.isHidden = false
@@ -216,20 +167,12 @@ final class SelectCityViewController: UIViewController {
     }
     
     @objc private func didTapAcceptButton() {
-//        viewModel.stateButton = .select
-//        print(viewModel.stateButton)
         delegate?.modalControllerWillDisapear(self, withDismiss: true)
-<<<<<<< HEAD
-        delegate?.updateSearchTextField(name: viewModel.selectedCity, withDismiss: true)
-=======
         delegate?.updateSearchTextField(name: viewModel.selectCity?.name ?? "", withDismiss: true)
->>>>>>> develop
         dismiss(animated: true)
     }
     
     @objc private func didTapCancelButton() {
-//        viewModel.stateButton = .nonSelect
-//        print(viewModel.stateButton)
         delegate?.modalControllerWillDisapear(self, withDismiss: false)
         delegate?.updateSearchTextField(name: "Поиск по названию", withDismiss: false)
         dismiss(animated: true)
@@ -238,35 +181,19 @@ final class SelectCityViewController: UIViewController {
 
 extension SelectCityViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-<<<<<<< HEAD
-        return viewModel.filteredCitiesList.count
-=======
         let count = viewModel.visibleCities.count
         return count
->>>>>>> develop
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectCityTableViewCell.identifier, for: indexPath) as? SelectCityTableViewCell else { return UITableViewCell() }
         let model = viewModel
-<<<<<<< HEAD
-        cell.configureCells(name: model.filteredCitiesList[indexPath.row].name)
-=======
         cell.configureCells(name: model.visibleCities[indexPath.row])
->>>>>>> develop
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-<<<<<<< HEAD
-        guard let cell = tableView.cellForRow(at: indexPath) as? SelectCityTableViewCell else {
-            return
-        }
-        viewModel.selectedCity = cell.label.text ?? ""
-        print(viewModel.selectedCity)
-=======
         viewModel.didSelectCityAt(indexPath)
->>>>>>> develop
         acceptButton.backgroundColor = .mainOrange
         acceptButton.isEnabled = true
     }

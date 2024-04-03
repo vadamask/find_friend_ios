@@ -7,14 +7,9 @@ final class EditMyProfileViewController: UIViewController {
         view.backgroundColor = .systemBackground
         addView()
         applyConstrainst()
-        datePickTextField.delegate = self
         datePickTextField.keyboardType = .numberPad
         datePickTextField.clearButtonMode = .whileEditing
-        datePickTextField.hideWarningLabel()
-        bind()
     }
-    
-    let viewDatePickerModel = BirthdayViewModel()
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -40,7 +35,6 @@ final class EditMyProfileViewController: UIViewController {
         button.layer.bounds.size.height = 44
         button.layer.cornerRadius = button.layer.bounds.height / 2
         button.clipsToBounds = true
-        //button.addTarget(self, action: #selector(), for: .touchUpInside)
         return button
     }()
     
@@ -52,7 +46,7 @@ final class EditMyProfileViewController: UIViewController {
     }()
     
     private lazy var firstName: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Имя"
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         return label
@@ -69,13 +63,11 @@ final class EditMyProfileViewController: UIViewController {
         textField.rightView = paddingView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
-       // textField.delegate = self
-        
         return textField
     }()
     
     private lazy var secondName: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Фамилия"
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         return label
@@ -92,13 +84,11 @@ final class EditMyProfileViewController: UIViewController {
         textField.rightView = paddingView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
-       // textField.delegate = self
-        
         return textField
     }()
     
     private lazy var birthdayLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "Дата рождения"
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         return label
@@ -144,45 +134,5 @@ final class EditMyProfileViewController: UIViewController {
             datePickTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             datePickTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
-    }
-    
-    func bind() {
-        viewDatePickerModel.$buttonAndError
-            .sink { [weak self] dateIsCorrect in
-                if dateIsCorrect {
-                    self?.datePickTextField.hideWarningLabel()
-                } else {
-                    self?.datePickTextField.showWarningForDate("недопустимое значение")
-                }
-            }
-            .store(in: &cancellables)
-        viewDatePickerModel.$textFieldText
-            .sink { [weak self] text in
-                self?.datePickTextField.text = text
-            }
-            .store(in: &cancellables)
-    }
-}
-
-extension EditMyProfileViewController: UITextFieldDelegate {
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        guard let text = textField.text else { return false }
-        let shouldChangeCharactersIn = viewDatePickerModel.shouldChangeCharactersIn(text: text, range: range, replacementString: string)
-        
-        if viewDatePickerModel.shouldHideKeyboard() {
-            textField.text = NSString(string: text).replacingCharacters(in: range, with: string)
-            textField.resignFirstResponder()
-        }
-        
-        return shouldChangeCharactersIn
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        datePickTextField.hideWarningLabel()
-        return true
     }
 }
