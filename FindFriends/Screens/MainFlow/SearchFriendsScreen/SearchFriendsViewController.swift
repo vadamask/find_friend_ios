@@ -8,7 +8,7 @@
 import UIKit
 
 final class SearchFriendsViewController: UIViewController {
-    private let searchFriendsView = SearchFriendsView()
+    private let searchFriendsView: SearchFriendsView
     
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
@@ -42,6 +42,15 @@ final class SearchFriendsViewController: UIViewController {
         return textField
     }()
     
+    init(searchFriendsView: SearchFriendsView) {
+        self.searchFriendsView = searchFriendsView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         self.view = searchFriendsView
     }
@@ -49,6 +58,11 @@ final class SearchFriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchFriendsView.loadUsers()
     }
     
     private func setupNavigationItem() {
@@ -67,4 +81,12 @@ final class SearchFriendsViewController: UIViewController {
         super.viewWillLayoutSubviews()
         searchTextField.frame = CGRect(x: 0, y: 0, width: searchFriendsView.bounds.width - 32, height: 36)
     }
+}
+
+extension SearchFriendsViewController: SearchFriendsViewDelegate {
+    func showAlert(_ message: String) {
+        
+    }
+    
+    
 }

@@ -24,6 +24,5 @@ struct UIBlockingProgressHUD {
         window?.isUserInteractionEnabled = true
         ProgressHUD.dismiss()
     }
-
 }
 
