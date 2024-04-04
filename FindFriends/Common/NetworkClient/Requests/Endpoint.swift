@@ -11,8 +11,8 @@ import Foundation
 enum Endpoint {
     
     case login
+    case getUsers(Int)
     case createUser
-    case friends
     case resetPassword
     case newPassword
     case interests
@@ -27,8 +27,8 @@ enum Endpoint {
     var path: String {
         switch self {
         case .login: "auth/token/login/"
+        case .getUsers(let page): "users/?page=\(page)"
         case .createUser: "users/"
-        case .friends: "friends/"
         case .resetPassword: "users/reset_password/"
         case .newPassword: "users/reset_password/confirm/"
         case .interests: "interests/"

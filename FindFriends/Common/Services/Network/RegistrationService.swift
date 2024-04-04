@@ -35,7 +35,7 @@ final class RegistrationService: RegistrationServiceProtocol {
         _ dto: CreateUserRequestDto,
         completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
     ) {
-        let request = UsersRequest(httpMethod: .post, body: dto)
+        let request = UsersRequest(httpMethod: .post, endpoint: .createUser, body: dto)
         networkClient.send(request: request, type: CreateUserResponseDto.self) { result in
             DispatchQueue.main.async {
                 switch result {

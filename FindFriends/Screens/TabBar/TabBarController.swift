@@ -55,7 +55,7 @@ open class TabBarController: UITabBarController  {
 
     open var barHeight: CGFloat {
         get {
-                return _barHeight + view.safeAreaInsets.bottom
+            return _barHeight + view.safeAreaInsets.bottom
         }
         set {
             _barHeight = newValue
@@ -98,6 +98,7 @@ open class TabBarController: UITabBarController  {
         viewController.tabBarItem.title = title
         viewController.tabBarItem.image = image
         let vc = UINavigationController(rootViewController: viewController)
+        vc.hideKeyboardWhenTappedAround(cancelsTouchesInView: true)
         vc.navigationBar.prefersLargeTitles = true
         return vc
     }
@@ -105,13 +106,16 @@ open class TabBarController: UITabBarController  {
  
     //MARK: - CreateTabBar
     private func createTabBar() {
+        let searchFriendsViewModel = SearchFriendsViewModel()
+        let searchFriendsView = SearchFriendsView(viewModel: searchFriendsViewModel)
+        let searchFriendsVC = SearchFriendsViewController(searchFriendsView: searchFriendsView)
+        
         
         viewControllers = [
             generateVC(UIViewController(), "Сообщения", UIImage(resource: .messagesWithoutNotification)),
-            generateVC(SearchFriendsViewController(), "Поиск друзей", UIImage(resource: .searchFriends)),
+            generateVC(searchFriendsVC, "Поиск друзей", UIImage(resource: .searchFriends)),
             generateVC(UIViewController(), "Мероприятия", UIImage(resource: .events)),
             generateVC(MyProfileViewController(), "Мой профиль", UIImage(resource: .myProfile))
         ]
     }
-
 }
