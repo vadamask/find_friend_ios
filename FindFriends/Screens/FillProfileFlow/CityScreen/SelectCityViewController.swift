@@ -16,6 +16,8 @@ final class SelectCityViewController: UIViewController {
         textField.searchTextField.addTarget(self, action: #selector(searchCities(_:)), for: .editingChanged)
         return textField
     }()
+                                            
+   private let searchController = UISearchController(searchResultsController: nil)
     
     private lazy var warningLabel: UILabel = {
         let label = UILabel()

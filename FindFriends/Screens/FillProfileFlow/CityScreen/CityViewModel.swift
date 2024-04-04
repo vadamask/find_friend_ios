@@ -27,7 +27,7 @@ class CityViewModel {
             }
         }
     }
-    
+
     func nextButtonTapped() {
         delegate?.cityIsSelect(selectCity?.id)
         delegate?.showControllerWithIndex(4)
