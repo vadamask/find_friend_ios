@@ -2,13 +2,7 @@ import UIKit
 
 final class MyProfileViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGray6
-        addView()
-        applyConstraints()
-        profileImageView.image = loadImage()
-    }
+    private let loginService = LoginService()
     
     private var contentSize: CGSize {
         CGSize(width: view.frame.width, height: view.frame.height + 440)
@@ -233,7 +227,7 @@ final class MyProfileViewController: UIViewController {
         return view
     }()
     
-    private lazy var logoutBotton: UIButton = {
+    private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setTitle("Выйти из аккаунта", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
@@ -250,6 +244,14 @@ final class MyProfileViewController: UIViewController {
         return view
     }()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGray6
+        addView()
+        applyConstraints()
+        profileImageView.image = loadImage()
+    }
+    
     private func addView() {
         view.addSubview(scrollView)
         [profileImageView, fullStackView].forEach(scrollView.addSubviewWithoutAutoresizingMask(_:))
@@ -262,7 +264,7 @@ final class MyProfileViewController: UIViewController {
         [friendsListLabel, meetingListLabel].forEach(labelStackView.addArrangedSubview(_:))
         [countStackView, labelStackView].forEach(friendsAndEventsView.addSubviewWithoutAutoresizingMask(_:))
         [tagsCollectionView].forEach(interestsView.addSubviewWithoutAutoresizingMask(_:))
-        [descrioptionStackView, friendsAndEventsView, createMeeting, jobView, aboutMyselfView, interestsView, vkView, tgView, logoutBotton].forEach(fullStackView.addArrangedSubview(_:))
+        [descrioptionStackView, friendsAndEventsView, createMeeting, jobView, aboutMyselfView, interestsView, vkView, tgView, logoutButton].forEach(fullStackView.addArrangedSubview(_:))
     }
     
     private func applyConstraints() {
@@ -318,7 +320,7 @@ final class MyProfileViewController: UIViewController {
             vkView.secondLabel.bottomAnchor.constraint(equalTo: vkView.bottomAnchor, constant: -8),
             tgView.secondLabel.topAnchor.constraint(equalTo: tgView.topAnchor, constant: 10),
             tgView.secondLabel.bottomAnchor.constraint(equalTo: tgView.bottomAnchor, constant: -8),
-            logoutBotton.heightAnchor.constraint(equalToConstant: 40)
+            logoutButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -338,7 +340,6 @@ final class MyProfileViewController: UIViewController {
     }
 
     @objc private func didTapEditButton() {
-        print("didTapEditButton")
         let vc = EditMyProfileViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -348,7 +349,26 @@ final class MyProfileViewController: UIViewController {
     }
     
     @objc private func didTapLogoutButton() {
-        print("didTapLogoutButton")
+        loginService.logoutUser { [unowned self] result in
+            switch result {
+            case .success(_):
+                showSplashScreen()
+            case .failure(let error):
+                AlertPresenter.show(in: self, model: AlertModel(message: error.message))
+            }
+        }
+    }
+    
+    private func showSplashScreen() {
+        DispatchQueue.main.async {
+            guard
+                let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                let window = scene.windows.first
+            else { fatalError("Invalid Configuration") }
+            
+            let login = LoginViewController()
+            window.rootViewController = login
+        }
     }
 }
 

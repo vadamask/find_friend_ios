@@ -1,24 +1,22 @@
 //
-//  RegistrationService.swift
+//  LoginService.swift
 //  FindFriends
 //
-//  Created by Vitaly on 24.02.2024.
+//  Created by Вадим Шишков on 04.04.2024.
 //
 
 import Foundation
 
-protocol RegistrationServiceProtocol {
-    func createUser(
-        _ dto: CreateUserRequestDto,
-        completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
-    )
+protocol LoginServiceProtocol {
     func loginUser(
         _ dto: LoginRequestDto,
         completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
     )
+    
+    func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void)
 }
 
-final class RegistrationService: RegistrationServiceProtocol {
+final class LoginService: LoginServiceProtocol {
 
     private let networkClient: NetworkClient
     private let oAuthTokenStorage: OAuthTokenStorageProtocol
@@ -31,28 +29,11 @@ final class RegistrationService: RegistrationServiceProtocol {
         self.oAuthTokenStorage = oAuthTokenStorage
     }
 
-    func createUser(
-        _ dto: CreateUserRequestDto,
-        completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
-    ) {
-        let request = UsersRequest(httpMethod: .post, endpoint: .createUser, body: dto)
-        networkClient.send(request: request, type: CreateUserResponseDto.self) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case let .success(user):
-                    completion(.success(user))
-                case let .failure(error):
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-
     func loginUser(
         _ dto: LoginRequestDto,
         completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
     ) {
-        let request = LoginUserRequest(body: dto)
+        let request = LoginRequest(body: dto)
         networkClient.send(request: request, type: LoginResponseDto.self) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -62,6 +43,19 @@ final class RegistrationService: RegistrationServiceProtocol {
                 case let .failure(error):
                     completion(.failure(error))
                 }
+            }
+        }
+    }
+    
+    func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
+        let request = LogoutRequest()
+        networkClient.send(request: request) { [unowned self] result in
+            switch result {
+            case .success(_):
+                oAuthTokenStorage.token = nil
+                completion(.success(Void()))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

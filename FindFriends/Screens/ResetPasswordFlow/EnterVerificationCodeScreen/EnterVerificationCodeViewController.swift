@@ -9,7 +9,6 @@ import UIKit
 
 final class EnterVerificationCodeViewController: BaseRegistrationViewController {
     private let enterVerficationCodeView: EnterVerificationCodeView
-    private let service = RegistrationService()
     
     override func loadView() {
         self.view = enterVerficationCodeView

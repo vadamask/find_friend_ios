@@ -33,18 +33,18 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
-    private let registrationService: RegistrationServiceProtocol
+    private let loginService: LoginServiceProtocol
 
     init(
-        registrationService: RegistrationServiceProtocol = RegistrationService(),
+        loginService: LoginServiceProtocol = LoginService(),
         credentials: Credentials = Credentials.empty
     ) {
-        self.registrationService = registrationService
+        self.loginService = loginService
         self.credentials = credentials
     }
 
     func loginUser(completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void) {
-        registrationService.loginUser(credentials.toLoginRequestDto) { result in
+        loginService.loginUser(credentials.toLoginRequestDto) { result in
             switch result {
             case .success(let model):
                 completion(.success(model))

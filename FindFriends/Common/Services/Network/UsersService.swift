@@ -11,6 +11,10 @@ protocol UsersServiceProtocol {
     var state: CurrentValueSubject<SearchFriendsState, Never> { get }
     func loadUsers()
     func convertToViewModels() -> [SearchFriendCellViewModel]
+    func createUser(
+        _ dto: CreateUserRequestDto,
+        completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
+    )
 }
 
 enum SearchFriendsState {
@@ -24,11 +28,28 @@ final class UsersService: UsersServiceProtocol {
     let state = CurrentValueSubject<SearchFriendsState, Never>(.finishLoading)
     
     private var usersResponse: [UsersResponse] = []
-    private let service: NetworkClient
+    private let networkClient: NetworkClient
     private var page = 1
     
-    init(service: NetworkClient = DefaultNetworkClient()) {
-        self.service = service
+    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+        self.networkClient = networkClient
+    }
+    
+    func createUser(
+        _ dto: CreateUserRequestDto,
+        completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
+    ) {
+        let request = UsersRequest(httpMethod: .post, endpoint: .createUser, body: dto)
+        networkClient.send(request: request, type: CreateUserResponseDto.self) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(user):
+                    completion(.success(user))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
     func loadUsers() {
@@ -37,7 +58,7 @@ final class UsersService: UsersServiceProtocol {
             sendRequest()
         } else {
             if let last = usersResponse.last,
-               let nextPage = last.next {
+               let _ = last.next {
                 sendRequest()
             }
         }
@@ -57,7 +78,7 @@ final class UsersService: UsersServiceProtocol {
     private func sendRequest() {
         state.send(.loading)
         let request = UsersRequest(httpMethod: .get, endpoint: .getUsers(page), body: nil)
-        service.send(request: request, type: UsersResponse.self) { [unowned self] result in
+        networkClient.send(request: request, type: UsersResponse.self) { [unowned self] result in
             switch result {
             case .success(let usersResponse):
                 self.usersResponse.append(usersResponse)

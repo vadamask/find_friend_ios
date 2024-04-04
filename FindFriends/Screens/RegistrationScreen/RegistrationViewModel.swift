@@ -10,7 +10,8 @@ import SafariServices
 
 final class RegistrationViewModel {
    
-    let registrationService: RegistrationServiceProtocol
+    let usersService: UsersServiceProtocol
+    let loginService: LoginServiceProtocol
     
     @Published var allFieldsAreFilling = false
     @Published var personalIsFilling = false
@@ -39,8 +40,9 @@ final class RegistrationViewModel {
         errorTextForConfirmPassword.isEmpty
     }
     
-    init(registrationService: RegistrationServiceProtocol) {
-        self.registrationService = registrationService
+    init(usersService: UsersServiceProtocol, loginService: LoginServiceProtocol) {
+        self.usersService = usersService
+        self.loginService = loginService
         setupPipline()
     }
     
@@ -49,10 +51,10 @@ final class RegistrationViewModel {
         if allFieldsAreValidate {
             let user = CreateUserRequestDto(firstName: name, lastName: lastName, email: email, password: confirmPassword)
             UIBlockingProgressHUD.show()
-            registrationService.createUser(user) { [unowned self] result in
+            usersService.createUser(user) { [unowned self] result in
                 switch result {
                 case .success(let model):
-                    registrationService.loginUser(
+                    loginService.loginUser(
                         LoginRequestDto(email: model.email, password: confirmPassword)) { [unowned self] _ in
                             switchToGenderScreen()
                         }

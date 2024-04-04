@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LoginUserRequest: NetworkRequestProtocol {
+struct LoginRequest: NetworkRequestProtocol {
     let httpMethod: HttpMethod = .post
     let endpoint: Endpoint = .login
     let body: Encodable?

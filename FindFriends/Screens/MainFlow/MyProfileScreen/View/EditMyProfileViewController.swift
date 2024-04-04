@@ -1,17 +1,6 @@
 import UIKit
-import Combine
 
 final class EditMyProfileViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstrainst()
-        datePickTextField.keyboardType = .numberPad
-        datePickTextField.clearButtonMode = .whileEditing
-    }
-    
-    private var cancellables: Set<AnyCancellable> = []
     
     private lazy var avatarView: UIImageView = {
         let view = UIImageView()
@@ -98,6 +87,15 @@ final class EditMyProfileViewController: UIViewController {
         let datePicker = RegistrationTextField(placeholder: "ДД.ММ.ГГГГ", type: .date)
         return datePicker
     }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstrainst()
+        datePickTextField.keyboardType = .numberPad
+        datePickTextField.clearButtonMode = .whileEditing
+    }
     
     private func addView() {
         [avatarView, editButton, editProfileLabel, firstName, firstNameTextField, secondName, secondNameTextField, birthdayLabel, datePickTextField].forEach(view.addSubviewWithoutAutoresizingMask(_:))
