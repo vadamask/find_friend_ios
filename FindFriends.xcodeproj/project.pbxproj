@@ -1054,7 +1054,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta;
 				PRODUCT_NAME = FindFriends;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1087,7 +1087,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.workshop.FindFriends.beta;
 				PRODUCT_NAME = FindFriends;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
