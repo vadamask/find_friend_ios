@@ -10,38 +10,6 @@ import UIKit
 final class SearchFriendsViewController: UIViewController {
     private let searchFriendsView: SearchFriendsView
     
-    private lazy var searchTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Поиск"
-        textField.backgroundColor = .searchTextFieldBackground
-        textField.layer.cornerRadius = 10
-        
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
-        let leftImageView = UIImageView(image: UIImage(resource: .loupe))
-        leftView.addSubview(leftImageView)
-        leftImageView.center = leftView.center
-        leftView.tintColor = .searchTextFieldTint
-        textField.leftView = leftView
-        textField.leftViewMode = .always
-        
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
-        let rightImageView = UIImageView(image: UIImage(resource: .filter))
-        rightView.addSubview(rightImageView)
-        rightImageView.center = rightView.center
-        rightView.tintColor = .searchTextFieldTint
-        textField.rightView = rightView
-        textField.rightViewMode = .always
-        
-        let placeholder = NSAttributedString(
-            string: "Поиск",
-            attributes: [
-                .foregroundColor: UIColor.searchTextFieldTint
-            ]
-        )
-        textField.attributedPlaceholder = placeholder
-        return textField
-    }()
-    
     init(searchFriendsView: SearchFriendsView) {
         self.searchFriendsView = searchFriendsView
         super.init(nibName: nil, bundle: nil)
@@ -67,7 +35,7 @@ final class SearchFriendsViewController: UIViewController {
     
     private func setupNavigationItem() {
         navigationItem.title = "Рекомендации"
-        navigationItem.titleView = searchTextField
+        navigationItem.titleView = searchFriendsView.searchTextField
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .backgroundMain
         appearance.largeTitleTextAttributes = [
@@ -79,14 +47,12 @@ final class SearchFriendsViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        searchTextField.frame = CGRect(x: 0, y: 0, width: searchFriendsView.bounds.width - 32, height: 36)
+        searchFriendsView.searchTextField.frame = CGRect(x: 0, y: 0, width: searchFriendsView.bounds.width - 32, height: 36)
     }
 }
 
 extension SearchFriendsViewController: SearchFriendsViewDelegate {
     func showAlert(_ message: String) {
-        
+        AlertPresenter.show(in: self, model: AlertModel(message: message))
     }
-    
-    
 }

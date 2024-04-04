@@ -8,13 +8,12 @@ import Combine
 import Foundation
 
 protocol UsersServiceProtocol {
-    var state: CurrentValueSubject<State, Never> { get }
+    var state: CurrentValueSubject<SearchFriendsState, Never> { get }
     func loadUsers()
     func convertToViewModels() -> [SearchFriendCellViewModel]
 }
 
-enum State {
-    case empty
+enum SearchFriendsState {
     case loading
     case finishLoading
     case error(NetworkClientError)
@@ -22,7 +21,7 @@ enum State {
 
 final class UsersService: UsersServiceProtocol {
  
-    let state = CurrentValueSubject<State, Never>(.empty)
+    let state = CurrentValueSubject<SearchFriendsState, Never>(.finishLoading)
     
     private var usersResponse: [UsersResponse] = []
     private let service: NetworkClient
@@ -33,6 +32,29 @@ final class UsersService: UsersServiceProtocol {
     }
     
     func loadUsers() {
+        guard case .finishLoading = state.value else { return }
+        if usersResponse.isEmpty {
+            sendRequest()
+        } else {
+            if let last = usersResponse.last,
+               let nextPage = last.next {
+                sendRequest()
+            }
+        }
+    }
+    
+    func convertToViewModels() -> [SearchFriendCellViewModel] {
+        guard let last = usersResponse.last else { return [] }
+        return last.results
+            .map { SearchFriendCellViewModel(
+                fullName: "\($0.firstName) \($0.lastName)",
+                age: $0.age,
+                avatar: $0.avatar,
+                purpose: $0.purpose
+            )}
+    }
+    
+    private func sendRequest() {
         state.send(.loading)
         let request = UsersRequest(httpMethod: .get, endpoint: .getUsers(page), body: nil)
         service.send(request: request, type: UsersResponse.self) { [unowned self] result in
@@ -45,17 +67,5 @@ final class UsersService: UsersServiceProtocol {
                 state.send(.error(error))
             }
         }
-    }
-    
-    func convertToViewModels() -> [SearchFriendCellViewModel] {
-        guard !usersResponse.isEmpty,
-              let last = usersResponse.last else { return [] }
-        return last.results
-            .map { SearchFriendCellViewModel(
-                fullName: "\($0.firstName) \($0.lastName)",
-                age: $0.age,
-                avatar: $0.avatar,
-                purpose: $0.purpose
-            )}
     }
 }

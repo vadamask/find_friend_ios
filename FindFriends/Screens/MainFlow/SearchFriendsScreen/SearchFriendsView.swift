@@ -16,6 +16,39 @@ final class SearchFriendsView: UIView {
     private let viewModel: SearchFriendsViewModel
     private var cancellables: Set<AnyCancellable> = []
     
+    lazy var searchTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Поиск"
+        textField.backgroundColor = .searchTextFieldBackground
+        textField.layer.cornerRadius = 10
+        textField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
+        
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+        let leftImageView = UIImageView(image: UIImage(resource: .loupe))
+        leftView.addSubview(leftImageView)
+        leftImageView.center = leftView.center
+        leftView.tintColor = .searchTextFieldTint
+        textField.leftView = leftView
+        textField.leftViewMode = .always
+        
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+        let rightImageView = UIImageView(image: UIImage(resource: .filter))
+        rightView.addSubview(rightImageView)
+        rightImageView.center = rightView.center
+        rightView.tintColor = .searchTextFieldTint
+        textField.rightView = rightView
+        textField.rightViewMode = .always
+        
+        let placeholder = NSAttributedString(
+            string: "Поиск",
+            attributes: [
+                .foregroundColor: UIColor.searchTextFieldTint
+            ]
+        )
+        textField.attributedPlaceholder = placeholder
+        return textField
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .backgroundMain
@@ -49,8 +82,6 @@ final class SearchFriendsView: UIView {
                     case .finishLoading:
                         UIBlockingProgressHUD.dismiss()
                         self.tableView.reloadData()
-                    case .empty:
-                        print("пусто")
                     case .loading:
                         UIBlockingProgressHUD.show()
                     case .error(let error):
@@ -77,7 +108,13 @@ final class SearchFriendsView: UIView {
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    @objc private func textDidChanged() {
+        viewModel.textDidChanged(searchTextField.text!)
+    }
 }
+
+// MARK: - UITableViewDataSource
 
 extension SearchFriendsView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,11 +131,17 @@ extension SearchFriendsView: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension SearchFriendsView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let visibleIndexPaths = tableView.indexPathsForVisibleRows,
            visibleIndexPaths.contains(indexPath) {
             viewModel.cellWillDisplay(at: indexPath)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRowAt(indexPath)
     }
 }

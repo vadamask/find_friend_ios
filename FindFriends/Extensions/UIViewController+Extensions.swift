@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-// MARK: - UIViewController
 extension UIViewController {
 
     func hideKeyboardWhenTappedAround(cancelsTouchesInView: Bool = false) {
@@ -24,4 +22,3 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
-

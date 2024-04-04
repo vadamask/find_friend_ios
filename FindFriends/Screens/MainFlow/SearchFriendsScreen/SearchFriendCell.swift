@@ -71,6 +71,7 @@ final class SearchFriendCell: UITableViewCell {
     
     private func setupViews() {
         backgroundColor = .clear
+        selectionStyle = .none
     }
     
     private func setupLayout() {

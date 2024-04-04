@@ -55,7 +55,7 @@ open class TabBarController: UITabBarController  {
 
     open var barHeight: CGFloat {
         get {
-                return _barHeight + view.safeAreaInsets.bottom
+            return _barHeight + view.safeAreaInsets.bottom
         }
         set {
             _barHeight = newValue
@@ -98,6 +98,7 @@ open class TabBarController: UITabBarController  {
         viewController.tabBarItem.title = title
         viewController.tabBarItem.image = image
         let vc = UINavigationController(rootViewController: viewController)
+        vc.hideKeyboardWhenTappedAround(cancelsTouchesInView: true)
         vc.navigationBar.prefersLargeTitles = true
         return vc
     }
@@ -117,5 +118,4 @@ open class TabBarController: UITabBarController  {
             generateVC(UIViewController(), "Мой профиль", UIImage(resource: .myProfile))
         ]
     }
-
 }

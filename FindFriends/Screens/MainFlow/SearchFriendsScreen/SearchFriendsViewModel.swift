@@ -8,7 +8,8 @@ import Combine
 import Foundation
 
 final class SearchFriendsViewModel {
-    @Published var state: State = .empty
+    @Published var state: SearchFriendsState = .finishLoading
+    private var visibleUsers: [SearchFriendCellViewModel] = []
     private var users: [SearchFriendCellViewModel] = []
     private let service: UsersServiceProtocol
     private var cancellables: Set<AnyCancellable> = []
@@ -19,11 +20,11 @@ final class SearchFriendsViewModel {
     }
     
     var numberOfRows: Int {
-        users.count
+        visibleUsers.count
     }
     
     func userForRowAt(_ indexPath: IndexPath) -> SearchFriendCellViewModel {
-        users[indexPath.row]
+        visibleUsers[indexPath.row]
     }
     
     func loadUsers() {
@@ -36,16 +37,28 @@ final class SearchFriendsViewModel {
         }
     }
     
+    func textDidChanged(_ text: String) {
+        if text.isEmpty {
+            visibleUsers = users
+        } else {
+            visibleUsers = users.filter { $0.fullName.contains(text) }
+        }
+        state = .finishLoading
+    }
+    
+    func didSelectRowAt(_ indexPath: IndexPath) {
+        
+    }
+    
     private func bind() {
         service.state
             .sink { [unowned self] state in
                 switch state {
-                case .empty:
-                    self.state = .empty
                 case .loading:
                     self.state = .loading
                 case .finishLoading:
                     users.append(contentsOf: service.convertToViewModels())
+                    visibleUsers = users
                     self.state = .finishLoading
                 case .error(let error):
                     self.state = .error(error)
