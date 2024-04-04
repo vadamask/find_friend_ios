@@ -366,8 +366,8 @@ final class MyProfileViewController: UIViewController {
                 let window = scene.windows.first
             else { fatalError("Invalid Configuration") }
             
-            let login = LoginViewController()
-            window.rootViewController = login
+            let splash = SplashViewController()
+            window.rootViewController = splash
         }
     }
 }
