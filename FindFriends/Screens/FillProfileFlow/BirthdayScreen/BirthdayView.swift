@@ -86,7 +86,7 @@ private extension BirthdayView {
                     self?.datePickTextField.hideWarningLabel()
                     self?.nextButtonOn()
                 } else {
-                    self?.datePickTextField.showWarningForDate("недопустимое значение")
+                    self?.datePickTextField.showWarningForDate("Недопустимое значение")
                     self?.nextButtonOff()
                 }
             }

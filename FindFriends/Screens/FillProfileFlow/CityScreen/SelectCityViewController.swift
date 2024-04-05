@@ -31,7 +31,7 @@ final class SelectCityViewController: UIViewController {
     
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .customLightGray
         return view
     }()
     
@@ -104,7 +104,7 @@ final class SelectCityViewController: UIViewController {
         viewModel.$visibleCities
             .sink { [unowned self] _ in
                 DispatchQueue.main.async {
-                    tableView.reloadData()
+                    self.tableView.reloadData()
                 }
             }
             .store(in: &cancellables)
@@ -154,9 +154,9 @@ final class SelectCityViewController: UIViewController {
             tableView.reloadData()
             if viewModel.visibleCities.isEmpty {
                 warningLabel.isHidden = false
-                searchCityTextField.layer.borderColor = UIColor.red.cgColor
+                searchCityTextField.layer.borderColor = UIColor.warning.cgColor
                 searchCityTextField.layer.borderWidth = 1
-                searchCityTextField.searchTextField.textColor = .red
+                searchCityTextField.searchTextField.textColor = .warning
             } else {
                 warningLabel.isHidden = true
                 searchCityTextField.layer.borderColor = UIColor.clear.cgColor

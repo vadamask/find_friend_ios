@@ -17,6 +17,7 @@ final class CityViewController: UIViewController {
         label.font = .regular16
         label.textAlignment = .center
         label.text = "Чтобы видеть события и друзей"
+        label.textColor = .standardGreyWireframe
         return label
     }()
     
@@ -36,7 +37,7 @@ final class CityViewController: UIViewController {
     private lazy var skipButton: UIButton = {
         let button = UIButton()
         button.setTitle("Пропустить", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(.buttonBlack, for: .normal)
         button.titleLabel?.font = .semibold17
         button.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
         return button
@@ -74,8 +75,10 @@ final class CityViewController: UIViewController {
             searchCityTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchCityTextField.topAnchor.constraint(equalTo: secondLabel.bottomAnchor, constant: 20),
             searchCityTextField.heightAnchor.constraint(equalToConstant: 36),
-            skipButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            skipButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -38),
             skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            skipButton.heightAnchor.constraint(equalToConstant: 48),
+            skipButton.widthAnchor.constraint(equalToConstant: 139),
             continueButton.bottomAnchor.constraint(equalTo: skipButton.topAnchor, constant: -10),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),

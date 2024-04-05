@@ -31,7 +31,7 @@ final class  SelectInterestsView: BaseFillProfileView {
         ])
         bar.backgroundColor = .white
         bar.searchTextField.backgroundColor = .white
-        bar.searchTextField.textColor = UIColor.searchBar
+        bar.searchTextField.textColor = .primeDark
         return bar
     }()
     

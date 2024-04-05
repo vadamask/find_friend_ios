@@ -22,7 +22,6 @@ final class GenderSelectionButton: UIButton {
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 17, trailing: 0)
         configuration.baseBackgroundColor = .white
         self.configuration = configuration
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

@@ -34,7 +34,7 @@ final class TagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
     }
     
     private func setupViews() {
-        contentView.backgroundColor = .backgroundLaunchScreen
+        contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
         contentView.layer.borderWidth = 1
@@ -58,7 +58,8 @@ final class TagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
     private func bind() {
         viewModel?.$isSelected
             .sink { [weak self] isSelected in
-                self?.contentView.backgroundColor = isSelected ? .selectedTag : .backgroundLaunchScreen
+                self?.contentView.backgroundColor = isSelected ? .selectedTag : .white
+                self?.contentView.layer.borderWidth = isSelected ? 0 : 1
             }
             .store(in: &cancellables)
     }

@@ -55,7 +55,6 @@ class BaseFillProfileView: UIView {
         if screenSubheader.text?.isEmpty != nil  {
             self.addSubviewWithoutAutoresizingMask(screenSubheader)
             NSLayoutConstraint.activate([
-                screenSubheader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
                 screenSubheader.topAnchor.constraint(equalTo: screenHeader.bottomAnchor),
                 screenSubheader.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 46.5),
                 screenSubheader.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -46.5)
