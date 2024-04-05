@@ -11,6 +11,8 @@ struct RegistrationErrorModel: Decodable {
     let password: [String]?
     let email: [String]?
     let nonFieldErrors: [String]?
+    let detail: String?
+    
     
     var currentError: String {
         if let email {
@@ -19,13 +21,15 @@ struct RegistrationErrorModel: Decodable {
             return password.joined(separator: " ")
         } else if let nonFieldErrors {
             return nonFieldErrors.joined(separator: " ")
+        } else if let detail {
+            return detail
         } else {
             return "Неизвестная ошибка"
         }
     }
     
     enum CodingKeys: String, CodingKey {
-        case password, email
+        case password, email, detail
         case nonFieldErrors = "non_field_errors"
     }
 }
