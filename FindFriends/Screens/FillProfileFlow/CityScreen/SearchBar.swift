@@ -23,7 +23,7 @@ final class SearchBar: UISearchBar {
         self.searchBarStyle = .minimal
         self.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск", attributes: [
             .foregroundColor: UIColor.searchBar,
-            .font: UIFont.Regular.medium
+            .font: UIFont.regular17
         ])
         self.layer.cornerRadius = 12
         self.layer.masksToBounds = true

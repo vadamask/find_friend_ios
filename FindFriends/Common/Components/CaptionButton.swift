@@ -10,7 +10,7 @@ import UIKit
 final class CaptionButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
-        titleLabel?.font = .Semibold.medium
+        titleLabel?.font = .semibold17
         setTitleColor(.primeDark, for: .normal)
         backgroundColor = .clear
         setTitle(text, for: .normal)

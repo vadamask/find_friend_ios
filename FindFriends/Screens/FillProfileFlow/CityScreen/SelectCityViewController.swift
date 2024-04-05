@@ -21,7 +21,7 @@ final class SelectCityViewController: UIViewController {
     
     private lazy var warningLabel: UILabel = {
         let label = UILabel()
-        label.font = .Regular.small11
+        label.font = .regular11
         label.textColor = .warning
         label.text = "Не найдено"
         label.numberOfLines = 0

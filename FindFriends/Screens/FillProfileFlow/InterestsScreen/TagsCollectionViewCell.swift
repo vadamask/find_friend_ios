@@ -42,7 +42,7 @@ final class TagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
         contentView.layoutMargins  = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         tagLabel.textAlignment = .center
-        tagLabel.font = UIFont.Regular.medium16
+        tagLabel.font = .regular16
     }
     
     private func setupConstraints() {

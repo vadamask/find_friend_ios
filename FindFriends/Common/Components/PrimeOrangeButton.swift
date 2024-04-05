@@ -11,7 +11,7 @@ final class PrimeOrangeButton: UIButton {
     init(text: String, isEnabled: Bool = false) {
         super.init(frame: .zero)
         layer.cornerRadius = 10
-        titleLabel?.font = .Semibold.medium
+        titleLabel?.font = .semibold17
         setTitleColor(.white, for: .normal)
         backgroundColor = isEnabled ? .mainOrange : .lightOrange
         setTitle(text, for: .normal)

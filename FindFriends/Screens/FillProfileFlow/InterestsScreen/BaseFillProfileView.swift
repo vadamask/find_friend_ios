@@ -11,14 +11,14 @@ class BaseFillProfileView: UIView {
     
     public lazy var screenHeader: UILabel = {
         let label = UILabel()
-        label.font = .Regular.header24
+        label.font = .medium24
         label.textColor = .primeDark
         return label
     } ()
     
     public lazy var screenSubheader: UILabel = {
         let label = UILabel()
-        label.font = .Regular.medium16
+        label.font = .regular16
         label.textColor = .standardGreyWireframe
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -29,7 +29,7 @@ class BaseFillProfileView: UIView {
     public lazy var passButton: UIButton = {
         var button = UIButton()
         button.setTitle("Пропустить", for: .normal)
-        button.titleLabel?.font =  UIFont.Regular.medium
+        button.titleLabel?.font = .semibold17
         button.setTitleColor(.buttonBlack, for: .normal)
         return button
     }()

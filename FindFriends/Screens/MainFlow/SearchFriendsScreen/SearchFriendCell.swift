@@ -30,7 +30,7 @@ final class SearchFriendCell: UITableViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.textColor = .primeDark
-        label.font = .Regular.medium16
+        label.font = .regular16
         return label
     }()
     
@@ -39,14 +39,14 @@ final class SearchFriendCell: UITableViewCell {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.textColor = .primeDark
-        label.font = .Regular.small12
+        label.font = .regular12
         return label
     }()
     
     private lazy var age: UILabel = {
         let label = UILabel()
         label.textColor = .placeholder
-        label.font = .Regular.small12
+        label.font = .regular12
         return label
     }()
     

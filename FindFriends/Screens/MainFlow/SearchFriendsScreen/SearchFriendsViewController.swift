@@ -40,7 +40,7 @@ final class SearchFriendsViewController: UIViewController {
         appearance.backgroundColor = .backgroundMain
         appearance.largeTitleTextAttributes = [
             .foregroundColor: UIColor.primeDark,
-            .font: UIFont.Medium.medium
+            .font: UIFont.medium24
         ]
         navigationItem.standardAppearance = appearance
     }

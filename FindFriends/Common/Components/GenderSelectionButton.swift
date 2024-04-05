@@ -12,7 +12,7 @@ final class GenderSelectionButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
         setTitle(text, for: .normal)
-        titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        titleLabel?.font = .regular16
         setTitleColor(.textGray, for: .normal)
         setTitleColor(.primeDark, for: .highlighted)
         contentVerticalAlignment = .bottom
@@ -32,6 +32,7 @@ final class GenderSelectionButton: UIButton {
     func isSelected(_ enabled: Bool) {
         isSelected = enabled
         setTitleColor(enabled ? .primeDark : .textGray, for: .selected)
+        titleLabel?.font = enabled ? .semibold16 : .regular16
         configuration?.baseBackgroundColor = enabled ? .buttonGray : .white
     }
 }

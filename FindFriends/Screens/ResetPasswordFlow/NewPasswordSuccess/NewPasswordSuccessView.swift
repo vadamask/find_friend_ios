@@ -42,7 +42,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .primeDark
-        label.font = .Bold.large
+        label.font = .bold34
         label.text = "Пароль сохранён"
         label.textAlignment = .center
         return label
@@ -52,7 +52,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
         let label = UILabel()
         label.textColor = .primeDark
         label.numberOfLines = 0
-        label.font = .Regular.medium
+        label.font = .regular17
         label.text = "Поздравляем. Теперь вы можете войти в свой профиль, используя новый пароль."
         label.textAlignment = .center
         return label

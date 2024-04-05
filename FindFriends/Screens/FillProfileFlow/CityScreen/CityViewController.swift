@@ -6,7 +6,7 @@ final class CityViewController: UIViewController {
     
     private lazy var firstLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.font = .medium24
         label.textAlignment = .center
         label.text = "Выберите город"
         return label
@@ -14,7 +14,7 @@ final class CityViewController: UIViewController {
     
     private lazy var secondLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = .regular16
         label.textAlignment = .center
         label.text = "Чтобы видеть события и друзей"
         return label
@@ -37,6 +37,7 @@ final class CityViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Пропустить", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = .semibold17
         button.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
         return button
     }()

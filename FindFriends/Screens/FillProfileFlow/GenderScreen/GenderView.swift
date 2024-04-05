@@ -14,8 +14,8 @@ final class GenderView: UIView {
     private var mainLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = UIColor(named: "primeDark")
+        label.font = .medium24
         label.text = "Ваш пол"
         return label
     }()
@@ -26,7 +26,7 @@ final class GenderView: UIView {
         label.textColor = UIColor(named: "primeDark")
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = .regular16
         label.text = "Влияет на события, \n которые Вам будут доступны"
         return label
     }()

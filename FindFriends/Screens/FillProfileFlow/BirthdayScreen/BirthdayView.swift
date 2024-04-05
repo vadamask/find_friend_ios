@@ -14,7 +14,7 @@ final class BirthdayView: UIView {
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.text = "Введите дату рождения"
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .medium24
         label.textAlignment = .center
         label.textColor = .primeDark
         
