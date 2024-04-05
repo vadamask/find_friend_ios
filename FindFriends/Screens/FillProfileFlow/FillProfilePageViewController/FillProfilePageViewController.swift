@@ -84,7 +84,9 @@ final class FillProfilePageViewController: UIPageViewController {
         let cityViewModel = CityViewModel(delegate: self)
         let cityVC = CityViewController(viewModel: cityViewModel)
         
-        let photoVC = PhotoViewController()
+        let photoViewModel = PhotoViewModel()
+        let photoView = PhotoView(viewModel: photoViewModel)
+        let photoVC = PhotoViewController(photoView: photoView)
         
         [genderVC, birthdayVC, interestsVC, cityVC, photoVC].forEach { pages.append($0) }
     }
