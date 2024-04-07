@@ -8,11 +8,11 @@
 import UIKit
 
 protocol FillProfileDelegate: AnyObject {
-    func showControllerWithIndex(_ index: Int)
+    func showNextViewController()
     func genderIsSelect(_ gender: String)
     func birthdayIsSelect(_ birthday: String)
-    func interestsIsSelect(_ interests: [Int])
-    func cityIsSelect(_ id: Int?)
+    func interestsIsSelect(_ interests: [InterestDto])
+    func cityIsSelect(_ name: String?)
     func avatarIsSelect(_ avatar: Data?)
 }
 
@@ -20,14 +20,37 @@ final class FillProfilePageViewController: UIPageViewController {
 
     private var pages: [UIViewController] = []
     private var profile: FillProfileDto?
+    private var currentIndex = 0 {
+        didSet {
+            backButton.isHidden = !(1...4 ~= currentIndex)
+            for i in 0...currentIndex {
+                progressStackView.arrangedSubviews[i].backgroundColor = .mainOrange
+            }
+            if currentIndex < 4 {
+                for i in (currentIndex + 1)...4 {
+                    progressStackView.arrangedSubviews[i].backgroundColor = .veryLightOrange
+                }
+            }
+        }
+    }
 
-    private lazy var pageControl: FillProfilePageControl = {
-        let control = FillProfilePageControl(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        control.numberOfPages = pages.count
-        control.currentPage = 0
-        control.currentPageIndicatorTintColor = .clear
-        control.pageIndicatorTintColor = .clear
-        return control
+    private lazy var progressStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.backgroundColor = .veryLightOrange
+        stackView.layer.cornerRadius = 2
+        stackView.axis = .horizontal
+        stackView.spacing = 8.46
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        
+        for _ in 1...5 {
+            let view = UIView()
+            view.backgroundColor = .veryLightOrange
+            view.layer.cornerRadius = 2
+            stackView.addArrangedSubview(view)
+        }
+        stackView.arrangedSubviews[0].backgroundColor = .mainOrange
+        return stackView
     }()
     
     private lazy var backButton: UIButton = {
@@ -70,38 +93,35 @@ final class FillProfilePageViewController: UIPageViewController {
         let genderView = GenderView(viewModel: genderViewModel)
         let genderVC = GenderViewController(genderView: genderView)
         
-        
         let birthdayViewModel = BirthdayViewModel(delegate: self)
         let birthdayView = BirthdayView(viewModel: birthdayViewModel)
         let birthdayVC = BirthdayViewController(birthdayView: birthdayView)
-        
         
         let interestsViewModel = SelectInterestsViewModel(delegate: self)
         let interestView = SelectInterestsView(viewModel: interestsViewModel)
         let interestsVC = SelectInterestsViewController(selectInterestsView: interestView)
         
-        let cityViewModel = CityViewModel(delegate: self)
-        let cityVC = CityViewController(viewModel: cityViewModel)
+        let selectCityViewModel = SelectCityViewModel(delegate: self)
+        let selectCityView = SelectCityView(viewModel: selectCityViewModel)
+        let selectCityVC = SelectCityViewController(selectCityView: selectCityView)
         
         let photoViewModel = PhotoViewModel(delegate: self)
         let photoView = PhotoView(viewModel: photoViewModel)
         let photoVC = PhotoViewController(photoView: photoView)
         
-        [genderVC, birthdayVC, interestsVC, cityVC, photoVC].forEach { pages.append($0) }
+        [genderVC, birthdayVC, interestsVC, selectCityVC, photoVC].forEach { pages.append($0) }
     }
     
     private func setupLayout() {
-        view.addSubviewWithoutAutoresizingMask(pageControl)
+        view.addSubviewWithoutAutoresizingMask(progressStackView)
         view.addSubviewWithoutAutoresizingMask(backButton)
         NSLayoutConstraint.activate([
-            pageControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 45),
-            pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
-            pageControl.heightAnchor.constraint(equalToConstant: 36),
-            backButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backButton.trailingAnchor.constraint(equalTo: pageControl.leadingAnchor),
-            backButton.heightAnchor.constraint(equalToConstant: 44)
+            progressStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            progressStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 45),
+            progressStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
+            progressStackView.heightAnchor.constraint(equalToConstant: 4),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12)
         ])
     }
     
@@ -117,16 +137,19 @@ final class FillProfilePageViewController: UIPageViewController {
         }
     }
     
-    private func showViewControllerWith(index: Int, direction: NavigationDirection) {
-        backButton.isHidden = !(1...4 ~= index)
-        pageControl.currentPage = index
-        let viewController = pages[index]
+    private func showViewController(direction: NavigationDirection) {
+        if case .forward = direction {
+            currentIndex += 1
+        } else {
+            currentIndex -= 1
+        }
+        let viewController = pages[currentIndex]
         setViewControllers([viewController], direction: direction, animated: true, completion: nil)
     }
     
     @objc
     private func backButtonTapped() {
-        showViewControllerWith(index: pageControl.currentPage - 1, direction: .reverse)
+        showViewController(direction: .reverse)
     }
 }
 
@@ -158,8 +181,8 @@ extension FillProfilePageViewController: UIPageViewControllerDataSource {
 // MARK: - FillProfilePageViewControllerDelegate
 
 extension FillProfilePageViewController: FillProfileDelegate {
-    func showControllerWithIndex(_ index: Int) {
-        showViewControllerWith(index: index, direction: .forward)
+    func showNextViewController() {
+        showViewController(direction: .forward)
     }
     
     func genderIsSelect(_ gender: String) {
@@ -184,7 +207,7 @@ extension FillProfilePageViewController: FillProfileDelegate {
         self.profile = profile
     }
     
-    func interestsIsSelect(_ interests: [Int]) {
+    func interestsIsSelect(_ interests: [InterestDto]) {
         let profile = FillProfileDto(
             sex: profile?.sex ?? "",
             birthday: profile?.birthday ?? "",
@@ -195,12 +218,12 @@ extension FillProfilePageViewController: FillProfileDelegate {
         self.profile = profile
     }
     
-    func cityIsSelect(_ id: Int?) {
+    func cityIsSelect(_ name: String?) {
         let profile = FillProfileDto(
             sex: profile?.sex ?? "",
             birthday: profile?.birthday ?? "",
             interests: profile?.interests ?? [],
-            city: id,
+            city: name,
             avatar: profile?.avatar
         )
         self.profile = profile
@@ -219,7 +242,26 @@ extension FillProfilePageViewController: FillProfileDelegate {
     }
     
     private func finishFlow() {
-        UserDefaults.standard.setValue(true, forKey: "fillingProfile")
-        dismiss(animated: true)
+        let service = UsersService()
+        service.loadMyInfo { [unowned self] result in
+            switch result {
+            case .success(let success):
+                service.updateMe(profile!) { [unowned self] result in
+                    switch result {
+                    case .success(let success):
+                        UserDefaults.standard.setValue(true, forKey: "fillingProfile")
+                        DispatchQueue.main.async {
+                            dismiss(animated: true)
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        
     }
 }

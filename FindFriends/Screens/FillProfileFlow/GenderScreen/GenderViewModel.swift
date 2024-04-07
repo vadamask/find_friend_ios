@@ -21,7 +21,7 @@ final class GenderViewModel {
     
     func nextButtonTapped() {
         delegate?.genderIsSelect(selectedGender?.rawValue ?? "")
-        delegate?.showControllerWithIndex(1)
+        delegate?.showNextViewController()
     }
     
     enum SelectedGender: String {

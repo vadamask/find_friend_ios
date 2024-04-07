@@ -205,7 +205,7 @@ final class MyProfileViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(TagsCollectionViewCell.self)
+        collectionView.register(InterestsCell.self)
         return collectionView
     }()
     
@@ -378,7 +378,7 @@ extension MyProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
+        let cell: InterestsCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
 
 
         cell.setupCell(with: InterestsCellViewModel(id: 0, name: "Спорт"))

@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct FillProfileDto: Codable {
+struct FillProfileDto {
     let sex: String
     let birthday: String
-    let interests: [Int]
-    let city: Int?
+    let interests: [InterestDto]
+    let city: String?
     let avatar: Data?
 }

@@ -13,7 +13,7 @@ protocol PhotoViewDelegate: AnyObject {
     func dimsiss()
 }
 
-final class PhotoView: UIView {
+final class PhotoView: BaseFillProfileView {
     weak var delegate: PhotoViewDelegate?
     private let viewModel: PhotoViewModel
     
@@ -21,24 +21,6 @@ final class PhotoView: UIView {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         return picker
-    }()
-    
-    private lazy var firstLabel: UILabel = {
-        let label = UILabel()
-        label.font = .medium24
-        label.textAlignment = .center
-        label.text = "Фото профиля"
-        return label
-    }()
-    
-    private lazy var secondLabel: UILabel = {
-        let label = UILabel()
-        label.font = .regular16
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        label.textColor = .standardGreyWireframe
-        label.text = "Добавьте фото, чтобы другим было\n проще вас узнать"
-        return label
     }()
     
     private lazy var avatarView: UIImageView = {
@@ -63,22 +45,6 @@ final class PhotoView: UIView {
         return button
     }()
     
-    private lazy var continueButton: PrimeOrangeButton = {
-        let button = PrimeOrangeButton(text: "Сохранить и продолжить")
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var skipButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Пропустить", for: .normal)
-        button.setTitleColor(.buttonBlack, for: .normal)
-        button.titleLabel?.font = .semibold17
-        button.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
     private lazy var clearPhotoButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "cancelPhoto"), for: .normal)
@@ -88,11 +54,17 @@ final class PhotoView: UIView {
     
     init(viewModel: PhotoViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(
+            header: "Фото профиля",
+            subheader: "Добавьте фото, чтобы другим было\n проще вас узнать",
+            passButtonHidden: false
+        )
         setupLayout()
         updateUI()
         imagePickerController.delegate = self
         backgroundColor = .white
+        nextButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
+        passButton.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -101,47 +73,32 @@ final class PhotoView: UIView {
     
     func updateUI() {
         if avatarView.image != UIImage(named: "plugPhoto") {
-            continueButton.backgroundColor = .mainOrange
-            continueButton.isEnabled = true
+            nextButton.setEnabled(true)
             avatarView.layer.borderWidth = 0
             clearPhotoButton.isHidden = false
             addPhotoButton.isHidden = true
-            secondLabel.text = "Отлично! Все готово для поиска\n новых друзей"
+            screenSubheader.text = "Отлично! Все готово для поиска\n новых друзей"
         } else {
-            continueButton.backgroundColor = .lightOrange
-            continueButton.isEnabled = false
+            nextButton.setEnabled(false)
             avatarView.layer.borderWidth = 4
             clearPhotoButton.isHidden = true
             addPhotoButton.isHidden = false
-            secondLabel.text = "Добавьте фото, чтобы другим было\n проще вас узнать"
+            screenSubheader.text = "Добавьте фото, чтобы другим было\n проще вас узнать"
         }
     }
     
     private func setupLayout() {
-        [firstLabel, secondLabel, avatarView, addPhotoButton, continueButton, skipButton, clearPhotoButton].forEach(addSubviewWithoutAutoresizingMask(_:))
+        [avatarView, addPhotoButton, clearPhotoButton].forEach(addSubviewWithoutAutoresizingMask(_:))
         
         NSLayoutConstraint.activate([
-            firstLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            firstLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            firstLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
-            secondLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            secondLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 10),
-            avatarView.topAnchor.constraint(equalTo: secondLabel.bottomAnchor, constant: 20),
+            avatarView.topAnchor.constraint(equalTo: screenSubheader.bottomAnchor, constant: 20),
             avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: avatarView.frame.width),
             avatarView.heightAnchor.constraint(equalToConstant: avatarView.frame.height),
             clearPhotoButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: -60),
             clearPhotoButton.centerXAnchor.constraint(equalTo: avatarView.centerXAnchor, constant: 60),
             addPhotoButton.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: -25),
-            addPhotoButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            skipButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -38),
-            skipButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            skipButton.heightAnchor.constraint(equalToConstant: 48),
-            continueButton.bottomAnchor.constraint(equalTo: skipButton.topAnchor, constant: -10),
-            continueButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            continueButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
-            continueButton.heightAnchor.constraint(equalToConstant: 48)
+            addPhotoButton.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     
