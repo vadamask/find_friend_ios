@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ValidateCodeRequest: NetworkRequestProtocol {
+struct ValidateTokenRequest: NetworkRequestProtocol {
     let httpMethod: HttpMethod = .post
     let endpoint = Endpoint.validateToken
     let body: Encodable?

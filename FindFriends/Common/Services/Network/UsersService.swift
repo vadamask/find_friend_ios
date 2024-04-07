@@ -15,6 +15,7 @@ protocol UsersServiceProtocol {
         _ dto: CreateUserRequestDto,
         completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
     )
+    func loadMyInfo(completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void)
 }
 
 enum SearchFriendsState {
@@ -63,7 +64,7 @@ final class UsersService: UsersServiceProtocol {
             }
         }
     }
-    
+
     func convertToViewModels() -> [SearchFriendCellViewModel] {
         guard let last = usersResponse.last else { return [] }
         return last.results
@@ -73,6 +74,18 @@ final class UsersService: UsersServiceProtocol {
                 avatar: $0.avatar,
                 purpose: $0.purpose
             )}
+    }
+    
+    func loadMyInfo(completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void) {
+        let request = MyProfileRequest()
+        networkClient.send(request: request, type: UserResponse.self) { result in
+            switch result {
+            case .success(let userData):
+                completion(.success(userData))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     private func sendRequest() {

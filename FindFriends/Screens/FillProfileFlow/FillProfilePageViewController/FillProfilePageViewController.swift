@@ -14,7 +14,6 @@ protocol FillProfileDelegate: AnyObject {
     func interestsIsSelect(_ interests: [Int])
     func cityIsSelect(_ id: Int?)
     func avatarIsSelect(_ avatar: Data?)
-    func finishFlow()
 }
 
 final class FillProfilePageViewController: UIPageViewController {
@@ -84,7 +83,7 @@ final class FillProfilePageViewController: UIPageViewController {
         let cityViewModel = CityViewModel(delegate: self)
         let cityVC = CityViewController(viewModel: cityViewModel)
         
-        let photoViewModel = PhotoViewModel()
+        let photoViewModel = PhotoViewModel(delegate: self)
         let photoView = PhotoView(viewModel: photoViewModel)
         let photoVC = PhotoViewController(photoView: photoView)
         
@@ -108,9 +107,6 @@ final class FillProfilePageViewController: UIPageViewController {
     
     private func setDelegates() {
         dataSource = self
-        delegate = self
-
-       
     }
     
     private func removeSwipeGesture() {
@@ -122,6 +118,7 @@ final class FillProfilePageViewController: UIPageViewController {
     }
     
     private func showViewControllerWith(index: Int, direction: NavigationDirection) {
+        backButton.isHidden = !(1...4 ~= index)
         pageControl.currentPage = index
         let viewController = pages[index]
         setViewControllers([viewController], direction: direction, animated: true, completion: nil)
@@ -157,21 +154,6 @@ extension FillProfilePageViewController: UIPageViewControllerDataSource {
     }
 }
 
-// MARK: - UIPageViewControllerDelegate
-
-extension FillProfilePageViewController: UIPageViewControllerDelegate {
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        didFinishAnimating finished: Bool,
-        previousViewControllers: [UIViewController],
-        transitionCompleted completed: Bool
-    ) {
-        if let currentViewController = pageViewController.viewControllers?.first,
-           let currentIndex = pages.firstIndex(of: currentViewController) {
-            pageControl.currentPage = currentIndex
-        }
-    }
-}
 
 // MARK: - FillProfilePageViewControllerDelegate
 
@@ -233,15 +215,11 @@ extension FillProfilePageViewController: FillProfileDelegate {
             avatar: avatar
         )
         self.profile = profile
+        finishFlow()
     }
     
-    func finishFlow() {
-        guard
-            let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let window = scene.windows.first
-        else { fatalError("Invalid Configuration") }
-        let tabBar = TabBar()
-        let tabBarController = TabBarController(customTabBar: tabBar)
-        window.rootViewController = tabBarController
+    private func finishFlow() {
+        UserDefaults.standard.setValue(true, forKey: "fillingProfile")
+        dismiss(animated: true)
     }
 }

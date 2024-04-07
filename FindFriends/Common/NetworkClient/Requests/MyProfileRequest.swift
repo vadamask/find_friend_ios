@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct ProfileRequest: NetworkRequestProtocol {
+struct MyProfileRequest: NetworkRequestProtocol {
     let httpMethod: HttpMethod = .get
-    let endpoint = Endpoint.getUser
+    let endpoint = Endpoint.me
     let body: Encodable? = nil
 }

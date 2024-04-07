@@ -352,22 +352,12 @@ final class MyProfileViewController: UIViewController {
         loginService.logoutUser { [unowned self] result in
             switch result {
             case .success(_):
-                showSplashScreen()
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
             case .failure(let error):
                 AlertPresenter.show(in: self, model: AlertModel(message: error.message))
             }
-        }
-    }
-    
-    private func showSplashScreen() {
-        DispatchQueue.main.async {
-            guard
-                let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                let window = scene.windows.first
-            else { fatalError("Invalid Configuration") }
-            
-            let splash = SplashViewController()
-            window.rootViewController = splash
         }
     }
 }
