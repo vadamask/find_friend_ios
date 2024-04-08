@@ -46,7 +46,11 @@ final class  SelectInterestsView: BaseFillProfileView {
     
     init(viewModel: SelectInterestsViewModel) {
         self.viewModel = viewModel
-        super.init(header: "Интересы", screenPosition: 3, subheader: "Выберете свои увлечения, чтобы найти единомышленников")
+        super.init(
+            header: "Интересы",
+            subheader: "Выберете свои увлечения, чтобы найти единомышленников",
+            passButtonHidden: false
+        )
         setupViews()
         setupConstraints()
         setupCollectionView()
@@ -55,10 +59,6 @@ final class  SelectInterestsView: BaseFillProfileView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(header: String, screenPosition: Int, subheader: String = "") {
-        fatalError("init(header:screenPosition:subheader:) has not been implemented")
     }
     
     func loadData() {
@@ -93,7 +93,7 @@ final class  SelectInterestsView: BaseFillProfileView {
         
         tagsCollectionView.delegate = self
         tagsCollectionView.dataSource = self
-        tagsCollectionView.register(TagsCollectionViewCell.self)
+        tagsCollectionView.register(InterestsCell.self)
     }
     
     private func setupConstraints() {
@@ -134,7 +134,7 @@ extension SelectInterestsView: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
+        let cell: InterestsCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
         cell.setupCell(with: viewModel.modelFor(indexPath))
         return cell
     }
@@ -178,11 +178,11 @@ extension SelectInterestsView: UICollectionViewDelegateFlowLayout {
 
 extension SelectInterestsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.cellDidTappedAt(indexPath)
+        viewModel.didSelectItemAt(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        viewModel.cellDidTappedAt(indexPath)
+        viewModel.didSelectItemAt(indexPath)
     }
 }
 

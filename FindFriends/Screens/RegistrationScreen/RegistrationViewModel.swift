@@ -31,6 +31,7 @@ final class RegistrationViewModel {
     
     @Published var webPage: SFSafariViewController?
     @Published var alert: AlertModel?
+    var registrationSuccessful = PassthroughSubject<Void, Never>()
     
     private var allFieldsAreValidate: Bool {
         errorTextForName.isEmpty &&
@@ -54,10 +55,11 @@ final class RegistrationViewModel {
             usersService.createUser(user) { [unowned self] result in
                 switch result {
                 case .success(let model):
-                    loginService.loginUser(
-                        LoginRequestDto(email: model.email, password: confirmPassword)) { [unowned self] _ in
-                            switchToGenderScreen()
-                        }
+                    let request = LoginRequestDto(email: model.email, password: confirmPassword)
+                    loginService.loginUser(request) { [unowned self] _ in
+                        UserDefaults.standard.removeObject(forKey: "fillingProfile")
+                        registrationSuccessful.send()
+                    }
                 case .failure(let error):
                     showAlert(error)
                 }
@@ -138,15 +140,5 @@ final class RegistrationViewModel {
     
     private func showAlert(_ error: NetworkClientError) {
         self.alert = AlertModel(message: error.message)
-    }
-    
-    private func switchToGenderScreen() {
-        guard
-            let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let window = scene.windows.first
-        else { fatalError("Invalid Configuration") }
-        
-        let fillProfile = FillProfilePageViewController()
-        window.rootViewController = fillProfile
     }
 }

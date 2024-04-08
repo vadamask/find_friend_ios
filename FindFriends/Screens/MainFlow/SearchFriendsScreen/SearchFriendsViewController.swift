@@ -26,6 +26,7 @@ final class SearchFriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
+        searchFriendsView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {

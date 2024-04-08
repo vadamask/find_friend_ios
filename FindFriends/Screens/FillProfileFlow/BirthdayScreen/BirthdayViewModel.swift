@@ -25,7 +25,7 @@ final class BirthdayViewModel {
         let formatted = components.reversed().joined(separator: "-")
         
         delegate?.birthdayIsSelect(formatted)
-        delegate?.showControllerWithIndex(2)
+        delegate?.showNextViewController()
     }
     
     func shouldChangeCharactersIn(text: String?, range: NSRange, replacementString: String) -> Bool {

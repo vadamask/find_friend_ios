@@ -9,24 +9,25 @@ import UIKit
 
 class BaseFillProfileView: UIView {
     
-    public lazy var screenHeader: UILabel = {
+    lazy var screenHeader: UILabel = {
         let label = UILabel()
         label.font = .medium24
         label.textColor = .primeDark
         return label
-    } ()
+    }()
     
-    public lazy var screenSubheader: UILabel = {
+    lazy var screenSubheader: UILabel = {
         let label = UILabel()
         label.font = .regular16
         label.textColor = .standardGreyWireframe
         label.numberOfLines = 2
         label.textAlignment = .center
         return label
-    } ()
+    }()
     
-    public lazy var nextButton = PrimeOrangeButton(text: "Далее", isEnabled: false)
-    public lazy var passButton: UIButton = {
+    lazy var nextButton = PrimeOrangeButton(text: "Продолжить")
+    
+    lazy var passButton: UIButton = {
         var button = UIButton()
         button.setTitle("Пропустить", for: .normal)
         button.titleLabel?.font = .semibold17
@@ -34,12 +35,13 @@ class BaseFillProfileView: UIView {
         return button
     }()
     
-    required init(header: String, screenPosition: Int, subheader: String = "") {
+    init(header: String, subheader: String = "", passButtonHidden: Bool) {
         super.init(frame: .zero)
     
         backgroundColor = .white
         screenHeader.text = header
         screenSubheader.text = subheader
+        passButton.isHidden = passButtonHidden
         setConstraits()
     }
     

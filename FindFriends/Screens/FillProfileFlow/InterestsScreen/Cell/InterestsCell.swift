@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-final class TagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
+final class InterestsCell: UICollectionViewCell, ReuseIdentifying  {
     
     private let tagLabel = UILabel()
     private var viewModel: InterestsCellViewModel? {
@@ -56,7 +56,7 @@ final class TagsCollectionViewCell: UICollectionViewCell,  ReuseIdentifying  {
     }
     
     private func bind() {
-        viewModel?.$isSelected
+        viewModel?.isSelected
             .sink { [weak self] isSelected in
                 self?.contentView.backgroundColor = isSelected ? .selectedTag : .white
                 self?.contentView.layer.borderWidth = isSelected ? 0 : 1

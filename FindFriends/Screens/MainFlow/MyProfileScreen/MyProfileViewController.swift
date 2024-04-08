@@ -205,7 +205,7 @@ final class MyProfileViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(TagsCollectionViewCell.self)
+        collectionView.register(InterestsCell.self)
         return collectionView
     }()
     
@@ -349,22 +349,12 @@ final class MyProfileViewController: UIViewController {
         loginService.logoutUser { [unowned self] result in
             switch result {
             case .success(_):
-                showSplashScreen()
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
             case .failure(let error):
                 AlertPresenter.show(in: self, model: AlertModel(message: error.message))
             }
-        }
-    }
-    
-    private func showSplashScreen() {
-        DispatchQueue.main.async {
-            guard
-                let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                let window = scene.windows.first
-            else { fatalError("Invalid Configuration") }
-            
-            let splash = SplashViewController()
-            window.rootViewController = splash
         }
     }
 }
@@ -385,9 +375,15 @@ extension MyProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+<<<<<<< HEAD:FindFriends/Screens/MainFlow/MyProfileScreen/View/MyProfileViewController.swift
         let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
         
         
+=======
+        let cell: InterestsCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
+
+
+>>>>>>> develop:FindFriends/Screens/MainFlow/MyProfileScreen/MyProfileViewController.swift
         cell.setupCell(with: InterestsCellViewModel(id: 0, name: "Спорт"))
         cell.isUserInteractionEnabled = false
         cell.contentView.layer.borderWidth = 0

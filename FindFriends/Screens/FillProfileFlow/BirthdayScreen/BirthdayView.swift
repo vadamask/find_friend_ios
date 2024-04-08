@@ -8,30 +8,19 @@
 import UIKit
 import Combine
 
-final class BirthdayView: UIView {
+final class BirthdayView: BaseFillProfileView {
     private let viewModel: BirthdayViewModel
-    
-    private lazy var headerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Введите дату рождения"
-        label.font = .medium24
-        label.textAlignment = .center
-        label.textColor = .primeDark
-        
-        return label
-    }()
     
     private let datePickTextField = RegistrationTextField(
         placeholder: "ДД.ММ.ГГГГ",
         type: .date
     )
-    
-    private let nextButton = PrimeOrangeButton(text: "Продолжить")
+
     private var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: BirthdayViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(header: "Введите дату рождения", passButtonHidden: true)
         
         bind()
         setupViews()
@@ -57,25 +46,13 @@ private extension BirthdayView {
     }
     
     func setupLayout() {
-        addSubviewWithoutAutoresizingMask(headerLabel)
         addSubviewWithoutAutoresizingMask(datePickTextField)
-        addSubviewWithoutAutoresizingMask(nextButton)
         
         NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            headerLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            headerLabel.heightAnchor.constraint(equalToConstant: 41),
-            headerLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 36),
-            
-            datePickTextField.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 52),
+            datePickTextField.topAnchor.constraint(equalTo: screenHeader.bottomAnchor, constant: 52),
             datePickTextField.heightAnchor.constraint(equalToConstant: 44),
             datePickTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            datePickTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            
-            nextButton.leadingAnchor.constraint(equalTo: datePickTextField.leadingAnchor),
-            nextButton.trailingAnchor.constraint(equalTo: datePickTextField.trailingAnchor),
-            nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -102),
-            nextButton.heightAnchor.constraint(equalToConstant: 48)
+            datePickTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
     }
     

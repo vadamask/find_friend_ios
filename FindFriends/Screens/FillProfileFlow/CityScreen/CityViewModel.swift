@@ -1,20 +1,22 @@
+import Combine
 import UIKit
 
-class CityViewModel {
-    var selectCity: CityResponse?
+final class CityViewModel {
+    
+    @Published var selectCity: CityResponse?
     @Published var visibleCities: [String] = []
+    var acceptCity = PassthroughSubject<Void, Never>()
+    
     
     private let service: CitiesServiceProtocol
-    private weak var delegate: FillProfileDelegate?
     private var allCities: [CityResponse] = [] {
         didSet {
-            visibleCities = allCities.prefix(15).map { $0.name }
+            visibleCities = allCities.map { $0.name }
         }
     }
     
-    init(service: CitiesServiceProtocol = CitiesService(), delegate: FillProfileDelegate) {
+    init(service: CitiesServiceProtocol = CitiesService()) {
         self.service = service
-        self.delegate = delegate
     }
     
     func loadCities() {
@@ -28,19 +30,15 @@ class CityViewModel {
         }
     }
 
-    func nextButtonTapped() {
-        delegate?.cityIsSelect(selectCity?.id)
-        delegate?.showControllerWithIndex(4)
-    }
-    
-    func skipButtonTapped() {
-        delegate?.cityIsSelect(nil)
-        delegate?.showControllerWithIndex(4)
+    func selectButtonTapped() {
+        if selectCity != nil {
+            acceptCity.send()
+        }
     }
     
     func textDidChanged(_ text: String) {
         if text.isEmpty {
-            visibleCities = allCities.prefix(15).map { $0.name }
+            visibleCities = allCities.map { $0.name }
         } else {
             visibleCities = allCities
                 .filter { $0.name.hasPrefix(text) }

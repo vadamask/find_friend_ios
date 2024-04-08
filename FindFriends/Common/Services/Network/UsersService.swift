@@ -15,6 +15,8 @@ protocol UsersServiceProtocol {
         _ dto: CreateUserRequestDto,
         completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
     )
+    func loadMyInfo(completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void)
+    func updateMe(_ data: FillProfileDto, completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void)
 }
 
 enum SearchFriendsState {
@@ -28,6 +30,7 @@ final class UsersService: UsersServiceProtocol {
     let state = CurrentValueSubject<SearchFriendsState, Never>(.finishLoading)
     
     private var usersResponse: [UsersResponse] = []
+    private var myProfile: UserResponse?
     private let networkClient: NetworkClient
     private var page = 1
     
@@ -63,7 +66,7 @@ final class UsersService: UsersServiceProtocol {
             }
         }
     }
-    
+
     func convertToViewModels() -> [SearchFriendCellViewModel] {
         guard let last = usersResponse.last else { return [] }
         return last.results
@@ -73,6 +76,45 @@ final class UsersService: UsersServiceProtocol {
                 avatar: $0.avatar,
                 purpose: $0.purpose
             )}
+    }
+    
+    func loadMyInfo(completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void) {
+        let request = MyProfileRequest(httpMethod: .get, body: nil)
+        networkClient.send(request: request, type: UserResponse.self) { [unowned self] result in
+            switch result {
+            case .success(let userData):
+                myProfile = userData
+                completion(.success(userData))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func updateMe(_ data: FillProfileDto, completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void) {
+        guard let myProfile else {
+            print("my profile is nil")
+            return
+        }
+        let dto = UpdateMyProfileDto(
+            firstName: myProfile.firstName,
+            lastName: myProfile.lastName,
+            email: myProfile.email,
+            sex: data.sex,
+            birthday: data.birthday,
+            interests: data.interests,
+            city: data.city,
+            avatar: data.avatar
+        )
+        let request = MyProfileRequest(httpMethod: .put, body: dto)
+        networkClient.send(request: request, type: UserResponse.self) { result in
+            switch result {
+            case .success(let user):
+                completion(.success(user))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func sendRequest() {

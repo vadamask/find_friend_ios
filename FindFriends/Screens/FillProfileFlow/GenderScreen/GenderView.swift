@@ -8,28 +8,8 @@
 import UIKit
 import Combine
 
-final class GenderView: UIView {
+final class GenderView: BaseFillProfileView {
     private let viewModel: GenderViewModel
-    
-    private var mainLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = .medium24
-        label.textColor = UIColor.primeDark
-        label.text = "Ваш пол"
-        return label
-    }()
-    
-    private var mainInfoText: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = UIColor.standardGreyWireframe
-        label.numberOfLines = 2
-        label.lineBreakMode = .byWordWrapping
-        label.font = .regular16
-        label.text = "Влияет на события, \n которые Вам будут доступны"
-        return label
-    }()
     
     private lazy var stackView: UIStackView = {
         let stack = UIStackView()
@@ -44,12 +24,15 @@ final class GenderView: UIView {
     private let genderManButton = GenderSelectionButton(text: "Мужской")
     private let genderWomanButton = GenderSelectionButton(text: "Женский")
     
-    private let nextButton = PrimeOrangeButton(text: "Продолжить")
     private var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: GenderViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(
+            header: "Ваш пол",
+            subheader: "Влияет на события, \n которые Вам будут доступны",
+            passButtonHidden: true
+        )
         
         setupViews()
         setupLayout()
@@ -111,9 +94,6 @@ private extension GenderView {
     }
     
     func setupLayout() {
-        addSubviewWithoutAutoresizingMask(mainLabel)
-        addSubviewWithoutAutoresizingMask(mainInfoText)
-        addSubviewWithoutAutoresizingMask(nextButton)
         addSubviewWithoutAutoresizingMask(stackView)
         stackView.addArrangedSubview(genderWomanButton)
         genderWomanButton.addSubviewWithoutAutoresizingMask(genderWomanImageView)
@@ -121,21 +101,8 @@ private extension GenderView {
         genderManButton.addSubviewWithoutAutoresizingMask(genderManImageView)
         
         NSLayoutConstraint.activate([
-            mainLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            mainLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
-            mainLabel.heightAnchor.constraint(equalToConstant: 41),
             
-            mainInfoText.topAnchor.constraint(equalTo: mainLabel.bottomAnchor),
-            mainInfoText.leadingAnchor.constraint(equalTo: leadingAnchor),
-            mainInfoText.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            nextButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            nextButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            nextButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -102),
-            nextButton.heightAnchor.constraint(equalToConstant: 48),
-            
-            stackView.topAnchor.constraint(equalTo: mainInfoText.bottomAnchor, constant: 74),
+            stackView.topAnchor.constraint(equalTo: screenHeader.bottomAnchor, constant: 74),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 122),
             

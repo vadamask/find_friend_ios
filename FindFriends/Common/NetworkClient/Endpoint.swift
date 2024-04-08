@@ -16,7 +16,7 @@ enum Endpoint {
     case resetPassword
     case newPassword
     case interests
-    case getUser
+    case me
     case validateToken
     case cities
     case logout
@@ -33,7 +33,7 @@ enum Endpoint {
         case .resetPassword: "users/reset_password/"
         case .newPassword: "users/reset_password/confirm/"
         case .interests: "interests/"
-        case .getUser: "users/me/"
+        case .me: "users/me/"
         case .validateToken: "users/reset_password/validate_token/"
         case .cities: "cities/"
         case .logout: "auth/token/logout/"

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol InterestsServiceProtocol {
-    func getInterests(completion: @escaping (Result<[InterestsdResponse], Error>) -> Void)
+    func getInterests(completion: @escaping (Result<[InterestsCellViewModel], Error>) -> Void)
 }
 
 final class InterestsService: InterestsServiceProtocol {
@@ -19,13 +19,13 @@ final class InterestsService: InterestsServiceProtocol {
         self.networkClient = networkClient
     }
 
-    func getInterests(completion: @escaping (Result<[InterestsdResponse], Error>) -> Void) {
+    func getInterests(completion: @escaping (Result<[InterestsCellViewModel], Error>) -> Void) {
         let request = InterstsRequest()
         networkClient.send(request: request, type: [InterestsdResponse].self) { result in
             DispatchQueue.main.async {
                 switch result {
-                case let .success(data):
-                    completion(.success(data))
+                case let .success(interests):
+                    completion(.success(interests.map { InterestsCellViewModel(id: $0.id, name: $0.name)}))
                 case let .failure(error):
                     completion(.failure(error))
                 }

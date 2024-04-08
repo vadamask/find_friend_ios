@@ -85,6 +85,7 @@ final class SearchFriendsView: UIView {
                     case .loading:
                         UIBlockingProgressHUD.show()
                     case .error(let error):
+                        UIBlockingProgressHUD.dismiss()
                         self.delegate?.showAlert(error.message)
                     }
                 }
