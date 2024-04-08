@@ -10,7 +10,9 @@ import Foundation
 protocol UsersServiceProtocol {
     var state: CurrentValueSubject<SearchFriendsState, Never> { get }
     func loadUsers()
+    func loadProfile()
     func convertToViewModels() -> [SearchFriendCellViewModel]
+    func convertToProfileViewModel() -> MyProfileModel?
     func createUser(
         _ dto: CreateUserRequestDto,
         completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
@@ -78,6 +80,27 @@ final class UsersService: UsersServiceProtocol {
             )}
     }
     
+    func loadProfile() {
+        guard case .finishLoading = state.value else { return }
+        sendProfileRequest()
+    }
+    
+    func convertToProfileViewModel() -> MyProfileModel? {
+        let profile = myProfile
+        return profile
+            .map { MyProfileModel(fullName: "\($0.firstName) \($0.lastName)",
+                                  age: $0.age,
+                                  avatar: $0.avatar,
+                                  purpose: $0.purpose,
+                                  interests: $0.interests,
+                                  friends: $0.friends,
+                                  friendsCount: $0.friendsCount,
+                                  city: $0.city,
+                                  profession: $0.profession,
+                                  networkNick: $0.networkNick
+            )}
+    }
+    
     func loadMyInfo(completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void) {
         let request = MyProfileRequest(httpMethod: .get, body: nil)
         networkClient.send(request: request, type: UserResponse.self) { [unowned self] result in
@@ -113,6 +136,21 @@ final class UsersService: UsersServiceProtocol {
                 completion(.success(user))
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func sendProfileRequest() {
+        state.send(.loading)
+        let request = MyProfileRequest(httpMethod: .get, body: nil)
+        networkClient.send(request: request, type: UserResponse.self) { [unowned self] result in
+            switch result {
+            case .success(let userData):
+                myProfile = userData
+                print(self.myProfile as Any)
+                self.state.send(.finishLoading)
+            case .failure(let error):
+                self.state.send(.error(error))
             }
         }
     }

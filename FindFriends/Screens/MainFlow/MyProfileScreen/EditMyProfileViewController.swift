@@ -1,16 +1,14 @@
 import UIKit
 import Combine
 
-
-
 final class EditMyProfileViewController: UIViewController {
     
     private var viewModel = EditMyProfileViewModel()
-    
+    weak var delegate: PhotoViewDelegate?
     private var cancellables: Set<AnyCancellable> = []
     
     private var contentSize: CGSize {
-        CGSize(width: view.frame.width, height: view.frame.height + 1300)
+        CGSize(width: view.frame.width, height: view.frame.height + 1500)
     }
     
     private lazy var scrollView: UIScrollView = {
@@ -21,6 +19,12 @@ final class EditMyProfileViewController: UIViewController {
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.isScrollEnabled = true
         return scrollView
+    }()
+    
+    private lazy var imagePickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        return picker
     }()
     
     private lazy var avatarView: UIImageView = {
@@ -37,15 +41,16 @@ final class EditMyProfileViewController: UIViewController {
         return view
     }()
     
-    private lazy var editButton: UIButton = {
+    private lazy var editProfilePhotoButton: UIButton = {
         let button = UIButton()
-//        button.configuration = .plain()
         button.setImage(.edit, for: .normal)
         button.imageView?.tintColor = .white
         button.backgroundColor = .mainOrange
         button.layer.bounds.size.height = 44
         button.layer.cornerRadius = button.layer.bounds.height / 2
         button.clipsToBounds = true
+        button.addTarget(self, action: #selector(didTapEditPhotoButton), for: .touchUpInside)
+        button.isUserInteractionEnabled = true
         return button
     }()
     
@@ -58,8 +63,13 @@ final class EditMyProfileViewController: UIViewController {
     
     private lazy var firstName: UILabel = {
         let label = UILabel()
-        label.text = "Имя"
+        var text = "Имя*"
+        let asterix = "*"
+        let range = (text as NSString).range(of: asterix)
+        let attributedText = NSMutableAttributedString.init(string: text)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.mainOrange , range: range)
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.attributedText = attributedText
         return label
     }()
     
@@ -79,8 +89,14 @@ final class EditMyProfileViewController: UIViewController {
     
     private lazy var secondName: UILabel = {
         let label = UILabel()
-        label.text = "Фамилия"
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let text = "Фамилия*"
+        let asterix = "*"
+        let range = (text as NSString).range(of: asterix)
+        let attributedText = NSMutableAttributedString.init(string: text)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.mainOrange , range: range)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.attributedText = attributedText
         return label
     }()
     
@@ -100,8 +116,14 @@ final class EditMyProfileViewController: UIViewController {
     
     private lazy var birthdayLabel: UILabel = {
         let label = UILabel()
-        label.text = "Дата рождения"
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let text = "Дата рождения*"
+        let asterix = "*"
+        let range = (text as NSString).range(of: asterix)
+        let attributedText = NSMutableAttributedString.init(string: text)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.mainOrange , range: range)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.attributedText = attributedText
         return label
     }()
     
@@ -109,12 +131,13 @@ final class EditMyProfileViewController: UIViewController {
         let datePicker = RegistrationTextField(placeholder: "ДД.ММ.ГГГГ", type: .date)
         datePicker.keyboardType = .numberPad
         datePicker.clearButtonMode = .whileEditing
+        datePicker.delegate = self
         return datePicker
     }()
     
     private lazy var genderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Пол"
+        label.text = "Пол*"
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         return label
     }()
@@ -198,7 +221,9 @@ final class EditMyProfileViewController: UIViewController {
     }()
     
     private lazy var socialLabel: SettingProfileView = {
-        let label = SettingProfileView(firstLabelText: "Ник в соцсетях (Видят только друзья)", firstLabelFont: 17, secondLabelText: "")
+        let label = SettingProfileView(firstLabelText: "Ник в соцсетях (Видят только друзья)",
+                                       firstLabelFont: 17,
+                                       secondLabelText: "")
         return label
     }()
     
@@ -274,7 +299,7 @@ final class EditMyProfileViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(TagsCollectionViewCell.self)
+        collectionView.register(InterestsCell.self)
         return collectionView
     }()
     
@@ -282,7 +307,6 @@ final class EditMyProfileViewController: UIViewController {
         let button = UIButton()
         button.imageView?.tintColor = .black
         button.setImage(.edit, for: .normal)
-        //button.addTarget(self, action: #selector(didTapEditButton), for: .touchUpInside)
         return button
     }()
     
@@ -290,7 +314,6 @@ final class EditMyProfileViewController: UIViewController {
         let label = UILabel()
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
         let underlineAttributedString = NSAttributedString(string: "Показать еще 8", attributes: underlineAttribute)
-        
         label.attributedText = underlineAttributedString
         return label
     }()
@@ -301,11 +324,12 @@ final class EditMyProfileViewController: UIViewController {
         addView()
         applyConstrainst()
         bind()
+        datePickTextField.hideWarningLabel()
     }
     
     private func addView() {
         view.addSubview(scrollView)
-        [avatarView, editButton, editProfileLabel, firstName, firstNameTextField, secondName, secondNameTextField, birthdayLabel, datePickTextField, genderLabel, genderManButton, genderWomanButton, stackView, saveButton, cityLabel, cityPickTextField, workView, workTextField, profileGoalsView, profileGoalsTextView,socialLabel, vkView, vkTextView, tgView, tgTextView, aboutMyself, aboutMyselfTextView, interestsView, tagsCollectionView, editInterestButton, seeMoreInterestLabel].forEach(scrollView.addSubviewWithoutAutoresizingMask(_:))
+        [avatarView, editProfilePhotoButton, editProfileLabel, firstName, firstNameTextField, secondName, secondNameTextField, birthdayLabel, datePickTextField, genderLabel, genderManButton, genderWomanButton, stackView, saveButton, cityLabel, cityPickTextField, workView, workTextField, profileGoalsView, profileGoalsTextView,socialLabel, vkView, vkTextView, tgView, tgTextView, aboutMyself, aboutMyselfTextView, interestsView, tagsCollectionView, editInterestButton, seeMoreInterestLabel].forEach(scrollView.addSubviewWithoutAutoresizingMask(_:))
         [genderManButton, genderWomanButton].forEach(stackView.addArrangedSubview(_:))
         
     }
@@ -316,10 +340,10 @@ final class EditMyProfileViewController: UIViewController {
             avatarView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: avatarView.frame.width),
             avatarView.heightAnchor.constraint(equalToConstant: avatarView.frame.height),
-            editButton.heightAnchor.constraint(equalToConstant: 44),
-            editButton.widthAnchor.constraint(equalToConstant: 44),
-            editButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 50),
-            editButton.centerXAnchor.constraint(equalTo: avatarView.centerXAnchor, constant: 60),
+            editProfilePhotoButton.heightAnchor.constraint(equalToConstant: 44),
+            editProfilePhotoButton.widthAnchor.constraint(equalToConstant: 44),
+            editProfilePhotoButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 50),
+            editProfilePhotoButton.centerXAnchor.constraint(equalTo: avatarView.centerXAnchor, constant: 60),
             editProfileLabel.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: 40),
             editProfileLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             firstName.topAnchor.constraint(equalTo: editProfileLabel.bottomAnchor, constant: 12),
@@ -411,8 +435,7 @@ final class EditMyProfileViewController: UIViewController {
         viewModel.$selectedGenderInSetting
             .sink { [weak self] gender in
                 if gender != nil {
-                    self?.saveButton.isEnabled = true
-                    self?.saveButton.backgroundColor = .mainOrange
+                    self?.saveButtonOff()
                     switch gender {
                     case .man:
                         self?.isManSelected(true)
@@ -422,8 +445,25 @@ final class EditMyProfileViewController: UIViewController {
                         return
                     }
                 } else {
-                    self?.saveButton.backgroundColor = .lightOrange
+                    self?.saveButtonOff()
                 }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$buttonAndError
+            .sink { [weak self] dateIsCorrect in
+                if dateIsCorrect {
+                    self?.datePickTextField.hideWarningLabel()
+                    self?.saveButtonOn()
+                } else {
+                    self?.datePickTextField.showWarningForDate("Недопустимое значение")
+                    self?.saveButtonOff()
+                }
+            }
+            .store(in: &cancellables)
+        viewModel.$textFieldText
+            .sink { [weak self] text in
+                self?.datePickTextField.text = text
             }
             .store(in: &cancellables)
     }
@@ -433,19 +473,30 @@ final class EditMyProfileViewController: UIViewController {
         genderWomanButton.isSelectedInSetting(bool ? false : true)
     }
     
+    func saveButtonOff() {
+        saveButton.isEnabled = false
+        saveButton.backgroundColor = .lightOrange
+    }
     
-    @objc
-    private func genderManSelected() {
+    func saveButtonOn() {
+        saveButton.isEnabled = true
+        saveButton.backgroundColor = .mainOrange
+    }
+    
+    @objc private func genderManSelected() {
         viewModel.change(gender: .man)
     }
     
-    @objc
-    private func genderWomanSelected() {
+    @objc private func genderWomanSelected() {
         viewModel.change(gender: .woman)
     }
     
     @objc private func didTapSelectCityButton() {
         
+    }
+    
+    @objc private func didTapEditPhotoButton() {
+        showImagePickerControleActionSheet()
     }
 }
 
@@ -455,7 +506,7 @@ extension EditMyProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
+        let cell: InterestsCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
         cell.setupCell(with: InterestsCellViewModel(id: 0, name: "Спорт"))
         cell.contentView.layer.borderWidth = 0
         cell.isSelected = false
@@ -476,5 +527,79 @@ extension EditMyProfileViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionLayout.spaceBetweenRows
+    }
+}
+
+extension EditMyProfileViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    
+    func showImagePickerControleActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Камера", style: .default, handler: { (action:UIAlertAction) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                self.schoosePicker(sourceType: .camera)
+            } else {print("CКамера недоступна") }
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Выбрать из галереи", style: .default, handler: { (action:UIAlertAction) in
+            self.schoosePicker(sourceType: .photoLibrary)}))
+        actionSheet.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
+        self.present(actionSheet, animated: true)
+    }
+    
+    func schoosePicker(sourceType: UIImagePickerController.SourceType){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = sourceType
+        present(imagePickerController, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            saveImage(editedImage)
+            avatarView.image = editedImage
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            avatarView.image = originalImage
+            saveImage(originalImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func saveImage(_ image: UIImage) {
+        guard let data = image.pngData() else
+        {
+            return
+        }
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imageUrl = documentsURL.appendingPathComponent("avatar.png")
+        do {
+            try data.write(to: imageUrl)
+        } catch {
+            print("Ошибка сохранения изображения")
+        }
+    }
+}
+
+extension EditMyProfileViewController: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard let text = textField.text else { return false }
+        let shouldChangeCharactersIn = viewModel.shouldChangeCharactersIn(text: text, range: range, replacementString: string)
+        
+        if viewModel.shouldHideKeyboard() {
+            textField.text = NSString(string: text).replacingCharacters(in: range, with: string)
+            textField.resignFirstResponder()
+        }
+        
+        return shouldChangeCharactersIn
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        datePickTextField.hideWarningLabel()
+        return true
     }
 }
