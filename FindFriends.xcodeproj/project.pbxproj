@@ -21,6 +21,10 @@
 		84CCA1C12B9640A4000BDC28 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCA1C02B9640A4000BDC28 /* GenderViewModel.swift */; };
 		CE07C5B42BBC3E7F001EEF0F /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */; };
 		CE07C5C02BBDA149001EEF0F /* ProfileCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */; };
+		CE07C5D32BC2A340001EEF0F /* UIFont+CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5D22BC2A340001EEF0F /* UIFont+CustomFonts.swift */; };
+		CE07C5D52BC2AD43001EEF0F /* EditMyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5D42BC2AD43001EEF0F /* EditMyProfileViewModel.swift */; };
+		CE07C5DA2BC3263B001EEF0F /* DashedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5D92BC3263B001EEF0F /* DashedView.swift */; };
+		CE07C5DC2BC326E3001EEF0F /* SettingProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5DB2BC326E3001EEF0F /* SettingProfileView.swift */; };
 		CECC80EA2B98988200F4312B /* SelectCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC80E62B98988200F4312B /* SelectCityTableViewCell.swift */; };
 		CECC80EB2B98988200F4312B /* SelectCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC80E82B98988200F4312B /* SelectCityViewController.swift */; };
 		CECC80EC2B98988200F4312B /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC80E92B98988200F4312B /* CityViewController.swift */; };
@@ -85,7 +89,6 @@
 		DD64AB902BBF25A40011E7D4 /* LogoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD64AB8F2BBF25A40011E7D4 /* LogoutRequest.swift */; };
 		DDC2551B2BA2249F0037FA7E /* RegistrationErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC2551A2BA2249F0037FA7E /* RegistrationErrorModel.swift */; };
 		DDCAC7C42B83C0BF00EC7D15 /* WhiteBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7C32B83C0BF00EC7D15 /* WhiteBorderButton.swift */; };
-		DDCAC7C72B84FB7900EC7D15 /* UIFont+CustomFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7C62B84FB7900EC7D15 /* UIFont+CustomFonts.swift */; };
 		DDCAC7CC2B851EF500EC7D15 /* RegistrationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7CB2B851EF500EC7D15 /* RegistrationTextField.swift */; };
 		DDCAC7CF2B851F7700EC7D15 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7CE2B851F7700EC7D15 /* ValidationService.swift */; };
 		DDCAC7D22B852B7B00EC7D15 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAC7D12B852B7B00EC7D15 /* RegistrationViewController.swift */; };
@@ -137,6 +140,10 @@
 		84CCA1C02B9640A4000BDC28 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
 		CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
 		CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCustomView.swift; sourceTree = "<group>"; };
+		CE07C5D22BC2A340001EEF0F /* UIFont+CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFonts.swift"; sourceTree = "<group>"; };
+		CE07C5D42BC2AD43001EEF0F /* EditMyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewModel.swift; sourceTree = "<group>"; };
+		CE07C5D92BC3263B001EEF0F /* DashedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashedView.swift; sourceTree = "<group>"; };
+		CE07C5DB2BC326E3001EEF0F /* SettingProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProfileView.swift; sourceTree = "<group>"; };
 		CECC80E62B98988200F4312B /* SelectCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCityTableViewCell.swift; sourceTree = "<group>"; };
 		CECC80E82B98988200F4312B /* SelectCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCityViewController.swift; sourceTree = "<group>"; };
 		CECC80E92B98988200F4312B /* CityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
@@ -202,7 +209,6 @@
 		DD64AB8F2BBF25A40011E7D4 /* LogoutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutRequest.swift; sourceTree = "<group>"; };
 		DDC2551A2BA2249F0037FA7E /* RegistrationErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationErrorModel.swift; sourceTree = "<group>"; };
 		DDCAC7C32B83C0BF00EC7D15 /* WhiteBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBorderButton.swift; sourceTree = "<group>"; };
-		DDCAC7C62B84FB7900EC7D15 /* UIFont+CustomFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFonts.swift"; sourceTree = "<group>"; };
 		DDCAC7CB2B851EF500EC7D15 /* RegistrationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTextField.swift; sourceTree = "<group>"; };
 		DDCAC7CE2B851F7700EC7D15 /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
 		DDCAC7D12B852B7B00EC7D15 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -307,6 +313,7 @@
 			children = (
 				CECC810A2BAC72C700F4312B /* MyProfileViewController.swift */,
 				CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */,
+				CE07C5D42BC2AD43001EEF0F /* EditMyProfileViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -447,11 +454,11 @@
 			isa = PBXGroup;
 			children = (
 				DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */,
-				DDCAC7C62B84FB7900EC7D15 /* UIFont+CustomFonts.swift */,
 				F36F40792B85562800B2082B /* UIViewController+Extensions.swift */,
 				F36F40862B86287D00B2082B /* UITapGestureRecognizer+Extensions.swift */,
 				CECC81252BADEB3200F4312B /* UILabel+AddImage.swift */,
 				CECC81182BADAF7900F4312B /* Observable.swift */,
+				CE07C5D22BC2A340001EEF0F /* UIFont+CustomFonts.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -467,6 +474,8 @@
 				F30170882B8D290700A6921A /* UIBlockingProgressHUD.swift */,
 				D854012D2B93125A0088C1E9 /* CellReusingUtils.swift */,
 				CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */,
+				CE07C5D92BC3263B001EEF0F /* DashedView.swift */,
+				CE07C5DB2BC326E3001EEF0F /* SettingProfileView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -802,6 +811,7 @@
 				D86387C72B87A16400692535 /* NetworkRequestProtocol.swift in Sources */,
 				F30170692B8CDF5C00A6921A /* UsersRequest.swift in Sources */,
 				DD64AB7C2BB5F84A0011E7D4 /* InterestsCellViewModel.swift in Sources */,
+				CE07C5DA2BC3263B001EEF0F /* DashedView.swift in Sources */,
 				F301707E2B8CF32500A6921A /* AlertButton.swift in Sources */,
 				DD0412EA2B9105BC00984BA7 /* SearchFriendCellViewModel.swift in Sources */,
 				D5E980BC2B8F0D6700A17E0A /* BirthdayViewController.swift in Sources */,
@@ -872,6 +882,7 @@
 				DD5F38242BAE045A004AF6B2 /* EnterVerificationCodeViewController.swift in Sources */,
 				CECC81262BADEB3200F4312B /* UILabel+AddImage.swift in Sources */,
 				84531D1A2B94C450002289C6 /* GenderViewController.swift in Sources */,
+				CE07C5D32BC2A340001EEF0F /* UIFont+CustomFonts.swift in Sources */,
 				DDC2551B2BA2249F0037FA7E /* RegistrationErrorModel.swift in Sources */,
 				D853CC282B7567AF00DA58D5 /* SceneDelegate.swift in Sources */,
 				DD5F38232BAE045A004AF6B2 /* EnterVerificationCodeView.swift in Sources */,
@@ -890,13 +901,14 @@
 				4CB304C32BADB43800D08003 /* ProfileDto.swift in Sources */,
 				F3BC5D392B8514D700562C08 /* BaseRegistrationView.swift in Sources */,
 				84531D182B94C41F002289C6 /* FillProfilePageControl.swift in Sources */,
+				CE07C5DC2BC326E3001EEF0F /* SettingProfileView.swift in Sources */,
 				84531D152B94C38E002289C6 /* FillProfilePageViewController.swift in Sources */,
 				F36F40872B86287D00B2082B /* UITapGestureRecognizer+Extensions.swift in Sources */,
 				F36F40782B85503F00B2082B /* RegistrationNavigationController.swift in Sources */,
 				F33B4C872B8FB8DA002D27B5 /* ResetPasswordRequest.swift in Sources */,
 				CE07C5B42BBC3E7F001EEF0F /* EditMyProfileViewController.swift in Sources */,
 				F3BC5D3D2B8514F700562C08 /* LoginView.swift in Sources */,
-				DDCAC7C72B84FB7900EC7D15 /* UIFont+CustomFonts.swift in Sources */,
+				CE07C5D52BC2AD43001EEF0F /* EditMyProfileViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

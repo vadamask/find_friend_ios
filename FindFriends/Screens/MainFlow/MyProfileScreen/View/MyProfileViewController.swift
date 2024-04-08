@@ -238,8 +238,8 @@ final class MyProfileViewController: UIViewController {
     private lazy var fullStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 8
-        view.distribution = .fillProportionally
+        view.spacing = 10
+        view.distribution = .equalSpacing
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -251,7 +251,14 @@ final class MyProfileViewController: UIViewController {
         applyConstraints()
         profileImageView.image = loadImage()
     }
-    
+    private func  hideUI() {
+        descrioptionStackView.isHidden = true
+        jobView.isHidden = true
+        aboutMyselfView.isHidden = true
+        interestsView.isHidden = true
+        vkView.isHidden = true
+        tgView.isHidden = true
+    }
     private func addView() {
         view.addSubview(scrollView)
         [profileImageView, fullStackView].forEach(scrollView.addSubviewWithoutAutoresizingMask(_:))
@@ -303,10 +310,6 @@ final class MyProfileViewController: UIViewController {
             labelStackView.topAnchor.constraint(equalTo: countStackView.bottomAnchor, constant: 10),
             labelStackView.leadingAnchor.constraint(equalTo: friendsAndEventsView.leadingAnchor, constant: 80),
             labelStackView.trailingAnchor.constraint(equalTo: friendsAndEventsView.trailingAnchor, constant: -75),
-            jobView.heightAnchor.constraint(equalToConstant: 70),
-            jobView.secondLabel.topAnchor.constraint(equalTo: jobView.firstLabel.bottomAnchor, constant: 6),
-            aboutMyselfView.heightAnchor.constraint(equalToConstant: 110),
-            aboutMyselfView.secondLabel.topAnchor.constraint(equalTo: aboutMyselfView.firstLabel.bottomAnchor, constant: 6),
             interestsView.heightAnchor.constraint(equalToConstant: 157),
             interestsView.firstLabel.heightAnchor.constraint(equalToConstant: 16),
             tagsCollectionView.leadingAnchor.constraint(equalTo: interestsView.leadingAnchor, constant: 10),
@@ -314,12 +317,6 @@ final class MyProfileViewController: UIViewController {
             tagsCollectionView.topAnchor.constraint(equalTo: interestsView.firstLabel.bottomAnchor),
             tagsCollectionView.bottomAnchor.constraint(equalTo: interestsView.bottomAnchor, constant: -10),
             createMeeting.heightAnchor.constraint(equalToConstant: 48),
-            vkView.heightAnchor.constraint(equalToConstant: 50),
-            tgView.heightAnchor.constraint(equalToConstant: 50),
-            vkView.secondLabel.topAnchor.constraint(equalTo: vkView.topAnchor, constant: 10),
-            vkView.secondLabel.bottomAnchor.constraint(equalTo: vkView.bottomAnchor, constant: -8),
-            tgView.secondLabel.topAnchor.constraint(equalTo: tgView.topAnchor, constant: 10),
-            tgView.secondLabel.bottomAnchor.constraint(equalTo: tgView.bottomAnchor, constant: -8),
             logoutButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
@@ -338,7 +335,7 @@ final class MyProfileViewController: UIViewController {
         profileYearOld.textColor = .white
         return UIImage(contentsOfFile: imageUrl.path)!
     }
-
+    
     @objc private func didTapEditButton() {
         let vc = EditMyProfileViewController()
         navigationController?.pushViewController(vc, animated: true)
@@ -389,8 +386,8 @@ extension MyProfileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
-
-
+        
+        
         cell.setupCell(with: InterestsCellViewModel(id: 0, name: "Спорт"))
         cell.isUserInteractionEnabled = false
         cell.contentView.layer.borderWidth = 0
@@ -401,15 +398,15 @@ extension MyProfileViewController: UICollectionViewDataSource {
 }
 
 extension MyProfileViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionLayout.spaceBetweenColumns
     }
- 
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: CollectionLayout.topOffsetCell, left: CollectionLayout.leadingOffsetCell, bottom: 10, right: CollectionLayout.trailingOffsetCell)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionLayout.spaceBetweenRows
     }

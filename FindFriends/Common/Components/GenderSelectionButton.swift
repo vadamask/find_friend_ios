@@ -34,4 +34,11 @@ final class GenderSelectionButton: UIButton {
         titleLabel?.font = enabled ? .semibold16 : .regular16
         configuration?.baseBackgroundColor = enabled ? .buttonGray : .white
     }
+    
+    func isSelectedInSetting(_ enabled: Bool) {
+        isSelected = enabled
+        setTitleColor(enabled ?.black: .black, for: .selected)
+        configuration?.image?.withTintColor(.lightOrange)
+        setImage(enabled ? .selectCity : .cityUnselected, for: .selected)
+    }
 }

@@ -1,6 +1,7 @@
 import UIKit
 
 final class CustomView : UIView {
+    
     lazy var firstLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
@@ -14,8 +15,8 @@ final class CustomView : UIView {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: .zero)
         backgroundColor = .white
         layer.cornerRadius = 20
         layer.masksToBounds = true
@@ -32,11 +33,13 @@ final class CustomView : UIView {
     }
     
     private func addConstraints() {
-            NSLayoutConstraint.activate([
-                firstLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-                firstLabel.topAnchor.constraint(equalTo: topAnchor, constant: 14),
-                secondLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-                secondLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
-            ])
-        }
+        NSLayoutConstraint.activate([
+            firstLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            firstLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 6),
+            secondLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            secondLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            secondLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+        ])
     }
+}
