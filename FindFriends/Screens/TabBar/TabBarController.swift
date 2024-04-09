@@ -110,12 +110,14 @@ open class TabBarController: UITabBarController  {
         let searchFriendsView = SearchFriendsView(viewModel: searchFriendsViewModel)
         let searchFriendsVC = SearchFriendsViewController(searchFriendsView: searchFriendsView)
         
+        let myProfileViewModel = MyProfileViewModel()
+        let myProfileVC = MyProfileViewController(viewModel: myProfileViewModel)
         
         viewControllers = [
             generateVC(UIViewController(), "Сообщения", UIImage(resource: .messagesWithoutNotification)),
             generateVC(searchFriendsVC, "Поиск друзей", UIImage(resource: .searchFriends)),
             generateVC(UIViewController(), "Мероприятия", UIImage(resource: .events)),
-            generateVC(MyProfileViewController(), "Мой профиль", UIImage(resource: .myProfile))
+            generateVC(myProfileVC, "Мой профиль", UIImage(resource: .myProfile))
         ]
     }
 }

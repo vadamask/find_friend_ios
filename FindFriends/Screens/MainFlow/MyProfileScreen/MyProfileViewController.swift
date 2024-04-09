@@ -1,8 +1,32 @@
 import UIKit
+import Combine
 
 final class MyProfileViewController: UIViewController {
     
     private let loginService = LoginService()
+    
+    private let viewModel: MyProfileViewModel
+    private var cancellables: Set<AnyCancellable> = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGray6
+        addView()
+        applyConstraints()
+        hideUI()
+        profileImageView.image = loadImage()
+        loadProfile()
+        bind()
+    }
+    
+    init(viewModel: MyProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private var contentSize: CGSize {
         CGSize(width: view.frame.width, height: view.frame.height + 440)
@@ -41,7 +65,7 @@ final class MyProfileViewController: UIViewController {
         return view
     }()
     
-    private lazy var profileYearOld: UILabel = {
+    private lazy var profileAge: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.text = "30 лет"
@@ -124,7 +148,7 @@ final class MyProfileViewController: UIViewController {
     
     private lazy var meetingListLabel: UILabel = {
         let label = UILabel()
-        label.text = "Событие"
+        label.text = "Событий"
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         return label
     }()
@@ -140,7 +164,7 @@ final class MyProfileViewController: UIViewController {
     
     private lazy var meetingListCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
+        label.text = "0"
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label
     }()
@@ -238,18 +262,21 @@ final class MyProfileViewController: UIViewController {
     private lazy var fullStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 8
-        view.distribution = .fillProportionally
+        view.spacing = 10
+        view.distribution = .equalSpacing
         view.isUserInteractionEnabled = true
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGray6
-        addView()
-        applyConstraints()
-        profileImageView.image = loadImage()
+    private func  hideUI() {
+        locationView.isHidden = true
+        descriptionView.isHidden = true
+        descroptionLogo.isHidden = true
+        jobView.isHidden = true
+        aboutMyselfView.isHidden = true
+        interestsView.isHidden = true
+        vkView.isHidden = true
+        tgView.isHidden = true
     }
     
     private func addView() {
@@ -257,14 +284,13 @@ final class MyProfileViewController: UIViewController {
         [profileImageView, fullStackView].forEach(scrollView.addSubviewWithoutAutoresizingMask(_:))
         [locationLabel, locationLogo].forEach(locationView.addSubviewWithoutAutoresizingMask(_:))
         [descriptionLabel, descroptionLogo].forEach(descriptionView.addSubviewWithoutAutoresizingMask(_:))
-        [locationView, descriptionView].forEach(descrioptionStackView.addArrangedSubview(_:))
         [editButton].forEach(editButtonView.addSubviewWithoutAutoresizingMask(_:))
-        [profileName, profileYearOld, editButtonView].forEach(profileImageView.addSubviewWithoutAutoresizingMask(_:))
+        [profileName, profileAge, editButtonView].forEach(profileImageView.addSubviewWithoutAutoresizingMask(_:))
         [friendsListCountLabel, meetingListCountLabel].forEach(countStackView.addArrangedSubview(_:))
         [friendsListLabel, meetingListLabel].forEach(labelStackView.addArrangedSubview(_:))
         [countStackView, labelStackView].forEach(friendsAndEventsView.addSubviewWithoutAutoresizingMask(_:))
         [tagsCollectionView].forEach(interestsView.addSubviewWithoutAutoresizingMask(_:))
-        [descrioptionStackView, friendsAndEventsView, createMeeting, jobView, aboutMyselfView, interestsView, vkView, tgView, logoutButton].forEach(fullStackView.addArrangedSubview(_:))
+        [locationView, descriptionView, friendsAndEventsView, createMeeting, jobView, aboutMyselfView, interestsView, vkView, tgView, logoutButton].forEach(fullStackView.addArrangedSubview(_:))
     }
     
     private func applyConstraints() {
@@ -274,8 +300,8 @@ final class MyProfileViewController: UIViewController {
             profileImageView.bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: 437),
             profileName.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor, constant: 18),
             profileName.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -40),
-            profileYearOld.leadingAnchor.constraint(equalTo: profileName.leadingAnchor),
-            profileYearOld.topAnchor.constraint(equalTo: profileName.bottomAnchor, constant: 5),
+            profileAge.leadingAnchor.constraint(equalTo: profileName.leadingAnchor),
+            profileAge.topAnchor.constraint(equalTo: profileName.bottomAnchor, constant: 5),
             editButtonView.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -18),
             editButtonView.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -30),
             editButtonView.heightAnchor.constraint(equalToConstant: 44),
@@ -303,10 +329,6 @@ final class MyProfileViewController: UIViewController {
             labelStackView.topAnchor.constraint(equalTo: countStackView.bottomAnchor, constant: 10),
             labelStackView.leadingAnchor.constraint(equalTo: friendsAndEventsView.leadingAnchor, constant: 80),
             labelStackView.trailingAnchor.constraint(equalTo: friendsAndEventsView.trailingAnchor, constant: -75),
-            jobView.heightAnchor.constraint(equalToConstant: 70),
-            jobView.secondLabel.topAnchor.constraint(equalTo: jobView.firstLabel.bottomAnchor, constant: 6),
-            aboutMyselfView.heightAnchor.constraint(equalToConstant: 110),
-            aboutMyselfView.secondLabel.topAnchor.constraint(equalTo: aboutMyselfView.firstLabel.bottomAnchor, constant: 6),
             interestsView.heightAnchor.constraint(equalToConstant: 157),
             interestsView.firstLabel.heightAnchor.constraint(equalToConstant: 16),
             tagsCollectionView.leadingAnchor.constraint(equalTo: interestsView.leadingAnchor, constant: 10),
@@ -314,16 +336,51 @@ final class MyProfileViewController: UIViewController {
             tagsCollectionView.topAnchor.constraint(equalTo: interestsView.firstLabel.bottomAnchor),
             tagsCollectionView.bottomAnchor.constraint(equalTo: interestsView.bottomAnchor, constant: -10),
             createMeeting.heightAnchor.constraint(equalToConstant: 48),
-            vkView.heightAnchor.constraint(equalToConstant: 50),
-            tgView.heightAnchor.constraint(equalToConstant: 50),
-            vkView.secondLabel.topAnchor.constraint(equalTo: vkView.topAnchor, constant: 10),
-            vkView.secondLabel.bottomAnchor.constraint(equalTo: vkView.bottomAnchor, constant: -8),
-            tgView.secondLabel.topAnchor.constraint(equalTo: tgView.topAnchor, constant: 10),
-            tgView.secondLabel.bottomAnchor.constraint(equalTo: tgView.bottomAnchor, constant: -8),
             logoutButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
+
+    func loadProfile() {
+        viewModel.loadProfile()
+    }
     
+    private func bind() {
+        viewModel.$state
+            .sink { [unowned self] state in
+                DispatchQueue.main.async {
+                    switch state {
+                    case .finishLoading:
+                        UIBlockingProgressHUD.dismiss()
+                    case .loading:
+                        UIBlockingProgressHUD.show()
+                    case .error(let error):
+                        print(error)
+                        UIBlockingProgressHUD.dismiss()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$profile
+            .sink { [unowned self] profile in
+                DispatchQueue.main.async {
+                    self.profileName.text = profile?.fullName
+                    if let profileAge = profile?.age {
+                        self.profileAge.text = "\(profileAge) \(self.correctStringForNumber(profileAge))"
+                    }
+                    self.locationLabel.text = profile?.city
+                    self.descriptionLabel.text = profile?.purpose
+                    if let friendsCount = profile?.friendsCount {
+                        self.friendsListCountLabel.text = "\(friendsCount)"
+                    }
+                    self.jobView.secondLabel.text = profile?.profession
+                    self.tgView.secondLabel.text = profile?.networkNick
+                    self.tgView.secondLabel.text = profile?.networkNick
+                }
+            }
+            .store(in: &cancellables)
+    }
+
     private func loadImage() -> UIImage {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -331,14 +388,29 @@ final class MyProfileViewController: UIViewController {
         guard fileManager.fileExists(atPath: imageUrl.path) else {
             profileImageView.contentMode = .center
             profileName.textColor = .black
-            profileYearOld.textColor = .black
+            profileAge.textColor = .black
             return UIImage(named: "plugPhoto")!
         }
         profileName.textColor = .white
-        profileYearOld.textColor = .white
+        profileAge.textColor = .white
         return UIImage(contentsOfFile: imageUrl.path)!
     }
-
+    
+    private func correctStringForNumber(_ num: Int) -> String {
+        switch num % 10 {
+        case 1 where num % 100 != 11:
+            return "год"
+        case 2 where num % 100 != 12:
+            return "года"
+        case 3 where num % 100 != 13:
+            return "года"
+        case 4 where num % 100 != 14:
+            return "года"
+        default:
+            return "лет"
+        }
+    }
+    
     @objc private func didTapEditButton() {
         let vc = EditMyProfileViewController()
         navigationController?.pushViewController(vc, animated: true)
@@ -374,7 +446,7 @@ extension MyProfileViewController: UIGestureRecognizerDelegate {
 
 extension MyProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return viewModel.numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -391,15 +463,15 @@ extension MyProfileViewController: UICollectionViewDataSource {
 }
 
 extension MyProfileViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionLayout.spaceBetweenColumns
     }
- 
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: CollectionLayout.topOffsetCell, left: CollectionLayout.leadingOffsetCell, bottom: 10, right: CollectionLayout.trailingOffsetCell)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CollectionLayout.spaceBetweenRows
     }
