@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		4C81E09D2BB5A963007FCB4E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81E09C2BB5A963007FCB4E /* SearchBar.swift */; };
 		4C81E09F2BB5ACCF007FCB4E /* CityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81E09E2BB5ACCF007FCB4E /* CityManager.swift */; };
+		4C824C7B2BBAFAC600F7B04D /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C824C7A2BBAFAC600F7B04D /* EventViewController.swift */; };
+		4C824C7F2BBC172C00F7B04D /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C824C7E2BBC172C00F7B04D /* CreateEventViewController.swift */; };
+		4C824C892BBF43EA00F7B04D /* Segment1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C824C882BBF43E900F7B04D /* Segment1View.swift */; };
+		4C824C8B2BBF475500F7B04D /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C824C8A2BBF475500F7B04D /* SegmentView.swift */; };
+		4C824C8F2BC031F700F7B04D /* Segment2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C824C8E2BC031F700F7B04D /* Segment2View.swift */; };
+		4C824C912BC2B43800F7B04D /* Segment3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C824C902BC2B43800F7B04D /* Segment3View.swift */; };
 		4CB304BB2BAC471D00D08003 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304BA2BAC471C00D08003 /* WelcomeViewController.swift */; };
 		4CB304BD2BAC49C900D08003 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304BC2BAC49C900D08003 /* WelcomeViewModel.swift */; };
 		4CB304C12BADAE5500D08003 /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304C02BADAE5500D08003 /* ProfileRequest.swift */; };
@@ -117,6 +123,12 @@
 /* Begin PBXFileReference section */
 		4C81E09C2BB5A963007FCB4E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4C81E09E2BB5ACCF007FCB4E /* CityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityManager.swift; sourceTree = "<group>"; };
+		4C824C7A2BBAFAC600F7B04D /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		4C824C7E2BBC172C00F7B04D /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		4C824C882BBF43E900F7B04D /* Segment1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment1View.swift; sourceTree = "<group>"; };
+		4C824C8A2BBF475500F7B04D /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
+		4C824C8E2BC031F700F7B04D /* Segment2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment2View.swift; sourceTree = "<group>"; };
+		4C824C902BC2B43800F7B04D /* Segment3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment3View.swift; sourceTree = "<group>"; };
 		4CB304BA2BAC471C00D08003 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4CB304BC2BAC49C900D08003 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		4CB304C02BADAE5500D08003 /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
@@ -235,6 +247,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C824C792BBAFA8E00F7B04D /* EventScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4C824C7A2BBAFAC600F7B04D /* EventViewController.swift */,
+				4C824C7E2BBC172C00F7B04D /* CreateEventViewController.swift */,
+				4C824C8A2BBF475500F7B04D /* SegmentView.swift */,
+				4C824C882BBF43E900F7B04D /* Segment1View.swift */,
+				4C824C8E2BC031F700F7B04D /* Segment2View.swift */,
+				4C824C902BC2B43800F7B04D /* Segment3View.swift */,
+			);
+			path = EventScreen;
+			sourceTree = "<group>";
+		};
 		4CB304B92BAC466700D08003 /* WelcomeScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +381,7 @@
 		D853CC392B756BB500DA58D5 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				4C824C792BBAFA8E00F7B04D /* EventScreen */,
 				4CB304B92BAC466700D08003 /* WelcomeScreen */,
 				F301707F2B8CF55E00A6921A /* SplashScreen */,
 				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
@@ -775,6 +801,7 @@
 				D86387C42B87A16400692535 /* NetworkTask.swift in Sources */,
 				D5E980BE2B8F0D7800A17E0A /* BirthdayViewModel.swift in Sources */,
 				DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */,
+				4C824C892BBF43EA00F7B04D /* Segment1View.swift in Sources */,
 				D854012A2B91F6940088C1E9 /* SelectInterestsViewController.swift in Sources */,
 				F30170892B8D290700A6921A /* UIBlockingProgressHUD.swift in Sources */,
 				DD0412DE2B90E31E00984BA7 /* SearchFriendsViewController.swift in Sources */,
@@ -823,6 +850,7 @@
 				84CCA1C12B9640A4000BDC28 /* GenderViewModel.swift in Sources */,
 				F33B4C8C2B8FBA0C002D27B5 /* ResetPasswordDto.swift in Sources */,
 				F30170792B8CF2D600A6921A /* AlertPresenter.swift in Sources */,
+				4C824C7F2BBC172C00F7B04D /* CreateEventViewController.swift in Sources */,
 				D85401342B95DA890088C1E9 /* SelectInterestsView.swift in Sources */,
 				CECC81072BA319F400F4312B /* TabBarButton.swift in Sources */,
 				F30170732B8CED2C00A6921A /* LoginViewModel.swift in Sources */,
@@ -838,6 +866,7 @@
 				F36F40912B864B1E00B2082B /* NewPasswordView.swift in Sources */,
 				DD0412E72B91056C00984BA7 /* SearchFriendCell.swift in Sources */,
 				DD0412E22B90E33600984BA7 /* SearchFriendsViewModel.swift in Sources */,
+				4C824C8B2BBF475500F7B04D /* SegmentView.swift in Sources */,
 				CECC80F92B989D6800F4312B /* CityViewModel.swift in Sources */,
 				F3BC5D402B853D1C00562C08 /* LoginViewController.swift in Sources */,
 				4C81E09D2BB5A963007FCB4E /* SearchBar.swift in Sources */,
@@ -851,8 +880,11 @@
 				F36F40872B86287D00B2082B /* UITapGestureRecognizer+Extensions.swift in Sources */,
 				F36F40782B85503F00B2082B /* RegistrationNavigationController.swift in Sources */,
 				F33B4C872B8FB8DA002D27B5 /* ResetPasswordRequest.swift in Sources */,
+				4C824C912BC2B43800F7B04D /* Segment3View.swift in Sources */,
 				F3BC5D3D2B8514F700562C08 /* LoginView.swift in Sources */,
+				4C824C8F2BC031F700F7B04D /* Segment2View.swift in Sources */,
 				DDCAC7C72B84FB7900EC7D15 /* UIFont+CustomFonts.swift in Sources */,
+				4C824C7B2BBAFAC600F7B04D /* EventViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
