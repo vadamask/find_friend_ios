@@ -22,7 +22,7 @@ enum Endpoint {
     case logout
     
     var baseURL: URL? {
-        URL(string: "http://158.160.60.2/api/v1/")
+        URL(string: "http://94.241.142.3/api/v1/")
     }
     
     var path: String {
