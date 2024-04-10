@@ -108,6 +108,7 @@
 		DDFA4A5D2BC2B85E00AEF3D0 /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA4A5C2BC2B85E00AEF3D0 /* CityView.swift */; };
 		DDFA4A602BC3259C00AEF3D0 /* InterestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA4A5F2BC3259C00AEF3D0 /* InterestDto.swift */; };
 		DDFA4A642BC32B1900AEF3D0 /* UpdateMyProfileDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA4A632BC32B1900AEF3D0 /* UpdateMyProfileDto.swift */; };
+		DDFA4A672BC6F82E00AEF3D0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = DDFA4A662BC6F82E00AEF3D0 /* SnapKit */; };
 		F30170652B8CDCA300A6921A /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170642B8CDCA300A6921A /* Endpoint.swift */; };
 		F30170672B8CDD1C00A6921A /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170662B8CDD1C00A6921A /* LoginRequest.swift */; };
 		F30170692B8CDF5C00A6921A /* UsersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170682B8CDF5C00A6921A /* UsersRequest.swift */; };
@@ -279,6 +280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDFA4A672BC6F82E00AEF3D0 /* SnapKit in Frameworks */,
 				D86387D72B8A7ECA00692535 /* SwiftKeychainWrapper in Frameworks */,
 				84CCA1BD2B95B6A6000BDC28 /* ProgressHUD in Frameworks */,
 			);
@@ -287,13 +289,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C7BC3062BC6EC1C00465C0F /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		84531D132B94C369002289C6 /* FillProfileFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,7 +409,6 @@
 		D853CC392B756BB500DA58D5 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				4C7BC3062BC6EC1C00465C0F /* New Group */,
 				4C7BC3042BC6EC1100465C0F /* EventViewController.swift */,
 				4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */,
 				4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */,
@@ -503,7 +497,7 @@
 		DD3A2EA02B7E7807006A3B8E /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				F30170772B8CF2CE00A6921A /* Alert */,
+				F30170772B8CF2CE00A6921A /* AlertPresenter */,
 				DDCAC7CD2B851F4200EC7D15 /* Services */,
 				D86387BD2B87A16400692535 /* NetworkClient */,
 				DD0C09A32B7901AB00792C29 /* Components */,
@@ -657,14 +651,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F30170772B8CF2CE00A6921A /* Alert */ = {
+		F30170772B8CF2CE00A6921A /* AlertPresenter */ = {
 			isa = PBXGroup;
 			children = (
 				F30170782B8CF2D600A6921A /* AlertPresenter.swift */,
 				F301707B2B8CF2FF00A6921A /* AlertModel.swift */,
 				F301707D2B8CF32500A6921A /* AlertButton.swift */,
 			);
-			path = Alert;
+			path = AlertPresenter;
 			sourceTree = "<group>";
 		};
 		F301707F2B8CF55E00A6921A /* SplashScreen */ = {
@@ -771,6 +765,7 @@
 			packageProductDependencies = (
 				D86387D62B8A7ECA00692535 /* SwiftKeychainWrapper */,
 				84CCA1BC2B95B6A6000BDC28 /* ProgressHUD */,
+				DDFA4A662BC6F82E00AEF3D0 /* SnapKit */,
 			);
 			productName = FindFriends;
 			productReference = D853CC222B7567AF00DA58D5 /* FindFriends.app */;
@@ -803,6 +798,7 @@
 			packageReferences = (
 				D86387D52B8A7ECA00692535 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 				84CCA1BB2B95B6A6000BDC28 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+				DDFA4A652BC6F82E00AEF3D0 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = D853CC232B7567AF00DA58D5 /* Products */;
 			projectDirPath = "";
@@ -1199,6 +1195,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		DDFA4A652BC6F82E00AEF3D0 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1211,6 +1215,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D86387D52B8A7ECA00692535 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
+		};
+		DDFA4A662BC6F82E00AEF3D0 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDFA4A652BC6F82E00AEF3D0 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
