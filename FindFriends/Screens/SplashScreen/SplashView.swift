@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SnapKit
 import UIKit
 
 protocol SplashViewDelegate: AnyObject {
@@ -17,13 +18,6 @@ protocol SplashViewDelegate: AnyObject {
 final class SplashView: UIView {
 
     weak var delegate: SplashViewDelegate?
-    
-    private enum Constants {
-        static let width: CGFloat = 137
-        static let height: CGFloat = 139
-        static let centerYInset: CGFloat = -72
-    }
-    
     private let viewModel: SplashViewModel
     private var cancellables: Set<AnyCancellable> = []
 
@@ -63,18 +57,20 @@ final class SplashView: UIView {
     }
 
     private func setupLayout() {
-        addSubviewWithoutAutoresizingMask(logoImageView)
-        addSubviewWithoutAutoresizingMask(label)
+        addSubview(logoImageView)
+        addSubview(label)
         
-        NSLayoutConstraint.activate([
-            logoImageView.widthAnchor.constraint(equalToConstant: Constants.width),
-            logoImageView.heightAnchor.constraint(equalToConstant: Constants.height),
-            logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: Constants.centerYInset),
-            
-            label.centerXAnchor.constraint(equalTo: centerXAnchor),
-            label.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20)
-        ])
+        logoImageView.snp.makeConstraints { make in
+            make.width.equalTo(137)
+            make.height.equalTo(139)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-72)
+        }
+        
+        label.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(logoImageView.snp.bottom).offset(20)
+        }
     }
     
     private func bind() {
@@ -124,6 +120,5 @@ extension SplashView {
                     }
                 }
         }
-       
     }
 }
