@@ -30,7 +30,7 @@ final class SearchFriendCell: UITableViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.textColor = .primeDark
-        label.font = .Regular.medium16
+        label.font = .regular16
         return label
     }()
     
@@ -39,14 +39,14 @@ final class SearchFriendCell: UITableViewCell {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.textColor = .primeDark
-        label.font = .Regular.small12
+        label.font = .regular12
         return label
     }()
     
     private lazy var age: UILabel = {
         let label = UILabel()
         label.textColor = .placeholder
-        label.font = .Regular.small12
+        label.font = .regular12
         return label
     }()
     
@@ -60,14 +60,18 @@ final class SearchFriendCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with model: RecomendationFriend) {
+    func configure(with model: SearchFriendCellViewModel) {
         fullName.text = model.fullName
         purpose.text = model.purpose
-        age.text = "\(model.age) лет"
+        if let age = model.age {
+            
+            self.age.text = "\(age) \(correctStringForNumber(age))"
+        }
     }
     
     private func setupViews() {
         backgroundColor = .clear
+        selectionStyle = .none
     }
     
     private func setupLayout() {
@@ -101,5 +105,20 @@ final class SearchFriendCell: UITableViewCell {
             age.topAnchor.constraint(equalTo: fullName.topAnchor),
             age.trailingAnchor.constraint(equalTo: purpose.trailingAnchor)
         ])
+    }
+    
+    private func correctStringForNumber(_ num: Int) -> String {
+        switch num % 10 {
+        case 1 where num % 100 != 11:
+            return "год"
+        case 2 where num % 100 != 12:
+            return "года"
+        case 3 where num % 100 != 13:
+            return "года"
+        case 4 where num % 100 != 14:
+            return "года"
+        default:
+            return "лет"
+        }
     }
 }

@@ -46,6 +46,7 @@ open class TabBarController: UITabBarController  {
         super.viewDidLoad()
         self.setValue(customTabBar, forKey: "tabBar")
         createTabBar()
+        selectedIndex = 1
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -54,7 +55,7 @@ open class TabBarController: UITabBarController  {
 
     open var barHeight: CGFloat {
         get {
-                return _barHeight + view.safeAreaInsets.bottom
+            return _barHeight + view.safeAreaInsets.bottom
         }
         set {
             _barHeight = newValue
@@ -97,6 +98,7 @@ open class TabBarController: UITabBarController  {
         viewController.tabBarItem.title = title
         viewController.tabBarItem.image = image
         let vc = UINavigationController(rootViewController: viewController)
+        vc.hideKeyboardWhenTappedAround(cancelsTouchesInView: true)
         vc.navigationBar.prefersLargeTitles = true
         return vc
     }
@@ -104,13 +106,18 @@ open class TabBarController: UITabBarController  {
  
     //MARK: - CreateTabBar
     private func createTabBar() {
+        let searchFriendsViewModel = SearchFriendsViewModel()
+        let searchFriendsView = SearchFriendsView(viewModel: searchFriendsViewModel)
+        let searchFriendsVC = SearchFriendsViewController(searchFriendsView: searchFriendsView)
+        
+        let myProfileViewModel = MyProfileViewModel()
+        let myProfileVC = MyProfileViewController(viewModel: myProfileViewModel)
         
         viewControllers = [
             generateVC(UIViewController(), "Сообщения", UIImage(resource: .messagesWithoutNotification)),
-            generateVC(SearchFriendsViewController(), "Поиск друзей", UIImage(resource: .searchFriends)),
-            generateVC(EventViewController(), "Мероприятия", UIImage(resource: .events)),
-            generateVC(UIViewController(), "Мой профиль", UIImage(resource: .myProfile))
+            generateVC(searchFriendsVC, "Поиск друзей", UIImage(resource: .searchFriends)),
+            generateVC(UIViewController(), "Мероприятия", UIImage(resource: .events)),
+            generateVC(myProfileVC, "Мой профиль", UIImage(resource: .myProfile))
         ]
     }
-
 }

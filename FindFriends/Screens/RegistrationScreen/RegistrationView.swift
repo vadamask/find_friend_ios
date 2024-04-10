@@ -12,10 +12,11 @@ import UIKit
 protocol RegistrationViewDelegate: AnyObject {
     func presentWebPage(_ page: SFSafariViewController)
     func showAlert(_ model: AlertModel)
+    func dismiss()
 }
 
 final class RegistrationView: BaseRegistrationView {
-    let viewModel = RegistrationViewModel(registrationService: RegistrationService())
+    let viewModel = RegistrationViewModel(usersService: UsersService(), loginService: LoginService())
     weak var delegate: RegistrationViewDelegate?
     
     lazy var nameTextField: RegistrationTextField = {
@@ -159,6 +160,12 @@ final class RegistrationView: BaseRegistrationView {
             .sink { [unowned self] model in
                 guard let model else { return }
                 delegate?.showAlert(model)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.registrationSuccessful
+            .sink { [unowned self] _ in
+                delegate?.dismiss()
             }
             .store(in: &cancellables)
     }

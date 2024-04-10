@@ -36,7 +36,7 @@ final class EnterVerificationCodeView: BaseRegistrationView {
     private lazy var header: UILabel = {
         let label = UILabel()
         label.textColor = .primeDark
-        label.font = .Bold.large
+        label.font = .bold34
         label.text = "Введите код"
         label.textAlignment = .center
         return label
@@ -46,7 +46,7 @@ final class EnterVerificationCodeView: BaseRegistrationView {
         let label = UILabel()
         label.textColor = .primeDark
         label.numberOfLines = 0
-        label.font = .Regular.medium
+        label.font = .regular17
         label.textAlignment = .center
         label.text = "Мы отправили код на вашу почту\n\(viewModel.email)"
         return label

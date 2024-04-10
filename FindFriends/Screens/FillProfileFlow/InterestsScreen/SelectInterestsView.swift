@@ -20,18 +20,18 @@ struct CollectionLayout {
 
 final class  SelectInterestsView: BaseFillProfileView {
     
-    let interestsViewModel = SelectInterestsViewModel()
+    private let viewModel: SelectInterestsViewModel
     
     private lazy var tagsSearchBar: UISearchBar = {
         var bar  = UISearchBar()
         bar.placeholder = "Поиск интересов"
         bar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск интересов", attributes: [
             .foregroundColor: UIColor.searchBar,
-            .font: UIFont.Regular.medium
+            .font: UIFont.regular17
         ])
         bar.backgroundColor = .white
         bar.searchTextField.backgroundColor = .white
-        bar.searchTextField.textColor = UIColor.searchBar
+        bar.searchTextField.textColor = .primeDark
         return bar
     }()
     
@@ -44,8 +44,13 @@ final class  SelectInterestsView: BaseFillProfileView {
     
     private var cancellables: Set<AnyCancellable> = []
     
-    required init() {
-        super.init(header: "Интересы", screenPosition: 3, subheader: "Выберете свои увлечения, чтобы найти единомышленников")
+    init(viewModel: SelectInterestsViewModel) {
+        self.viewModel = viewModel
+        super.init(
+            header: "Интересы",
+            subheader: "Выберете свои увлечения, чтобы найти единомышленников",
+            passButtonHidden: false
+        )
         setupViews()
         setupConstraints()
         setupCollectionView()
@@ -56,22 +61,18 @@ final class  SelectInterestsView: BaseFillProfileView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(header: String, screenPosition: Int, subheader: String = "") {
-        fatalError("init(header:screenPosition:subheader:) has not been implemented")
-    }
-    
     func loadData() {
-        interestsViewModel.getInterests()
+        viewModel.getInterests()
     }
     
     private func bind() {
-        interestsViewModel.interestsDidLoadPublisher
+        viewModel.interestsDidLoadPublisher
             .sink { [unowned self] _ in
                 tagsCollectionView.reloadData()
             }
             .store(in: &cancellables)
         
-        interestsViewModel.$interestsIsSelected
+        viewModel.$interestsIsSelected
             .sink { [unowned self] isSelected in
                 nextButton.setEnabled(isSelected)
             }
@@ -92,7 +93,7 @@ final class  SelectInterestsView: BaseFillProfileView {
         
         tagsCollectionView.delegate = self
         tagsCollectionView.dataSource = self
-        tagsCollectionView.register(TagsCollectionViewCell.self)
+        tagsCollectionView.register(InterestsCell.self)
     }
     
     private func setupConstraints() {
@@ -113,11 +114,11 @@ final class  SelectInterestsView: BaseFillProfileView {
     }
     
     @objc private func nextButtonTapped() {
-        interestsViewModel.nextButtonTapped()
+        viewModel.nextButtonTapped()
     }
     
     @objc private func passButtonTapped() {
-        interestsViewModel.passButtonTapped()
+        viewModel.passButtonTapped()
     }
 }
 
@@ -125,7 +126,7 @@ final class  SelectInterestsView: BaseFillProfileView {
 
 extension SelectInterestsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return interestsViewModel.numberOfItems
+        return viewModel.numberOfItems
     }
     
     func collectionView(
@@ -133,8 +134,8 @@ extension SelectInterestsView: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        let cell: TagsCollectionViewCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setupCell(with: interestsViewModel.modelFor(indexPath))
+        let cell: InterestsCell = tagsCollectionView.dequeueReusableCell(indexPath: indexPath)
+        cell.setupCell(with: viewModel.modelFor(indexPath))
         return cell
     }
 }
@@ -177,11 +178,11 @@ extension SelectInterestsView: UICollectionViewDelegateFlowLayout {
 
 extension SelectInterestsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        interestsViewModel.cellDidTappedAt(indexPath)
+        viewModel.didSelectItemAt(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        interestsViewModel.cellDidTappedAt(indexPath)
+        viewModel.didSelectItemAt(indexPath)
     }
 }
 
@@ -190,6 +191,6 @@ extension SelectInterestsView: UICollectionViewDelegate {
 
 extension SelectInterestsView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        interestsViewModel.searchFieldDidChanged(searchText)
+        viewModel.searchFieldDidChanged(searchText)
     }
 }

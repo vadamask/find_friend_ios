@@ -1,0 +1,62 @@
+//
+//  LoginService.swift
+//  FindFriends
+//
+//  Created by Вадим Шишков on 04.04.2024.
+//
+
+import Foundation
+
+protocol LoginServiceProtocol {
+    func loginUser(
+        _ dto: LoginRequestDto,
+        completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
+    )
+    
+    func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void)
+}
+
+final class LoginService: LoginServiceProtocol {
+
+    private let networkClient: NetworkClient
+    private let oAuthTokenStorage: OAuthTokenStorageProtocol
+
+    init(
+        networkClient: NetworkClient = DefaultNetworkClient(),
+        oAuthTokenStorage: OAuthTokenStorageProtocol = OAuthTokenStorage.shared
+    ) {
+        self.networkClient = networkClient
+        self.oAuthTokenStorage = oAuthTokenStorage
+    }
+
+    func loginUser(
+        _ dto: LoginRequestDto,
+        completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
+    ) {
+        let request = LoginRequest(body: dto)
+        networkClient.send(request: request, type: LoginResponseDto.self) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(data):
+                    self.oAuthTokenStorage.token = data.authToken
+                    completion(.success(data))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
+        let request = LogoutRequest()
+        networkClient.send(request: request) { [unowned self] result in
+            switch result {
+            case .success(_):
+                oAuthTokenStorage.token = nil
+                completion(.success(Void()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}

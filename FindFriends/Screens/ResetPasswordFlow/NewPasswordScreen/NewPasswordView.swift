@@ -36,7 +36,7 @@ final class NewPasswordView: BaseRegistrationView {
         let label = UILabel()
         label.textColor = .primeDark
         label.numberOfLines = 0
-        label.font = .Regular.medium
+        label.font = .regular17
         label.text = "Придумайте новый пароль. Он должен отличаться от вашего старого пароля."
         return label
     }()

@@ -47,4 +47,8 @@ extension RegistrationViewController: RegistrationViewDelegate {
     func showAlert(_ model: AlertModel) {
         AlertPresenter.show(in: self, model: model)
     }
+    
+    func dismiss() {
+        dismiss(animated: true)
+    }
 }

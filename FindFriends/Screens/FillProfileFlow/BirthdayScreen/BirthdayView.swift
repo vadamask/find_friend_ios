@@ -8,30 +8,20 @@
 import UIKit
 import Combine
 
-final class BirthdayView: UIView {
-    weak var delegate: CustomUIPageControlProtocol?
-    let viewModel = BirthdayViewModel()
-    
-    private lazy var headerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Введите дату рождения"
-        label.font = .systemFont(ofSize: 24, weight: .bold)
-        label.textAlignment = .center
-        label.textColor = .primeDark
-        
-        return label
-    }()
+final class BirthdayView: BaseFillProfileView {
+    private let viewModel: BirthdayViewModel
     
     private let datePickTextField = RegistrationTextField(
         placeholder: "ДД.ММ.ГГГГ",
         type: .date
     )
-    
-    private let nextButton = PrimeOrangeButton(text: "Продолжить")
+
     private var cancellables: Set<AnyCancellable> = []
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: BirthdayViewModel) {
+        self.viewModel = viewModel
+        super.init(header: "Введите дату рождения", passButtonHidden: true)
+        
         bind()
         setupViews()
         setupLayout()
@@ -52,29 +42,17 @@ private extension BirthdayView {
         datePickTextField.hideWarningLabel()
         
         nextButton.isEnabled = false
-        nextButton.addTarget(self, action: #selector(nexButtonTap), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextButtonTap), for: .touchUpInside)
     }
     
     func setupLayout() {
-        addSubviewWithoutAutoresizingMask(headerLabel)
         addSubviewWithoutAutoresizingMask(datePickTextField)
-        addSubviewWithoutAutoresizingMask(nextButton)
         
         NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            headerLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            headerLabel.heightAnchor.constraint(equalToConstant: 41),
-            headerLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 36),
-            
-            datePickTextField.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 52),
+            datePickTextField.topAnchor.constraint(equalTo: screenHeader.bottomAnchor, constant: 52),
             datePickTextField.heightAnchor.constraint(equalToConstant: 44),
             datePickTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            datePickTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            
-            nextButton.leadingAnchor.constraint(equalTo: datePickTextField.leadingAnchor),
-            nextButton.trailingAnchor.constraint(equalTo: datePickTextField.trailingAnchor),
-            nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -102),
-            nextButton.heightAnchor.constraint(equalToConstant: 48)
+            datePickTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
     }
     
@@ -85,7 +63,7 @@ private extension BirthdayView {
                     self?.datePickTextField.hideWarningLabel()
                     self?.nextButtonOn()
                 } else {
-                    self?.datePickTextField.showWarningForDate("недопустимое значение")
+                    self?.datePickTextField.showWarningForDate("Недопустимое значение")
                     self?.nextButtonOff()
                 }
             }
@@ -108,8 +86,8 @@ private extension BirthdayView {
     }
     
     @objc
-    func nexButtonTap() {
-        delegate?.sendPage(number: 2)
+    func nextButtonTap() {
+        viewModel.nextButtonTapped(datePickTextField.text ?? "")
     }
 }
 

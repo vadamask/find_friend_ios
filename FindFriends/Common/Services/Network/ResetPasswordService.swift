@@ -49,7 +49,7 @@ final class ResetPasswordService: ResetPasswordServiceProtocol {
     
     func validateCode(_ token: String, completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
         let dto = TokenDto(token: token)
-        let request = ValidateCodeRequest(body: dto)
+        let request = ValidateTokenRequest(body: dto)
         networkClient.send(request: request, type: SuccessResponse.self) { result in
             DispatchQueue.main.async {
                 switch result {

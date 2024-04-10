@@ -22,7 +22,7 @@ final class RegistrationTextField: UITextField {
     
     private lazy var warningLabel: UILabel = {
         let label = UILabel()
-        label.font = .Regular.small11
+        label.font = .regular11
         label.textColor = .warning
         label.numberOfLines = 0
         return label
@@ -78,7 +78,7 @@ final class RegistrationTextField: UITextField {
     }
 
     private func setupViews(placeholder text: String, type: TextFieldType) {
-        font = .Regular.medium
+        font = .regular17
         textColor = .primeDark
         attributedPlaceholder = attributedText(text, with: .placeholder)
         
@@ -109,7 +109,7 @@ final class RegistrationTextField: UITextField {
             string: text,
             attributes: [
                 .foregroundColor: color,
-                .font: UIFont.Regular.medium
+                .font: UIFont.regular17
         ])
     }
     

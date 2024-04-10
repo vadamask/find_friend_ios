@@ -232,7 +232,7 @@ fileprivate class UnderlinedButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.Semibold.small,
+            .font: UIFont.semibold12,
             .foregroundColor: UIColor.primeDark,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
@@ -240,7 +240,7 @@ fileprivate class UnderlinedButton: UIButton {
             string: text,
             attributes: attributes
         )
-        titleLabel?.font = .Regular.small12
+        titleLabel?.font = .regular12
         setAttributedTitle(attributeString, for: .normal)
         backgroundColor = .clear
     }

@@ -10,7 +10,7 @@ import UIKit
 final class WhiteBorderButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
-        titleLabel?.font = .Regular.medium
+        titleLabel?.font = .regular17
         setTitleColor(.primeDark, for: .normal)
         backgroundColor = .white
         setTitle(text, for: .normal)

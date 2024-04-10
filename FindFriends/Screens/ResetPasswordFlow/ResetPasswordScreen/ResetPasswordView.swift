@@ -36,7 +36,7 @@ final class ResetPasswordView: BaseRegistrationView {
         let label = UILabel()
         label.textColor = .primeDark
         label.numberOfLines = 0
-        label.font = .Regular.medium
+        label.font = .regular17
         label.text = "Укажите электронную почту, связанную с вашей учетной записью. " +
                      "Мы отправим вам письмо с кодом для сброса пароля."
         return label

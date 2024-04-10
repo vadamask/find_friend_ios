@@ -6,14 +6,13 @@ final class SelectCityTableViewCell: UITableViewCell {
     lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Астана"
         label.font = UIFont.systemFont(ofSize: 18)
         return label
     } ()
     
     lazy var checkMark: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "circle"), for: .normal)
+        button.setImage(UIImage(resource: .cityUnselected), for: .normal)
         button.tintColor = UIColor.black
         return button
     }()
@@ -25,10 +24,10 @@ final class SelectCityTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
-            checkMark.setImage(UIImage(systemName: "circle.circle.fill"), for: .normal)
+            checkMark.setImage(UIImage(resource: .citySelected), for: .normal)
             checkMark.tintColor = UIColor.lightOrange
         } else {
-            checkMark.setImage(UIImage(systemName: "circle"), for: .normal)
+            checkMark.setImage(UIImage(resource: .cityUnselected), for: .normal)
             checkMark.tintColor = UIColor.black
         }
     }

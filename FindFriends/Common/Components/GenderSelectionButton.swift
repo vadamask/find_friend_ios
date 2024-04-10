@@ -12,7 +12,7 @@ final class GenderSelectionButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
         setTitle(text, for: .normal)
-        titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        titleLabel?.font = .regular16
         setTitleColor(.textGray, for: .normal)
         setTitleColor(.primeDark, for: .highlighted)
         contentVerticalAlignment = .bottom
@@ -22,7 +22,6 @@ final class GenderSelectionButton: UIButton {
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 17, trailing: 0)
         configuration.baseBackgroundColor = .white
         self.configuration = configuration
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
@@ -32,6 +31,14 @@ final class GenderSelectionButton: UIButton {
     func isSelected(_ enabled: Bool) {
         isSelected = enabled
         setTitleColor(enabled ? .primeDark : .textGray, for: .selected)
+        titleLabel?.font = enabled ? .semibold16 : .regular16
         configuration?.baseBackgroundColor = enabled ? .buttonGray : .white
+    }
+    
+    func isSelectedInSetting(_ enabled: Bool) {
+        isSelected = enabled
+        setTitleColor(enabled ?.black: .black, for: .selected)
+        configuration?.image?.withTintColor(.lightOrange)
+        setImage(enabled ? .selectCity : .cityUnselected, for: .selected)
     }
 }
