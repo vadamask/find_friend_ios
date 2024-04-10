@@ -7,7 +7,7 @@ class SegmentView: UIView, UIImagePickerControllerDelegate & UINavigationControl
         let label = UILabel()
         label.text = "Заголовок"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -42,7 +42,7 @@ class SegmentView: UIView, UIImagePickerControllerDelegate & UINavigationControl
         let label = UILabel()
         label.text = "0 / 50"
         label.textColor = UIColor(named: "placeholder")
-        label.font = .Regular.small11
+        label.font = .regular11
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -52,7 +52,7 @@ class SegmentView: UIView, UIImagePickerControllerDelegate & UINavigationControl
         let label = UILabel()
         label.text = "Тип"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -88,7 +88,7 @@ class SegmentView: UIView, UIImagePickerControllerDelegate & UINavigationControl
         let label = UILabel()
         label.text = "0 / 50"
         label.textColor = UIColor(named: "placeholder")
-        label.font = .Regular.small11
+        label.font = .regular11
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -98,7 +98,7 @@ class SegmentView: UIView, UIImagePickerControllerDelegate & UINavigationControl
         let label = UILabel()
         label.text = "Подробности"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -136,7 +136,7 @@ class SegmentView: UIView, UIImagePickerControllerDelegate & UINavigationControl
         let label = UILabel()
         label.text = "Фото места проведения"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

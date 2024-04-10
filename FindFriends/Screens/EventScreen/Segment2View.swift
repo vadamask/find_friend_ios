@@ -24,7 +24,7 @@ class Segment2View: UIView {
         let label = UILabel()
         label.text = "Количество участников"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -96,7 +96,7 @@ class Segment2View: UIView {
         let label = UILabel()
         label.text = "Возраст"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -168,7 +168,7 @@ class Segment2View: UIView {
         let label = UILabel()
         label.text = "Пол"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

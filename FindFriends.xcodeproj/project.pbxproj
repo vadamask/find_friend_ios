@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C7BC3052BC6EC1100465C0F /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC3042BC6EC1100465C0F /* EventViewController.swift */; };
+		4C7BC3082BC6EC6200465C0F /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */; };
+		4C7BC30A2BC6EC7400465C0F /* Segment1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC3092BC6EC7300465C0F /* Segment1View.swift */; };
+		4C7BC30C2BC6EC7900465C0F /* Segment2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */; };
+		4C7BC30E2BC6EC7E00465C0F /* Segment3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */; };
+		4C7BC3102BC6EC8300465C0F /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */; };
 		4C81E09D2BB5A963007FCB4E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81E09C2BB5A963007FCB4E /* SearchBar.swift */; };
 		4CB304C12BADAE5500D08003 /* MyProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB304C02BADAE5500D08003 /* MyProfileRequest.swift */; };
 		8445676E2B9740CB00114604 /* GenderSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445676D2B9740CB00114604 /* GenderSelectionButton.swift */; };
@@ -135,6 +141,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C7BC3042BC6EC1100465C0F /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		4C7BC3092BC6EC7300465C0F /* Segment1View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segment1View.swift; path = EventScreen/Segment1View.swift; sourceTree = "<group>"; };
+		4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segment2View.swift; path = EventScreen/Segment2View.swift; sourceTree = "<group>"; };
+		4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segment3View.swift; path = EventScreen/Segment3View.swift; sourceTree = "<group>"; };
+		4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentView.swift; path = EventScreen/SegmentView.swift; sourceTree = "<group>"; };
 		4C81E09C2BB5A963007FCB4E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4CB304C02BADAE5500D08003 /* MyProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileRequest.swift; sourceTree = "<group>"; };
 		8445676D2B9740CB00114604 /* GenderSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSelectionButton.swift; sourceTree = "<group>"; };
@@ -275,6 +287,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C7BC3062BC6EC1C00465C0F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		84531D132B94C369002289C6 /* FillProfileFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +414,13 @@
 		D853CC392B756BB500DA58D5 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				4C7BC3062BC6EC1C00465C0F /* New Group */,
+				4C7BC3042BC6EC1100465C0F /* EventViewController.swift */,
+				4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */,
+				4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */,
+				4C7BC3092BC6EC7300465C0F /* Segment1View.swift */,
+				4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */,
+				4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */,
 				F301707F2B8CF55E00A6921A /* SplashScreen */,
 				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
 				F31111282B9690F800A97B80 /* BaseRegistration */,
@@ -811,6 +837,7 @@
 				CECC81062BA319F400F4312B /* TabBarController.swift in Sources */,
 				DDCAC7D42B852B8600EC7D15 /* RegistrationView.swift in Sources */,
 				DD64AB902BBF25A40011E7D4 /* LogoutRequest.swift in Sources */,
+				4C7BC3052BC6EC1100465C0F /* EventViewController.swift in Sources */,
 				F30170762B8CF22F00A6921A /* Credentials.swift in Sources */,
 				4CB304C12BADAE5500D08003 /* MyProfileRequest.swift in Sources */,
 				F30DA5A22B8E7B2100E6571B /* ResetPasswordViewModel.swift in Sources */,
@@ -819,6 +846,7 @@
 				D86387D42B8A7E4F00692535 /* TokenStorageService.swift in Sources */,
 				DD64AB9A2BC1273F0011E7D4 /* UserResponse.swift in Sources */,
 				D86387C72B87A16400692535 /* NetworkRequestProtocol.swift in Sources */,
+				4C7BC30A2BC6EC7400465C0F /* Segment1View.swift in Sources */,
 				DD64AB982BC11AAB0011E7D4 /* SplashViewModel.swift in Sources */,
 				F30170692B8CDF5C00A6921A /* UsersRequest.swift in Sources */,
 				DD64AB7C2BB5F84A0011E7D4 /* InterestsCellViewModel.swift in Sources */,
@@ -832,6 +860,7 @@
 				8445676E2B9740CB00114604 /* GenderSelectionButton.swift in Sources */,
 				D86387C42B87A16400692535 /* NetworkTask.swift in Sources */,
 				D5E980BE2B8F0D7800A17E0A /* BirthdayViewModel.swift in Sources */,
+				4C7BC3102BC6EC8300465C0F /* SegmentView.swift in Sources */,
 				DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */,
 				D854012A2B91F6940088C1E9 /* SelectInterestsViewController.swift in Sources */,
 				DD64AB842BBC6BCC0011E7D4 /* CityRequest.swift in Sources */,
@@ -843,6 +872,7 @@
 				F36F407A2B85562800B2082B /* UIViewController+Extensions.swift in Sources */,
 				D853CC262B7567AF00DA58D5 /* AppDelegate.swift in Sources */,
 				DDCAC7CF2B851F7700EC7D15 /* ValidationService.swift in Sources */,
+				4C7BC30C2BC6EC7900465C0F /* Segment2View.swift in Sources */,
 				DD0920E82BB1EC5700798310 /* ResetPasswordService.swift in Sources */,
 				DD64AB882BBC90720011E7D4 /* UsersService.swift in Sources */,
 				F36F40802B86129900B2082B /* ResetPasswordView.swift in Sources */,
@@ -869,6 +899,7 @@
 				DDFA4A5B2BC2B70700AEF3D0 /* SelectCityViewModel.swift in Sources */,
 				DD64AB6F2BB33C420011E7D4 /* ValidateTokenRequest.swift in Sources */,
 				D854012E2B93125A0088C1E9 /* CellReusingUtils.swift in Sources */,
+				4C7BC30E2BC6EC7E00465C0F /* Segment3View.swift in Sources */,
 				CE07C5E22BC44612001EEF0F /* MyProfileModel.swift in Sources */,
 				DDFA4A642BC32B1900AEF3D0 /* UpdateMyProfileDto.swift in Sources */,
 				DD64AB712BB341B10011E7D4 /* TokenDto.swift in Sources */,
@@ -900,6 +931,7 @@
 				DDFA4A592BC2B36300AEF3D0 /* SelectCityView.swift in Sources */,
 				DD5F38242BAE045A004AF6B2 /* EnterVerificationCodeViewController.swift in Sources */,
 				CECC81262BADEB3200F4312B /* UILabel+AddImage.swift in Sources */,
+				4C7BC3082BC6EC6200465C0F /* CreateEventViewController.swift in Sources */,
 				84531D1A2B94C450002289C6 /* GenderViewController.swift in Sources */,
 				DDC2551B2BA2249F0037FA7E /* RegistrationErrorModel.swift in Sources */,
 				D853CC282B7567AF00DA58D5 /* SceneDelegate.swift in Sources */,

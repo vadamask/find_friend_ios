@@ -6,7 +6,7 @@ class Segment3View: UIView {
         let label = UILabel()
         label.text = "Стоимость"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

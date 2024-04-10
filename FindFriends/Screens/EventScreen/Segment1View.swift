@@ -6,7 +6,7 @@ class Segment1View: UIView {
         let label = UILabel()
         label.text = "Начало события"
         label.textAlignment = .left
-        label.font = .Semibold.medium
+        label.font = .semibold17
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
