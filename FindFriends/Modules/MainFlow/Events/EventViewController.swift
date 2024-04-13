@@ -5,7 +5,7 @@ final class EventViewController: UIViewController {
     private let emptyEvent: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named:"austronaut")
+        image.image = UIImage(named: "austronaut")
         return image
     }()
     

@@ -135,10 +135,10 @@
 /* Begin PBXFileReference section */
 		4C7BC3042BC6EC1100465C0F /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
-		4C7BC3092BC6EC7300465C0F /* Segment1View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segment1View.swift; path = EventScreen/Segment1View.swift; sourceTree = "<group>"; };
-		4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segment2View.swift; path = EventScreen/Segment2View.swift; sourceTree = "<group>"; };
-		4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Segment3View.swift; path = EventScreen/Segment3View.swift; sourceTree = "<group>"; };
-		4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentView.swift; path = EventScreen/SegmentView.swift; sourceTree = "<group>"; };
+		4C7BC3092BC6EC7300465C0F /* Segment1View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment1View.swift; sourceTree = "<group>"; };
+		4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment2View.swift; sourceTree = "<group>"; };
+		4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment3View.swift; sourceTree = "<group>"; };
+		4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		4C81E09C2BB5A963007FCB4E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		8445676D2B9740CB00114604 /* GenderSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSelectionButton.swift; sourceTree = "<group>"; };
 		84531D142B94C38E002289C6 /* FillProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillProfilePageViewController.swift; sourceTree = "<group>"; };
@@ -295,7 +295,7 @@
 			path = GenderScreen;
 			sourceTree = "<group>";
 		};
-		CE07C5B72BBD91A9001EEF0F /* MyProfileScreen */ = {
+		CE07C5B72BBD91A9001EEF0F /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
 				CECC810A2BAC72C700F4312B /* MyProfileViewController.swift */,
@@ -304,7 +304,7 @@
 				CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */,
 				CE07C5D42BC2AD43001EEF0F /* EditMyProfileViewModel.swift */,
 			);
-			path = MyProfileScreen;
+			path = MyProfile;
 			sourceTree = "<group>";
 		};
 		CECC80E42B98984B00F4312B /* CityScreen */ = {
@@ -383,31 +383,22 @@
 				DD67CE3B2B769EC1008B2A9C /* App */,
 				DD3A2EA02B7E7807006A3B8E /* Common */,
 				DD0C09A22B79019700792C29 /* Extensions */,
-				D853CC392B756BB500DA58D5 /* Screens */,
+				D853CC392B756BB500DA58D5 /* Modules */,
 				DD67CE3C2B769ED8008B2A9C /* Resources */,
 			);
 			path = FindFriends;
 			sourceTree = "<group>";
 		};
-		D853CC392B756BB500DA58D5 /* Screens */ = {
+		D853CC392B756BB500DA58D5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				4C7BC3042BC6EC1100465C0F /* EventViewController.swift */,
-				4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */,
-				4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */,
-				4C7BC3092BC6EC7300465C0F /* Segment1View.swift */,
-				4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */,
-				4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */,
 				F301707F2B8CF55E00A6921A /* SplashScreen */,
-				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
-				F31111282B9690F800A97B80 /* BaseRegistration */,
-				F36F407B2B855FAE00B2082B /* RegistrationScreen */,
+				DD0EE6AD2BCA736B00E2E3AB /* AuthFlow */,
 				DD5F38132BAB7017004AF6B2 /* ResetPasswordFlow */,
 				84531D132B94C369002289C6 /* FillProfileFlow */,
-				CECC80FD2BA3192A00F4312B /* TabBar */,
 				DD5F38142BAB7985004AF6B2 /* MainFlow */,
 			);
-			path = Screens;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		D85401282B91F3EE0088C1E9 /* InterestsScreen */ = {
@@ -422,7 +413,7 @@
 			path = InterestsScreen;
 			sourceTree = "<group>";
 		};
-		DD0412DC2B90E29400984BA7 /* SearchFriendsScreen */ = {
+		DD0412DC2B90E29400984BA7 /* SearchFriends */ = {
 			isa = PBXGroup;
 			children = (
 				DD0412DD2B90E31E00984BA7 /* SearchFriendsViewController.swift */,
@@ -431,7 +422,7 @@
 				DD0412E62B91056C00984BA7 /* SearchFriendCell.swift */,
 				DD0412E92B9105BC00984BA7 /* SearchFriendCellViewModel.swift */,
 			);
-			path = SearchFriendsScreen;
+			path = SearchFriends;
 			sourceTree = "<group>";
 		};
 		DD0C09A22B79019700792C29 /* Extensions */ = {
@@ -463,6 +454,44 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		DD0EE6AA2BCA715C00E2E3AB /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				4C7BC3042BC6EC1100465C0F /* EventViewController.swift */,
+				DD0EE6AC2BCA72DF00E2E3AB /* CreateEventScreen */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		DD0EE6AB2BCA72AA00E2E3AB /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		DD0EE6AC2BCA72DF00E2E3AB /* CreateEventScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4C7BC3072BC6EC6200465C0F /* CreateEventViewController.swift */,
+				4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */,
+				4C7BC3092BC6EC7300465C0F /* Segment1View.swift */,
+				4C7BC30B2BC6EC7900465C0F /* Segment2View.swift */,
+				4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */,
+			);
+			path = CreateEventScreen;
+			sourceTree = "<group>";
+		};
+		DD0EE6AD2BCA736B00E2E3AB /* AuthFlow */ = {
+			isa = PBXGroup;
+			children = (
+				F31111282B9690F800A97B80 /* BaseRegistration */,
+				F36F407B2B855FAE00B2082B /* RegistrationScreen */,
+				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
+			);
+			path = AuthFlow;
+			sourceTree = "<group>";
+		};
 		DD3A2EA02B7E7807006A3B8E /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,8 +516,11 @@
 		DD5F38142BAB7985004AF6B2 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
-				CE07C5B72BBD91A9001EEF0F /* MyProfileScreen */,
-				DD0412DC2B90E29400984BA7 /* SearchFriendsScreen */,
+				CECC80FD2BA3192A00F4312B /* TabBar */,
+				DD0EE6AB2BCA72AA00E2E3AB /* Messages */,
+				DD0EE6AA2BCA715C00E2E3AB /* Events */,
+				DD0412DC2B90E29400984BA7 /* SearchFriends */,
+				CE07C5B72BBD91A9001EEF0F /* MyProfile */,
 			);
 			path = MainFlow;
 			sourceTree = "<group>";
