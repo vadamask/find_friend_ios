@@ -33,10 +33,10 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
 
-    private let loginService: LoginServiceProtocol
+    private let loginService: AuthServiceProtocol
 
     init(
-        loginService: LoginServiceProtocol = LoginService(),
+        loginService: AuthServiceProtocol = AuthService(),
         credentials: Credentials = Credentials.empty
     ) {
         self.loginService = loginService

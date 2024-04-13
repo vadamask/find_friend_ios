@@ -13,14 +13,14 @@ protocol InterestsServiceProtocol {
 
 final class InterestsService: InterestsServiceProtocol {
 
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
 
-    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+    init(networkClient: NetworkClientProtocol = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
 
     func getInterests(completion: @escaping (Result<[InterestsCellViewModel], Error>) -> Void) {
-        let request = InterstsRequest()
+        let request = NetworkRequest(endpoint: .getInterests)
         networkClient.send(request: request, type: [InterestsdResponse].self) { result in
             DispatchQueue.main.async {
                 switch result {

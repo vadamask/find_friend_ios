@@ -13,7 +13,7 @@ protocol ResetPasswordServiceProtocol {
         completion: @escaping (Result<SuccessResponse, NetworkClientError>) -> Void
     )
     func validateCode(
-        _ token: String,
+        _ token: TokenDto,
         completion: @escaping (Result<Void, NetworkClientError>) -> Void
     )
     func setNewPassword(
@@ -24,9 +24,9 @@ protocol ResetPasswordServiceProtocol {
 
 final class ResetPasswordService: ResetPasswordServiceProtocol {
 
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
 
-    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+    init(networkClient: NetworkClientProtocol = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
 
@@ -34,7 +34,7 @@ final class ResetPasswordService: ResetPasswordServiceProtocol {
         _ dto: ResetPasswordRequestDto,
         completion: @escaping (Result<SuccessResponse, NetworkClientError>) -> Void
     ) {
-        let request = ResetPasswordRequest(body: dto)
+        let request = NetworkRequest(endpoint: .resetPassword, body: dto)
         networkClient.send(request: request, type: SuccessResponse.self) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -47,9 +47,8 @@ final class ResetPasswordService: ResetPasswordServiceProtocol {
         }
     }
     
-    func validateCode(_ token: String, completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
-        let dto = TokenDto(token: token)
-        let request = ValidateTokenRequest(body: dto)
+    func validateCode(_ dto: TokenDto, completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
+        let request = NetworkRequest(endpoint: .validateToken, body: dto)
         networkClient.send(request: request, type: SuccessResponse.self) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -70,7 +69,7 @@ final class ResetPasswordService: ResetPasswordServiceProtocol {
         _ dto: NewPasswordDto,
         completion: @escaping (Result<Void, NetworkClientError>) -> Void
     ) {
-        let request = NewPasswordRequest(body: dto)
+        let request = NetworkRequest(endpoint: .setPassword, body: dto)
         networkClient.send(request: request, type: SuccessResponse.self) { result in
             DispatchQueue.main.async {
                 switch result {

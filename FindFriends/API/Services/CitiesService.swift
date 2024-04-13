@@ -12,14 +12,14 @@ protocol CitiesServiceProtocol {
 }
 
 final class CitiesService: CitiesServiceProtocol {
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
     
-    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+    init(networkClient: NetworkClientProtocol = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
     
     func loadCities(completion: @escaping (Result<[CityResponse], NetworkClientError>) -> Void) {
-        let request = CityRequest()
+        let request = NetworkRequest(endpoint: .getCities)
         networkClient.send(request: request, type: [CityResponse].self) { result in
             switch result {
             case .success(let cities):

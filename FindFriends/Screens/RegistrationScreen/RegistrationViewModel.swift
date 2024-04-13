@@ -11,7 +11,7 @@ import SafariServices
 final class RegistrationViewModel {
    
     let usersService: UsersServiceProtocol
-    let loginService: LoginServiceProtocol
+    let loginService: AuthServiceProtocol
     
     @Published var allFieldsAreFilling = false
     @Published var personalIsFilling = false
@@ -41,7 +41,7 @@ final class RegistrationViewModel {
         errorTextForConfirmPassword.isEmpty
     }
     
-    init(usersService: UsersServiceProtocol, loginService: LoginServiceProtocol) {
+    init(usersService: UsersServiceProtocol, loginService: AuthServiceProtocol) {
         self.usersService = usersService
         self.loginService = loginService
         setupPipline()

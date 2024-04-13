@@ -33,10 +33,10 @@ final class UsersService: UsersServiceProtocol {
     
     private var usersResponse: [UsersResponse] = []
     private var myProfile: UserResponse?
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
     private var page = 1
     
-    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+    init(networkClient: NetworkClientProtocol = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
     
@@ -44,7 +44,7 @@ final class UsersService: UsersServiceProtocol {
         _ dto: CreateUserRequestDto,
         completion: @escaping (Result<CreateUserResponseDto, NetworkClientError>) -> Void
     ) {
-        let request = UsersRequest(httpMethod: .post, endpoint: .createUser, body: dto)
+        let request = NetworkRequest(endpoint: .createUser, body: dto)
         networkClient.send(request: request, type: CreateUserResponseDto.self) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -102,7 +102,7 @@ final class UsersService: UsersServiceProtocol {
     }
     
     func loadMyInfo(completion: @escaping (Result<UserResponse, NetworkClientError>) -> Void) {
-        let request = MyProfileRequest(httpMethod: .get, body: nil)
+        let request = NetworkRequest(endpoint: .getMe)
         networkClient.send(request: request, type: UserResponse.self) { [unowned self] result in
             switch result {
             case .success(let userData):
@@ -129,7 +129,7 @@ final class UsersService: UsersServiceProtocol {
             city: data.city,
             avatar: data.avatar
         )
-        let request = MyProfileRequest(httpMethod: .put, body: dto)
+        let request = NetworkRequest(endpoint: .updateMe, body: dto)
         networkClient.send(request: request, type: UserResponse.self) { result in
             switch result {
             case .success(let user):
@@ -142,7 +142,7 @@ final class UsersService: UsersServiceProtocol {
     
     private func sendProfileRequest() {
         state.send(.loading)
-        let request = MyProfileRequest(httpMethod: .get, body: nil)
+        let request = NetworkRequest(endpoint: .getMe)
         networkClient.send(request: request, type: UserResponse.self) { [unowned self] result in
             switch result {
             case .success(let userData):
@@ -157,7 +157,7 @@ final class UsersService: UsersServiceProtocol {
     
     private func sendRequest() {
         state.send(.loading)
-        let request = UsersRequest(httpMethod: .get, endpoint: .getUsers(page), body: nil)
+        let request = NetworkRequest(endpoint: .getUsers(page))
         networkClient.send(request: request, type: UsersResponse.self) { [unowned self] result in
             switch result {
             case .success(let usersResponse):

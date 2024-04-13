@@ -1,10 +1,10 @@
 import Foundation
 
-protocol NetworkTask {
+protocol NetworkTaskProtocol {
     func cancel()
 }
 
-struct DefaultNetworkTask: NetworkTask {
+struct DefaultNetworkTask: NetworkTaskProtocol {
     let dataTask: URLSessionDataTask
 
     func cancel() {

@@ -3,7 +3,7 @@ import Combine
 
 final class MyProfileViewController: UIViewController {
     
-    private let loginService = LoginService()
+    private let loginService = AuthService()
     
     private let viewModel: MyProfileViewModel
     private var cancellables: Set<AnyCancellable> = []
@@ -346,7 +346,7 @@ final class MyProfileViewController: UIViewController {
     
     private func bind() {
         viewModel.$state
-            .sink { [unowned self] state in
+            .sink { state in
                 DispatchQueue.main.async {
                     switch state {
                     case .finishLoading:

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RegistrationErrorModel: Decodable {
+struct ErrorModel: Decodable {
     let password: [String]?
     let email: [String]?
     let nonFieldErrors: [String]?

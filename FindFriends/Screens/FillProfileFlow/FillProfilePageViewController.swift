@@ -245,13 +245,13 @@ extension FillProfilePageViewController: FillProfileDelegate {
         let service = UsersService()
         service.loadMyInfo { [unowned self] result in
             switch result {
-            case .success(let success):
+            case .success(_):
                 service.updateMe(profile!) { [unowned self] result in
                     switch result {
-                    case .success(let success):
+                    case .success(_):
                         UserDefaults.standard.setValue(true, forKey: "fillingProfile")
                         DispatchQueue.main.async {
-                            dismiss(animated: true)
+                            self.dismiss(animated: true)
                         }
                     case .failure(let error):
                         print(error.localizedDescription)

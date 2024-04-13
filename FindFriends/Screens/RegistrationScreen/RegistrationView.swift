@@ -16,7 +16,7 @@ protocol RegistrationViewDelegate: AnyObject {
 }
 
 final class RegistrationView: BaseRegistrationView {
-    let viewModel = RegistrationViewModel(usersService: UsersService(), loginService: LoginService())
+    let viewModel = RegistrationViewModel(usersService: UsersService(), loginService: AuthService())
     weak var delegate: RegistrationViewDelegate?
     
     lazy var nameTextField: RegistrationTextField = {

@@ -9,7 +9,7 @@ enum NetworkClientError: Error {
     var message: String {
         switch self {
         case let .httpStatusCode(_, data):
-            let model = try? JSONDecoder().decode(RegistrationErrorModel.self, from: data)
+            let model = try? JSONDecoder().decode(ErrorModel.self, from: data)
             return model?.currentError ?? ""
         case .urlRequestError(let error):
             return "Ошибка составления запроса: \(error.localizedDescription)"
@@ -21,22 +21,22 @@ enum NetworkClientError: Error {
     }
 }
 
-protocol NetworkClient {
+protocol NetworkClientProtocol {
     @discardableResult
     func send(
         request: NetworkRequestProtocol,
         onResponse: @escaping (Result<Data, NetworkClientError>) -> Void
-    ) -> NetworkTask?
+    ) -> NetworkTaskProtocol?
 
     @discardableResult
     func send<T: Decodable>(
         request: NetworkRequestProtocol,
         type: T.Type,
         onResponse: @escaping (Result<T, NetworkClientError>) -> Void
-    ) -> NetworkTask?
+    ) -> NetworkTaskProtocol?
 }
 
-struct DefaultNetworkClient: NetworkClient {
+struct DefaultNetworkClient: NetworkClientProtocol {
     private let session: URLSession
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
@@ -53,9 +53,9 @@ struct DefaultNetworkClient: NetworkClient {
     func send(
         request: NetworkRequestProtocol,
         onResponse: @escaping (Result<Data, NetworkClientError>) -> Void
-    ) -> NetworkTask? {
+    ) -> NetworkTaskProtocol? {
         
-        guard let urlRequest = create(request: request) else { return nil }
+        guard let urlRequest = createURLRequestFrom(request) else { return nil }
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
             if let error {
@@ -85,7 +85,7 @@ struct DefaultNetworkClient: NetworkClient {
         request: NetworkRequestProtocol,
         type: T.Type,
         onResponse: @escaping (Result<T, NetworkClientError>) -> Void
-    ) -> NetworkTask? {
+    ) -> NetworkTaskProtocol? {
         
         return send(request: request) { result in
             switch result {
@@ -97,19 +97,20 @@ struct DefaultNetworkClient: NetworkClient {
         }
     }
     
-    private func create(request: NetworkRequestProtocol) -> URLRequest? {
+    private func createURLRequestFrom(_ request: NetworkRequestProtocol) -> URLRequest? {
         guard let url = request.endpoint.url else {
             assertionFailure("Empty endpoint")
             return nil
         }
 
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.httpMethod = request.endpoint.method.rawValue
 
-        if let token = request.token {
-            urlRequest.setValue("Token \(token)", forHTTPHeaderField: "Authorization")
+        if !request.headers.isEmpty {
+            for header in request.headers {
+                urlRequest.setValue(header.value, forHTTPHeaderField: header.key)
+            }
         }
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         if let body = request.body,
            let data = try? encoder.encode(body) {

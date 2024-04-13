@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol LoginServiceProtocol {
+protocol AuthServiceProtocol {
     func loginUser(
         _ dto: LoginRequestDto,
         completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
@@ -16,13 +16,13 @@ protocol LoginServiceProtocol {
     func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void)
 }
 
-final class LoginService: LoginServiceProtocol {
+final class AuthService: AuthServiceProtocol {
 
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
     private let oAuthTokenStorage: OAuthTokenStorageProtocol
 
     init(
-        networkClient: NetworkClient = DefaultNetworkClient(),
+        networkClient: NetworkClientProtocol = DefaultNetworkClient(),
         oAuthTokenStorage: OAuthTokenStorageProtocol = OAuthTokenStorage.shared
     ) {
         self.networkClient = networkClient
@@ -33,7 +33,7 @@ final class LoginService: LoginServiceProtocol {
         _ dto: LoginRequestDto,
         completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
     ) {
-        let request = LoginRequest(body: dto)
+        let request = NetworkRequest(endpoint: .login, body: dto)
         networkClient.send(request: request, type: LoginResponseDto.self) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -48,7 +48,7 @@ final class LoginService: LoginServiceProtocol {
     }
     
     func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
-        let request = LogoutRequest()
+        let request = NetworkRequest(endpoint: .logout)
         networkClient.send(request: request) { [unowned self] result in
             switch result {
             case .success(_):

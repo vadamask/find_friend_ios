@@ -41,7 +41,8 @@ final class EnterVerificationCodeViewModel {
     
     func confirmButtonTapped() {
         isLoading = true
-        service.validateCode(token.joined()) { [unowned self] result in
+        let dto = TokenDto(token: token.joined())
+        service.validateCode(dto) { [unowned self] result in
             switch result {
             case .success(_):
                 tokenIsValid = true
