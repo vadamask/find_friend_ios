@@ -5,85 +5,66 @@
 //  Created by Artem Novikov on 26.02.2024.
 //
 
+import Combine
 import Foundation
 
-typealias Binding<T> = (T) -> Void
+final class LoginViewModel {
 
-protocol LoginViewModelProtocol {
-    var onLoginAllowedStateChange: Binding<Bool>? { get set }
-    var onEmailErrorStateChange: Binding<String>? { get set }
-    var onPasswordErrorStateChange: Binding<String>? { get set }
-    var credentials: Credentials { get set }
-
-    func loginUser(completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void)
-    func validateFields() -> Bool
-}
-
-final class LoginViewModel: LoginViewModelProtocol {
-
-    var onLoginAllowedStateChange: Binding<Bool>?
-    var onEmailErrorStateChange: Binding<String>?
-    var onPasswordErrorStateChange: Binding<String>?
-
-    var credentials: Credentials {
-        didSet {
-            let allFieldsAreFilled = !credentials.email.isEmpty && !credentials.password.isEmpty
-            onLoginAllowedStateChange?(allFieldsAreFilled)
-            hideErrorMessages()
-        }
-    }
+    @Published var emptyFields: Bool = true
+    @Published var emailError: String?
+    @Published var networkError: String?
+    @Published var isLoading = false
+    var email = CurrentValueSubject<String, Never>("")
+    var password = CurrentValueSubject<String, Never>("")
 
     private let loginService: AuthServiceProtocol
+    private weak var coordinator: AuthCoordinatorProtocol?
 
-    init(
-        loginService: AuthServiceProtocol = AuthService(),
-        credentials: Credentials = Credentials.empty
-    ) {
+    init(loginService: AuthServiceProtocol = AuthService(), coordinator: AuthCoordinatorProtocol) {
         self.loginService = loginService
-        self.credentials = credentials
+        self.coordinator = coordinator
+        bind()
     }
-
-    func loginUser(completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void) {
-        loginService.loginUser(credentials.toLoginRequestDto) { result in
-            switch result {
-            case .success(let model):
-                completion(.success(model))
-            case .failure(let error):
-                completion(.failure(error))
+    
+    func didTapLoginButton() {
+        isLoading = true
+        validateEmail()
+        if emailError == nil {
+            let dto = LoginRequestDto(email: email.value, password: password.value)
+            loginService.loginUser(dto) { [unowned self] result in
+                switch result {
+                case .success(_):
+                    coordinator?.showMainFlow()
+                    networkError = nil
+                case .failure(let error):
+                    networkError = error.message
+                }
+                isLoading = false
             }
         }
     }
-
-    func validateFields() -> Bool {
-        let isLoginValid = validateLogin()
-        let isPasswordValid = validatePassword()
-        return isLoginValid && isPasswordValid
+    
+    func didTapRegistrationButton() {
+        coordinator?.showRegistrationScreen()
     }
-
-    private func validateLogin() -> Bool {
-        switch ValidationService.validate(credentials.email, type: .email) {
+    
+    func didTapForgotPasswordButton() {
+        coordinator?.showResetPasswordScreen()
+    }
+    
+    private func bind() {
+        email.combineLatest(password)
+            .map { $0.0.isEmpty && $0.1.isEmpty }
+            .assign(to: &$emptyFields)
+    }
+    
+    private func validateEmail() {
+        switch ValidationService.validate(email.value, type: .email) {
         case .success:
-            onEmailErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
-            return true
+            emailError = nil
         case .failure(let message):
-            onEmailErrorStateChange?(message.rawValue)
-            return false
+            emailError = message.rawValue
+            isLoading = false
         }
-    }
-
-    private func validatePassword() -> Bool {
-        switch ValidationService.validate(credentials.password, type: .password) {
-        case .success:
-            onPasswordErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
-            return true
-        case .failure(let message):
-            onPasswordErrorStateChange?(message.rawValue)
-            return false
-        }
-    }
-
-    private func hideErrorMessages() {
-        onEmailErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
-        onPasswordErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
     }
 }

@@ -7,18 +7,13 @@
 
 import UIKit
 
-final class LoginViewController: BaseRegistrationViewController {
+final class LoginViewController: UIViewController {
 
     private let loginView: LoginView
-    private var viewModel: LoginViewModelProtocol
 
-    init(
-        viewModel: LoginViewModelProtocol = LoginViewModel(),
-        loginView: LoginView = LoginView()
-    ) {
-        self.viewModel = viewModel
+    init(loginView: LoginView) {
         self.loginView = loginView
-        super.init(baseRegistrationView: loginView)
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -31,67 +26,8 @@ final class LoginViewController: BaseRegistrationViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationBar()
-        bind()
-        loginView.delegate = self
-    }
-
-    private func configureNavigationBar() {
-        navigationItem.title = "Вход"
+        title = "Вход"
         navigationItem.backButtonTitle = "Назад"
-        navigationItem.largeTitleDisplayMode = .always
-    }
-
-    private func bind() {
-        viewModel.onLoginAllowedStateChange = { [weak self] isLoginAllowed in
-            self?.loginView.setLoginButton(enabled: isLoginAllowed)
-        }
-        viewModel.onEmailErrorStateChange = { [weak self] message in
-            self?.loginView.setEmailTextFieldError(message: message)
-        }
-        viewModel.onPasswordErrorStateChange = { [weak self] message in
-            self?.loginView.setPasswordTextFieldError(message: message)
-        }
-    }
-
-    private func loginUser() {
-        UIBlockingProgressHUD.show()
-        self.viewModel.loginUser { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                UIBlockingProgressHUD.dismiss()
-                dismiss(animated: true)
-            case .failure(let error):
-                UIBlockingProgressHUD.dismiss()
-                AlertPresenter.show(in: self, model: AlertModel(message: error.message))
-            }
-        }
-    }
-}
-
-// MARK: - LoginViewDelegate
-
-extension LoginViewController: LoginViewDelegate {
-    func didChangeTextField() {
-        viewModel.credentials = loginView.credentials
-    }
-
-    func didTapRegistrationButton() {
-        let view = RegistrationView()
-        let viewController = RegistrationViewController(registrationView: view)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    func didTapLoginButton() {
-        let isFieldsValid = viewModel.validateFields()
-        if isFieldsValid {
-            loginUser()
-        }
-    }
-
-    func didTapForgotPasswordButton() {
-        let viewController = ResetPasswordViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationItem.hidesBackButton = true
     }
 }

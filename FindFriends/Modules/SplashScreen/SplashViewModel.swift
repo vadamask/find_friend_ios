@@ -22,10 +22,12 @@ final class SplashViewModel {
     
     private let service: UsersServiceProtocol
     private let oauthTokenStorage = OAuthTokenStorage.shared
+    private weak var coordinator: AppCoordinatorProtocol?
     private let userDefaults = UserDefaults.standard
     
-    init(service: UsersServiceProtocol = UsersService()) {
+    init(service: UsersServiceProtocol, coordinator: AppCoordinatorProtocol) {
         self.service = service
+        self.coordinator = coordinator
     }
     
     func viewDidAppear() {
@@ -50,5 +52,17 @@ final class SplashViewModel {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func presentMainFlow() {
+        coordinator?.presentMainFlow()
+    }
+    
+    func presentAuthFlow() {
+        coordinator?.presentAuthFlow()
+    }
+    
+    func presentFillProfileFlow() {
+        coordinator?.presentFillProfileFlow()
     }
 }

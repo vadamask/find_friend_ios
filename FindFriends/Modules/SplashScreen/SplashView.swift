@@ -9,15 +9,8 @@ import Combine
 import SnapKit
 import UIKit
 
-protocol SplashViewDelegate: AnyObject {
-    func presentMainFlow()
-    func presentLoginFlow()
-    func presentFillingFlow()
-}
-
 final class SplashView: UIView {
 
-    weak var delegate: SplashViewDelegate?
     private let viewModel: SplashViewModel
     private var cancellables: Set<AnyCancellable> = []
 
@@ -80,9 +73,9 @@ final class SplashView: UIView {
                 case .login:
                     animateWelcomeViewEntrance()
                 case .unlogin:
-                    delegate?.presentLoginFlow()
+                    viewModel.presentAuthFlow()
                 case .unfinishedRegistration:
-                    delegate?.presentFillingFlow()
+                    viewModel.presentFillProfileFlow()
                 }
             }
             .store(in: &cancellables)
@@ -116,7 +109,7 @@ extension SplashView {
                 } completion: { isFinished in
                     if isFinished {
                         self.label.text = ""
-                        self.delegate?.presentMainFlow()
+                        self.viewModel.presentMainFlow()
                     }
                 }
         }

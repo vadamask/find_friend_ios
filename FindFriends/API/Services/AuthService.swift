@@ -10,10 +10,12 @@ import Foundation
 protocol AuthServiceProtocol {
     func loginUser(
         _ dto: LoginRequestDto,
-        completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
+        completion: @escaping (Result<Void, NetworkClientError>) -> Void
     )
     
-    func logoutUser(completion: @escaping (Result<Void, NetworkClientError>) -> Void)
+    func logoutUser(
+        completion: @escaping (Result<Void, NetworkClientError>) -> Void
+    )
 }
 
 final class AuthService: AuthServiceProtocol {
@@ -31,7 +33,7 @@ final class AuthService: AuthServiceProtocol {
 
     func loginUser(
         _ dto: LoginRequestDto,
-        completion: @escaping (Result<LoginResponseDto, NetworkClientError>) -> Void
+        completion: @escaping (Result<Void, NetworkClientError>) -> Void
     ) {
         let request = NetworkRequest(endpoint: .login, body: dto)
         networkClient.send(request: request, type: LoginResponseDto.self) { result in
@@ -39,7 +41,7 @@ final class AuthService: AuthServiceProtocol {
                 switch result {
                 case let .success(data):
                     self.oAuthTokenStorage.token = data.authToken
-                    completion(.success(data))
+                    completion(.success(Void()))
                 case let .failure(error):
                     completion(.failure(error))
                 }

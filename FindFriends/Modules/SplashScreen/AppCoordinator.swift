@@ -1,0 +1,56 @@
+//
+//  SplashCoordinator.swift
+//  FindFriends
+//
+//  Created by Вадим Шишков on 13.04.2024.
+//
+
+import UIKit
+
+protocol AppCoordinatorProtocol: Coordinator {
+    func presentAuthFlow()
+    func presentMainFlow()
+    func presentFillProfileFlow()
+}
+
+final class AppCoordinator: AppCoordinatorProtocol {
+    var navigationController: UINavigationController
+    var childs: [Coordinator] = []
+    weak var parent: Coordinator? = nil
+    
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+    
+    func start() {
+        let service = UsersService()
+        let splashViewModel = SplashViewModel(service: service, coordinator: self)
+        let splashView = SplashView(viewModel: splashViewModel)
+        let splashVC = SplashViewController(splashView: splashView)
+        navigationController.pushViewController(splashVC, animated: false)
+    }
+    
+    func presentAuthFlow() {
+        let coordinator = AuthCoordinator(navigationController: navigationController)
+        childs.append(coordinator)
+        coordinator.parent = self
+        coordinator.start()
+    }
+    
+    func presentMainFlow() {
+        let tabBar = TabBar()
+        let tabBarController = TabBarController(customTabBar: tabBar)
+        tabBarController.modalTransitionStyle = .crossDissolve
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.navigationController.present(tabBarController, animated: true)
+    }
+    
+    func presentFillProfileFlow() {
+        let fillProfileVC = FillProfilePageViewController()
+        fillProfileVC.modalTransitionStyle = .crossDissolve
+        fillProfileVC.modalPresentationStyle = .fullScreen
+        self.navigationController.present(fillProfileVC, animated: true)
+    }
+    
+   
+}

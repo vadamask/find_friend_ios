@@ -5,68 +5,32 @@
 //  Created by Artem Novikov on 20.02.2024.
 //
 
-
+import Combine
 import UIKit
-
-protocol LoginViewDelegate: AnyObject {
-    func didTapRegistrationButton()
-    func didTapLoginButton()
-    func didTapForgotPasswordButton()
-    func didChangeTextField()
-}
 
 final class LoginView: BaseRegistrationView {
 
-    weak var delegate: LoginViewDelegate?
-    
-    var credentials: Credentials {
-        Credentials(
-            email: emailTextField.text ?? "",
-            password: passwordTextField.text ?? ""
-        )
-    }
-
     private enum Constants {
-        enum Circle {
-            enum Big {
-                static let width: CGFloat = 184
-                static let trailingInset: CGFloat = 48
-                static let topInset: CGFloat = 33
-            }
-            enum Small {
-                static let width: CGFloat = 133
-                static let leadingInset: CGFloat = 33
-                static let bottomInset: CGFloat = 33
-            }
+        enum BigCircle {
+            static let width: CGFloat = 184
+            static let trailingInset: CGFloat = 48
+            static let topInset: CGFloat = 33
         }
-        enum TextField {
-            static let height: CGFloat = 48
-            enum Email {
-                static let inset: CGFloat = 36
-            }
-            enum Password {
-                static let topInset: CGFloat = 24
-            }
-        }
-        enum Button {
-            enum Forgot {
-                static let height: CGFloat = 48
-                static let topInset: CGFloat = 4
-            }
-            enum LogIn {
-                static let bottomInset: CGFloat = 16
-            }
-            enum Registration {
-                static let bottomInset: CGFloat = 21
-            }
+        enum SmallCircle {
+            static let width: CGFloat = 133
+            static let leadingInset: CGFloat = 33
+            static let bottomInset: CGFloat = 33
         }
     }
-
+    
+    private var viewModel: LoginViewModel
+    private var cancellables: Set<AnyCancellable> = []
+    
     private let bigCircleView: UIView = CircleView(
-        cornerRadius: Constants.Circle.Big.width / 2
+        cornerRadius: Constants.BigCircle.width / 2
     )
     private let smallCircleView: UIView = CircleView(
-        cornerRadius: Constants.Circle.Small.width / 2
+        cornerRadius: Constants.SmallCircle.width / 2
     )
     private let emailTextField = RegistrationTextField(
         placeholder: "Электронная почта", type: .email
@@ -78,10 +42,12 @@ final class LoginView: BaseRegistrationView {
     private let registrationButton = CaptionButton(text: "Регистрация")
     private let forgotPasswordButton = UnderlinedButton(text: "Забыли пароль?")
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupViews()
         setupLayout()
+        bind()
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
@@ -89,27 +55,35 @@ final class LoginView: BaseRegistrationView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func setLoginButton(enabled: Bool) {
-        logInButton.setEnabled(enabled)
+    
+    private func bind() {
+        viewModel.$emptyFields
+            .sink { [unowned self] isEmpty in
+                logInButton.setEnabled(!isEmpty)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$emailError
+            .sink { [unowned self] error in
+                if let error {
+                    emailTextField.showWarningLabel(error)
+                } else {
+                    emailTextField.hideWarningLabel()
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$isLoading
+            .sink { isLoading in
+                if isLoading {
+                    UIBlockingProgressHUD.show()
+                } else {
+                    UIBlockingProgressHUD.dismiss()
+                }
+            }
+            .store(in: &cancellables)
     }
-
-    func setEmailTextFieldError(message: String) {
-        setError(for: emailTextField, message: message)
-    }
-
-    func setPasswordTextFieldError(message: String) {
-        setError(for: passwordTextField, message: message)
-    }
-
-    private func setError(for textField: RegistrationTextField, message: String) {
-        if message.isEmpty {
-            textField.hideWarningLabel()
-        } else {
-            textField.showWarningLabel(message)
-        }
-    }
-
+    
     private func setupViews() {
         contentView.addSubviewWithoutAutoresizingMask(bigCircleView)
         contentView.addSubviewWithoutAutoresizingMask(smallCircleView)
@@ -134,67 +108,76 @@ final class LoginView: BaseRegistrationView {
             action: #selector(forgotPasswordButtonTapped),
             for: .touchUpInside
         )
-        for textField in [emailTextField, passwordTextField] {
-            textField.addTarget(
+        emailTextField.addTarget(
+            self,
+            action: #selector(emailTextFieldDidChanged),
+            for: .valueChanged
+        )
+        passwordTextField.addTarget(
                 self,
-                action: #selector(textFieldChanged),
+                action: #selector(passwordTextFieldDidChanged),
                 for: .editingChanged
-            )
-        }
+        )
     }
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            bigCircleView.widthAnchor.constraint(equalToConstant: Constants.Circle.Big.width),
-            bigCircleView.heightAnchor.constraint(equalToConstant: Constants.Circle.Big.width),
-            topDecoration.bottomAnchor.constraint(equalTo: bigCircleView.topAnchor, constant: Constants.Circle.Big.topInset),
-            bigCircleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.Circle.Big.trailingInset),
+            bigCircleView.widthAnchor.constraint(equalToConstant: Constants.BigCircle.width),
+            bigCircleView.heightAnchor.constraint(equalToConstant: Constants.BigCircle.width),
+            topDecoration.bottomAnchor.constraint(equalTo: bigCircleView.topAnchor, constant: Constants.BigCircle.topInset),
+            bigCircleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.BigCircle.trailingInset),
 
             emailTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
             emailTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
-            contentView.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor, constant: Constants.TextField.Email.inset),
+            emailTextField.heightAnchor.constraint(equalToConstant: 48),
+            contentView.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor, constant: 36),
 
             passwordTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
             passwordTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
             passwordTextField.heightAnchor.constraint(equalTo: emailTextField.heightAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: Constants.TextField.Password.topInset),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 48),
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
 
             forgotPasswordButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: Constants.Button.Forgot.topInset),
-            forgotPasswordButton.heightAnchor.constraint(equalToConstant: Constants.Button.Forgot.height),
+            forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 4),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 48),
 
-            smallCircleView.widthAnchor.constraint(equalToConstant: Constants.Circle.Small.width),
-            smallCircleView.heightAnchor.constraint(equalToConstant: Constants.Circle.Small.width),
-            logInButton.topAnchor.constraint(equalTo: smallCircleView.bottomAnchor, constant: Constants.Circle.Small.bottomInset),
-            leadingAnchor.constraint(equalTo: smallCircleView.leadingAnchor, constant: Constants.Circle.Small.leadingInset),
+            smallCircleView.widthAnchor.constraint(equalToConstant: Constants.SmallCircle.width),
+            smallCircleView.heightAnchor.constraint(equalToConstant: Constants.SmallCircle.width),
+            logInButton.topAnchor.constraint(equalTo: smallCircleView.bottomAnchor, constant: Constants.SmallCircle.bottomInset),
+            leadingAnchor.constraint(equalTo: smallCircleView.leadingAnchor, constant: Constants.SmallCircle.leadingInset),
 
             logInButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
             logInButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            logInButton.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
+            logInButton.heightAnchor.constraint(equalToConstant: 48),
             
-            registrationButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: Constants.Button.LogIn.bottomInset),
+            registrationButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
             registrationButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            registrationButton.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
-            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: registrationButton.bottomAnchor, constant: Constants.Button.Registration.bottomInset)
+            registrationButton.heightAnchor.constraint(equalToConstant: 48),
+            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: registrationButton.bottomAnchor, constant: 21)
         ])
     }
 
     @objc private func loginButtonTapped() {
-        delegate?.didTapLoginButton()
+        viewModel.didTapLoginButton()
     }
 
     @objc private func registrationButtonTapped() {
-        delegate?.didTapRegistrationButton()
+        viewModel.didTapRegistrationButton()
     }
 
     @objc private func forgotPasswordButtonTapped() {
-        delegate?.didTapForgotPasswordButton()
+        viewModel.didTapForgotPasswordButton()
     }
 
-    @objc private func textFieldChanged() {
-        delegate?.didChangeTextField()
+    @objc private func emailTextFieldDidChanged() {
+        guard let text = emailTextField.text else { return }
+        viewModel.email.send(text)
+    }
+    
+    @objc private func passwordTextFieldDidChanged() {
+        guard let text = passwordTextField.text else { return }
+        viewModel.password.send(text)
     }
 }
 
@@ -232,7 +215,7 @@ fileprivate class UnderlinedButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.semibold12,
+            .font: UIFont.semibold15,
             .foregroundColor: UIColor.primeDark,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
