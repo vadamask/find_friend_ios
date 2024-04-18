@@ -40,17 +40,11 @@ final class AppCoordinator: AppCoordinatorProtocol {
     func presentMainFlow() {
         let tabBar = TabBar()
         let tabBarController = TabBarController(customTabBar: tabBar)
-        tabBarController.modalTransitionStyle = .crossDissolve
-        tabBarController.modalPresentationStyle = .fullScreen
-        self.navigationController.present(tabBarController, animated: true)
+        self.navigationController.pushViewController(tabBarController, animated: true)
     }
     
     func presentFillProfileFlow() {
         let fillProfileVC = FillProfilePageViewController()
-        fillProfileVC.modalTransitionStyle = .crossDissolve
-        fillProfileVC.modalPresentationStyle = .fullScreen
-        self.navigationController.present(fillProfileVC, animated: true)
+        self.navigationController.pushViewController(fillProfileVC, animated: true)
     }
-    
-   
 }

@@ -5,58 +5,60 @@
 //  Created by Artem Novikov on 27.02.2024.
 //
 
+import Combine
 import Foundation
 
-protocol ResetPasswordViewModelProtocol {
-    var onResetAllowedStateChange: Binding<Bool>? { get set }
-    var onEmailErrorStateChange: Binding<String>? { get set }
-    var email: String { get set }
+final class ResetPasswordViewModel {
 
-    func resetPassword(completion: @escaping (Result<Void, NetworkClientError>) -> Void)
-    func validateEmail() -> Bool
-}
-
-final class ResetPasswordViewModel: ResetPasswordViewModelProtocol {
-
-    var onResetAllowedStateChange: Binding<Bool>?
-    var onEmailErrorStateChange: Binding<String>?
-
-    var email: String = "" {
-        didSet {
-            onResetAllowedStateChange?(!email.isEmpty)
-            onEmailErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
-        }
-    }
-
+    @Published var emailIsEmpty = true
+    @Published var isLoading = false
+    @Published var emailError: String?
+    
+    var email = CurrentValueSubject<String, Never>("")
+    
     private let resetPasswordService: ResetPasswordServiceProtocol
+    private let coordinator: AuthCoordinatorProtocol
 
-    init(resetPasswordService: ResetPasswordServiceProtocol = ResetPasswordService()) {
+    init(
+        resetPasswordService: ResetPasswordServiceProtocol,
+        coordinator: AuthCoordinatorProtocol
+    ) {
         self.resetPasswordService = resetPasswordService
+        self.coordinator = coordinator
+        
+        bind()
     }
 
-    func resetPassword(completion: @escaping (Result<Void, NetworkClientError>) -> Void) {
-        resetPasswordService.resetPassword(ResetPasswordRequestDto(email: email)) { result in
-            switch result {
-            case .success(let response):
-                if response.status == "OK" {
-                    completion(.success(Void()))
-                } else {
-                    completion(.failure(.parsingError))
+    func sendCodeTapped() {
+        validateEmail()
+        if emailError == nil {
+            resetPasswordService.resetPassword(ResetPasswordRequestDto(email: email.value)) { [unowned self] result in
+                switch result {
+                case .success(let response):
+                    if response.status == "OK" {
+                        coordinator.showVerificationCodeScreen(email.value)
+                    } else {
+                        print("reset password not ok")
+                    }
+                case .failure(let error):
+                    coordinator.showAlert(error.message)
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
     }
+    
+    private func bind() {
+        email
+            .map { $0.isEmpty }
+            .assign(to: &$emailIsEmpty)
+    }
 
-    func validateEmail() -> Bool {
-        switch ValidationService.validate(email, type: .email) {
+    private func validateEmail() {
+        switch ValidationService.validate(email.value, type: .email) {
         case .success:
-            onEmailErrorStateChange?(ValidateMessages.emptyMessage.rawValue)
-            return true
+            emailError = nil
         case .failure(let message):
-            onEmailErrorStateChange?(message.rawValue)
-            return false
+            emailError = message.rawValue
         }
     }
 }

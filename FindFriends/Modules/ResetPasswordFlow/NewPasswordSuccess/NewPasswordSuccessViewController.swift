@@ -9,7 +9,16 @@
 import UIKit
 
 final class NewPasswordSuccessViewController: UIViewController {
-    private let newPasswordSuccessView = NewPasswordSuccessView()
+    private let newPasswordSuccessView: NewPasswordSuccessView
+    
+    init(view: NewPasswordSuccessView) {
+        self.newPasswordSuccessView = view
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = newPasswordSuccessView
@@ -18,18 +27,9 @@ final class NewPasswordSuccessViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
-        newPasswordSuccessView.delegate = self
     }
 
     private func configureNavigationBar() {
         navigationItem.setHidesBackButton(true, animated: false)
-    }
-}
-
-// MARK: - NewPasswordSuccessViewDelegate
-
-extension NewPasswordSuccessViewController: NewPasswordSuccessViewDelegate {
-    func didTapLogInButton() {
-        navigationController?.popToRootViewController(animated: true)
     }
 }

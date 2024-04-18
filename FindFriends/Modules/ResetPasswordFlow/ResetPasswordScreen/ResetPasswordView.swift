@@ -5,18 +5,10 @@
 //  Created by Artem Novikov on 21.02.2024.
 //
 
+import Combine
 import UIKit
 
-protocol ResetPasswordViewDelegate: AnyObject {
-    func didTapSendInstructionButton()
-    func didChangeTextField()
-}
-
 final class ResetPasswordView: BaseRegistrationView {
-    weak var delegate: ResetPasswordViewDelegate?
-    var email: String {
-        emailTextField.text ?? ""
-    }
 
     private enum Constants {
         enum Label {
@@ -31,7 +23,10 @@ final class ResetPasswordView: BaseRegistrationView {
             static let bottomInset: CGFloat = 85
         }
     }
-
+    
+    private let viewModel: ResetPasswordViewModel
+    private var cancellables: Set<AnyCancellable> = []
+    
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .primeDark
@@ -46,39 +41,57 @@ final class ResetPasswordView: BaseRegistrationView {
         placeholder: "Электронная почта", type: .email
     )
     
-    private let sendInstructionButton = PrimeOrangeButton(text: "Отправить код")
+    private let sendCodeButton = PrimeOrangeButton(text: "Отправить код")
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: ResetPasswordViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupViews()
         setupLayout()
+        bind()
         emailTextField.delegate = self
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func setSendInstructionButton(enabled: Bool) {
-        sendInstructionButton.setEnabled(enabled)
-    }
-
-    func setEmailTextFieldError(message: String) {
-        if message.isEmpty {
-            emailTextField.hideWarningLabel()
-        } else {
-            emailTextField.showWarningLabel(message)
-        }
+    
+    private func bind() {
+        viewModel.$emailIsEmpty
+            .sink { [unowned self] isEmpty in
+                sendCodeButton.setEnabled(!isEmpty)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$emailError
+            .sink { [unowned self] error in
+                if let error {
+                    emailTextField.showWarningLabel(error)
+                } else {
+                    emailTextField.hideWarningLabel()
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$isLoading
+            .sink { isLoading in
+                if isLoading {
+                    UIBlockingProgressHUD.show()
+                } else {
+                    UIBlockingProgressHUD.dismiss()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func setupViews() {
         contentView.addSubviewWithoutAutoresizingMask(label)
         contentView.addSubviewWithoutAutoresizingMask(emailTextField)
-        contentView.addSubviewWithoutAutoresizingMask(sendInstructionButton)
+        contentView.addSubviewWithoutAutoresizingMask(sendCodeButton)
 
-        sendInstructionButton.addTarget(
+        sendCodeButton.addTarget(
             self,
-            action: #selector(sendInstructionButtonTapped),
+            action: #selector(sendCodeTapped),
             for: .touchUpInside
         )
         emailTextField.addTarget(
@@ -99,19 +112,20 @@ final class ResetPasswordView: BaseRegistrationView {
             emailTextField.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
             emailTextField.topAnchor.constraint(equalTo: label.bottomAnchor, constant: Constants.TextField.topInset),
 
-            sendInstructionButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            sendInstructionButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            sendInstructionButton.heightAnchor.constraint(equalToConstant: Constants.Button.height),
-            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: sendInstructionButton.bottomAnchor, constant: Constants.Button.bottomInset)
+            sendCodeButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+            sendCodeButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            sendCodeButton.heightAnchor.constraint(equalToConstant: Constants.Button.height),
+            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: sendCodeButton.bottomAnchor, constant: Constants.Button.bottomInset)
         ])
     }
 
-    @objc private func sendInstructionButtonTapped() {
-        delegate?.didTapSendInstructionButton()
+    @objc private func sendCodeTapped() {
+        viewModel.sendCodeTapped()
     }
 
     @objc private func textFieldChanged() {
-        delegate?.didChangeTextField()
+        guard let text = emailTextField.text else { return }
+        viewModel.email.send(text)
     }
 }
 

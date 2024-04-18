@@ -5,15 +5,13 @@
 //  Created by Вадим Шишков on 22.03.2024.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class EnterVerificationCodeViewModel {
     let email: String
     var token = Array(repeating: "", count: 6)
     @Published var isFullfill = false
-    @Published var tokenIsValid = false
-    @Published var error: NetworkClientError?
     @Published var isLoading = false 
     
     var fields: [CurrentValueSubject<String, Never>] = [
@@ -26,11 +24,13 @@ final class EnterVerificationCodeViewModel {
     ]
     
     private let service: ResetPasswordServiceProtocol
+    private let coordinator: AuthCoordinatorProtocol
     private var cancellables: Set<AnyCancellable> = []
     
-    init(email: String, service: ResetPasswordServiceProtocol) {
+    init(email: String, service: ResetPasswordServiceProtocol, coordinator: AuthCoordinatorProtocol) {
         self.email = email
         self.service = service
+        self.coordinator = coordinator
         bind()
     }
     
@@ -45,9 +45,9 @@ final class EnterVerificationCodeViewModel {
         service.validateCode(dto) { [unowned self] result in
             switch result {
             case .success(_):
-                tokenIsValid = true
+                coordinator.showNewPasswordScreen(dto.token)
             case .failure(let error):
-                self.error = error
+                coordinator.showAlert(error.message)
             }
             isLoading = false
         }

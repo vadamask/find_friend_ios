@@ -10,16 +10,16 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var coordinator: Coordinator?
+    var appCoordinator: Coordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        coordinator = AppCoordinator(navigationController: setupNavController())
-        coordinator?.start()
+        appCoordinator = AppCoordinator(navigationController: setupNavController())
+        appCoordinator?.start()
         
-        window?.rootViewController = coordinator?.navigationController
+        window?.rootViewController = appCoordinator?.navigationController
         window?.makeKeyAndVisible()
     }
     

@@ -8,13 +8,9 @@
 import Combine
 import UIKit
 
-protocol NewPasswordViewDelegate: AnyObject {
-    func showSuccessScreen()
-}
-
 final class NewPasswordView: BaseRegistrationView {
-    weak var delegate: NewPasswordViewDelegate?
-    let viewModel: NewPasswordViewModel
+    
+    private let viewModel: NewPasswordViewModel
     private var cancellables: Set<AnyCancellable> = []
     
     private enum Constants {
@@ -110,14 +106,6 @@ final class NewPasswordView: BaseRegistrationView {
                     UIBlockingProgressHUD.show()
                 } else {
                     UIBlockingProgressHUD.dismiss()
-                }
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$isSuccess
-            .sink { [unowned self] isSuccess in
-                if isSuccess {
-                    delegate?.showSuccessScreen()
                 }
             }
             .store(in: &cancellables)

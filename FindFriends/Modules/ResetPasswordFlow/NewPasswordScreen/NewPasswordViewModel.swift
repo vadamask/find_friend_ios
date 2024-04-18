@@ -11,20 +11,22 @@ final class NewPasswordViewModel {
     @Published var fieldsAreFilling = false
     @Published var errorForPassword = ""
     @Published var errorForConfirmPassword = ""
-    @Published var isSuccess = false
     @Published var isLoading = false
     var password = ""
     var confirmPassword = ""
     let token: String
 
     private let resetPasswordService: ResetPasswordServiceProtocol
+    private let coordinator: AuthCoordinatorProtocol
 
     init(
         resetPasswordService: ResetPasswordServiceProtocol = ResetPasswordService(),
-        token: String
+        token: String,
+        coordinator: AuthCoordinatorProtocol
     ) {
         self.resetPasswordService = resetPasswordService
         self.token = token
+        self.coordinator = coordinator
     }
     
     func saveButtonTapped() {
@@ -34,9 +36,9 @@ final class NewPasswordViewModel {
             resetPasswordService.setNewPassword(dto) { [unowned self] result in
                 switch result {
                 case .success(_):
-                    isSuccess = true
+                    coordinator.showSuccessScreen()
                 case .failure(_):
-                    isSuccess = false
+                    coordinator.showAlert("Произошла неизвестная ошибка")
                 }
                 isLoading = false
             }

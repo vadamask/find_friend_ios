@@ -7,16 +7,11 @@
 import Combine
 import UIKit
 
-protocol EnterVerificationViewDelegate: AnyObject {
-    func showNewPasswordScreen(_ token: String)
-    func showAlert(_ message: String)
-}
-
 final class EnterVerificationCodeView: BaseRegistrationView {
-    let viewModel: EnterVerificationCodeViewModel
-    var delegate: EnterVerificationViewDelegate?
     
+    private let viewModel: EnterVerificationCodeViewModel
     private let confirmButton = PrimeOrangeButton(text: "Подтвердить")
+    
     private let sendCodeAgainButton: UIButton = {
         let button = UIButton()
         
@@ -130,21 +125,6 @@ final class EnterVerificationCodeView: BaseRegistrationView {
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] isFullfill in
                 confirmButton.setEnabled(isFullfill)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$tokenIsValid
-            .sink { [unowned self] isValid in
-                if isValid {
-                    delegate?.showNewPasswordScreen(viewModel.token.joined())
-                }
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$error
-            .sink { [unowned self] error in
-                guard let error else { return }
-                delegate?.showAlert(error.message)
             }
             .store(in: &cancellables)
         

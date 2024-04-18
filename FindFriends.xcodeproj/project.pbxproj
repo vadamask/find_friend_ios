@@ -72,6 +72,7 @@
 		DD0EE6B62BCA77B400E2E3AB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6B52BCA77B400E2E3AB /* Coordinator.swift */; };
 		DD0EE6B82BCA7D1F00E2E3AB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6B72BCA7D1F00E2E3AB /* AppCoordinator.swift */; };
 		DD0EE6BA2BCA86B500E2E3AB /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */; };
+		DD0EE6BC2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */; };
 		DD3A2E9F2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */; };
 		DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */; };
 		DD3A2EA82B7E9836006A3B8E /* CaptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */; };
@@ -202,6 +203,7 @@
 		DD0EE6B52BCA77B400E2E3AB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		DD0EE6B72BCA7D1F00E2E3AB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordSuccessViewModel.swift; sourceTree = "<group>"; };
 		DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoresizingMask.swift"; sourceTree = "<group>"; };
 		DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeOrangeButton.swift; sourceTree = "<group>"; };
 		DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionButton.swift; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 			children = (
 				F36F408B2B86434C00B2082B /* NewPasswordSuccessView.swift */,
 				F36F408D2B86435500B2082B /* NewPasswordSuccessViewController.swift */,
+				DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */,
 			);
 			path = NewPasswordSuccess;
 			sourceTree = "<group>";
@@ -892,6 +895,7 @@
 				DD64AB862BBC70D50011E7D4 /* FillProfileDto.swift in Sources */,
 				84CCA1C12B9640A4000BDC28 /* GenderViewModel.swift in Sources */,
 				F33B4C8C2B8FBA0C002D27B5 /* ResetPasswordDto.swift in Sources */,
+				DD0EE6BC2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift in Sources */,
 				F30170792B8CF2D600A6921A /* AlertPresenter.swift in Sources */,
 				D85401342B95DA890088C1E9 /* SelectInterestsView.swift in Sources */,
 				CECC81072BA319F400F4312B /* TabBarButton.swift in Sources */,

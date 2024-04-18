@@ -7,13 +7,10 @@
 
 import UIKit
 
-protocol NewPasswordSuccessViewDelegate: AnyObject {
-    func didTapLogInButton()
-}
-
 final class NewPasswordSuccessView: BaseRegistrationView {
-    weak var delegate: NewPasswordSuccessViewDelegate?
 
+    private let viewModel: NewPasswordSuccessViewModel
+    
     private enum Constants {
         enum ImageView {
             static let topInset: CGFloat = 74
@@ -60,8 +57,9 @@ final class NewPasswordSuccessView: BaseRegistrationView {
 
     private let logInButton = PrimeOrangeButton(text: "Войти", isEnabled: true)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: NewPasswordSuccessViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupViews()
         setupLayout()
     }
@@ -118,7 +116,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
     }
 
     @objc private func logInButtonTapped() {
-        delegate?.didTapLogInButton()
+        viewModel.didTapLogInButton()
     }
 }
 

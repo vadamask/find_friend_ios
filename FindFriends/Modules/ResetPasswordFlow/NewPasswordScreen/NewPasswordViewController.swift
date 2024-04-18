@@ -30,19 +30,9 @@ final class NewPasswordViewController: BaseRegistrationViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
-        newPasswordView.delegate = self
     }
 
     private func configureNavigationBar() {
         navigationItem.title = "Новый пароль"
-    }
-}
-
-// MARK: - NewPasswordViewDelegate
-
-extension NewPasswordViewController: NewPasswordViewDelegate {
-    func showSuccessScreen() {
-        let controller = NewPasswordSuccessViewController()
-        navigationController?.pushViewController(controller, animated: true)
     }
 }
