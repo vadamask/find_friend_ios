@@ -111,12 +111,12 @@ final class LoginView: BaseRegistrationView {
         emailTextField.addTarget(
             self,
             action: #selector(emailTextFieldDidChanged),
-            for: .valueChanged
+            for: .editingChanged
         )
         passwordTextField.addTarget(
-                self,
-                action: #selector(passwordTextFieldDidChanged),
-                for: .editingChanged
+            self,
+            action: #selector(passwordTextFieldDidChanged),
+            for: .editingChanged
         )
     }
 
@@ -172,7 +172,7 @@ final class LoginView: BaseRegistrationView {
 
     @objc private func emailTextFieldDidChanged() {
         guard let text = emailTextField.text else { return }
-        viewModel.email.send(text)
+        viewModel.email.value = text
     }
     
     @objc private func passwordTextFieldDidChanged() {

@@ -14,11 +14,11 @@ final class LoginViewModel {
     @Published var emailError: String?
     @Published var networkError: String?
     @Published var isLoading = false
-    var email = CurrentValueSubject<String, Never>("")
-    var password = CurrentValueSubject<String, Never>("")
+    let email = CurrentValueSubject<String, Never>("")
+    let password = CurrentValueSubject<String, Never>("")
 
     private let loginService: AuthServiceProtocol
-    private weak var coordinator: AuthCoordinatorProtocol?
+    private let coordinator: AuthCoordinatorProtocol
 
     init(loginService: AuthServiceProtocol = AuthService(), coordinator: AuthCoordinatorProtocol) {
         self.loginService = loginService
@@ -34,10 +34,10 @@ final class LoginViewModel {
             loginService.loginUser(dto) { [unowned self] result in
                 switch result {
                 case .success(_):
-                    coordinator?.showMainFlow()
                     networkError = nil
+                    coordinator.popToRoot()
                 case .failure(let error):
-                    networkError = error.message
+                    coordinator.showAlert(error.message)
                 }
                 isLoading = false
             }
@@ -45,11 +45,11 @@ final class LoginViewModel {
     }
     
     func didTapRegistrationButton() {
-        coordinator?.showRegistrationScreen()
+        coordinator.showRegistrationScreen()
     }
     
     func didTapForgotPasswordButton() {
-        coordinator?.showResetPasswordScreen()
+        coordinator.showResetPasswordScreen()
     }
     
     private func bind() {
