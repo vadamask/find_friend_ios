@@ -10,8 +10,9 @@ import SafariServices
 
 final class RegistrationViewModel {
    
-    let usersService: UsersServiceProtocol
-    let loginService: AuthServiceProtocol
+    private let usersService: UsersServiceProtocol
+    private let authService: AuthServiceProtocol
+    private let coordinator: AuthCoordinatorProtocol
     
     @Published var allFieldsAreFilling = false
     @Published var personalIsFilling = false
@@ -29,10 +30,6 @@ final class RegistrationViewModel {
     @Published var errorTextForPassword = ""
     @Published var errorTextForConfirmPassword = ""
     
-    @Published var webPage: SFSafariViewController?
-    @Published var alert: AlertModel?
-    var registrationSuccessful = PassthroughSubject<Void, Never>()
-    
     private var allFieldsAreValidate: Bool {
         errorTextForName.isEmpty &&
         errorTextForLastName.isEmpty &&
@@ -41,9 +38,10 @@ final class RegistrationViewModel {
         errorTextForConfirmPassword.isEmpty
     }
     
-    init(usersService: UsersServiceProtocol, loginService: AuthServiceProtocol) {
+    init(usersService: UsersServiceProtocol, authService: AuthServiceProtocol, coordinator: AuthCoordinatorProtocol) {
         self.usersService = usersService
-        self.loginService = loginService
+        self.authService = authService
+        self.coordinator = coordinator
         setupPipline()
     }
     
@@ -56,12 +54,12 @@ final class RegistrationViewModel {
                 switch result {
                 case .success(let model):
                     let request = LoginRequestDto(email: model.email, password: confirmPassword)
-                    loginService.loginUser(request) { [unowned self] _ in
+                    authService.loginUser(request) { [unowned self] _ in
                         UserDefaults.standard.removeObject(forKey: "fillingProfile")
-                        registrationSuccessful.send()
+                        coordinator.popToRoot()
                     }
                 case .failure(let error):
-                    showAlert(error)
+                    coordinator.showAlert(error.message)
                 }
                 UIBlockingProgressHUD.dismiss()
             }
@@ -70,10 +68,10 @@ final class RegistrationViewModel {
     
     func agreementDidTapped() {
         guard let url = URL(string: "https://practicum.yandex.ru") else { return }
-        let webPage = SFSafariViewController(url: url)
-        self.webPage = webPage
+        let page = SFSafariViewController(url: url)
+        coordinator.showPage(page)
     }
-    
+
     private func setupPipline() {
         let personal = Publishers.CombineLatest3($name, $lastName, $email)
         let password = Publishers.CombineLatest($password, $confirmPassword)
@@ -136,9 +134,5 @@ final class RegistrationViewModel {
                 errorTextForConfirmPassword = message.rawValue
             }
         }
-    }
-    
-    private func showAlert(_ error: NetworkClientError) {
-        self.alert = AlertModel(message: error.message)
     }
 }

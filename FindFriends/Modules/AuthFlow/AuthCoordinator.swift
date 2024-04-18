@@ -5,6 +5,7 @@
 //  Created by Вадим Шишков on 13.04.2024.
 //
 
+import SafariServices
 import UIKit
 
 protocol AuthCoordinatorProtocol: Coordinator {
@@ -14,14 +15,14 @@ protocol AuthCoordinatorProtocol: Coordinator {
     func showNewPasswordScreen(_ token: String)
     func showSuccessScreen()
     func popToLoginVC()
+    func popToRoot()
+    func showPage(_ page: SFSafariViewController)
     func showAlert(_ message: String)
     func showMainFlow()
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
     var navigationController: UINavigationController
-    weak var parent: Coordinator?
-    var childs: [Coordinator] = []
     private var loginVC: LoginViewController?
     
     init(navigationController: UINavigationController) {
@@ -58,6 +59,14 @@ extension AuthCoordinator {
         let view = RegistrationView(viewModel: viewModel)
         let viewController = RegistrationViewController(registrationView: view)
         navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showPage(_ page: SFSafariViewController) {
+        navigationController.present(page, animated: true)
+    }
+    
+    func popToRoot() {
+        navigationController.popToRootViewController(animated: true)
     }
 }
 

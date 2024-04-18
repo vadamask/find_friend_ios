@@ -16,9 +16,7 @@ final class RegistrationViewController: BaseRegistrationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavigationItem()
-        registrationView.delegate = self
+        title = "Регистрация"
     }
     
     init(registrationView: RegistrationView) {
@@ -28,27 +26,5 @@ final class RegistrationViewController: BaseRegistrationViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupNavigationItem() {
-        navigationItem.title = "Регистрация"
-    }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-}
-
-extension RegistrationViewController: RegistrationViewDelegate {
-    func presentWebPage(_ page: SFSafariViewController) {
-        present(page, animated: true)
-    }
-    
-    func showAlert(_ model: AlertModel) {
-        AlertPresenter.show(in: self, model: model)
-    }
-    
-    func dismiss() {
-        dismiss(animated: true)
     }
 }

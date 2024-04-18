@@ -404,7 +404,6 @@
 			children = (
 				F301707F2B8CF55E00A6921A /* SplashScreen */,
 				DD0EE6AD2BCA736B00E2E3AB /* AuthFlow */,
-				DD5F38132BAB7017004AF6B2 /* ResetPasswordFlow */,
 				84531D132B94C369002289C6 /* FillProfileFlow */,
 				DD5F38142BAB7985004AF6B2 /* MainFlow */,
 			);
@@ -501,6 +500,7 @@
 				F31111282B9690F800A97B80 /* BaseRegistration */,
 				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
 				F36F407B2B855FAE00B2082B /* RegistrationScreen */,
+				DD5F38132BAB7017004AF6B2 /* ResetPasswordFlow */,
 				DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */,
 			);
 			path = AuthFlow;

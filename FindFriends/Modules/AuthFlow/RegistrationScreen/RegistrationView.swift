@@ -6,18 +6,10 @@
 //
 
 import Combine
-import SafariServices
 import UIKit
 
-protocol RegistrationViewDelegate: AnyObject {
-    func presentWebPage(_ page: SFSafariViewController)
-    func showAlert(_ model: AlertModel)
-    func dismiss()
-}
-
 final class RegistrationView: BaseRegistrationView {
-    let viewModel = RegistrationViewModel(usersService: UsersService(), loginService: AuthService())
-    weak var delegate: RegistrationViewDelegate?
+    private let viewModel: RegistrationViewModel
     
     lazy var nameTextField: RegistrationTextField = {
         let textField = RegistrationTextField( placeholder: "Имя", type: .name)
@@ -80,8 +72,9 @@ final class RegistrationView: BaseRegistrationView {
     
     private var cancellables: Set<AnyCancellable> = []
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: RegistrationViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupViews()
         setupLayout()
         bind()
@@ -146,26 +139,6 @@ final class RegistrationView: BaseRegistrationView {
                 } else {
                     passwordConfirmationTextField.showWarningLabel(error)
                 }
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$webPage
-            .sink { [weak self] page in
-                guard let page else { return }
-                self?.delegate?.presentWebPage(page)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$alert
-            .sink { [unowned self] model in
-                guard let model else { return }
-                delegate?.showAlert(model)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.registrationSuccessful
-            .sink { [unowned self] _ in
-                delegate?.dismiss()
             }
             .store(in: &cancellables)
     }
@@ -270,7 +243,7 @@ extension RegistrationView {
             passwordConfirmationTextField.hideWarningLabel()
         }
     }
-
+    
     @objc private func registrationButtonTapped() {
         viewModel.registrationButtonTapped()
     }

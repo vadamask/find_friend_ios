@@ -15,9 +15,7 @@ protocol AppCoordinatorProtocol: Coordinator {
 
 final class AppCoordinator: AppCoordinatorProtocol {
     var navigationController: UINavigationController
-    var childs: [Coordinator] = []
-    weak var parent: Coordinator? = nil
-    
+        
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -32,8 +30,6 @@ final class AppCoordinator: AppCoordinatorProtocol {
     
     func presentAuthFlow() {
         let coordinator = AuthCoordinator(navigationController: navigationController)
-        childs.append(coordinator)
-        coordinator.parent = self
         coordinator.start()
     }
     
