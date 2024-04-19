@@ -74,11 +74,11 @@ final class LoginView: BaseRegistrationView {
             .store(in: &cancellables)
         
         viewModel.$isLoading
-            .sink { isLoading in
+            .sink { [unowned self] isLoading in
                 if isLoading {
-                    UIBlockingProgressHUD.show()
+                    loadingIndicator.show()
                 } else {
-                    UIBlockingProgressHUD.dismiss()
+                    loadingIndicator.hide()
                 }
             }
             .store(in: &cancellables)

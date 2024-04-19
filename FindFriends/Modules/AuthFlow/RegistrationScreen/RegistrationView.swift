@@ -10,41 +10,40 @@ import UIKit
 
 final class RegistrationView: BaseRegistrationView {
     private let viewModel: RegistrationViewModel
+    private let registrationButton = PrimeOrangeButton(text: "Зарегистрироваться")
+    private var cancellables: Set<AnyCancellable> = []
     
-    lazy var nameTextField: RegistrationTextField = {
+    private lazy var nameTextField: RegistrationTextField = {
         let textField = RegistrationTextField( placeholder: "Имя", type: .name)
         textField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var lastnameTextField: RegistrationTextField = {
+    private lazy var lastnameTextField: RegistrationTextField = {
         let textField = RegistrationTextField(placeholder: "Фамилия", type: .lastName)
         textField.addTarget(self, action: #selector(lastNameDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var emailTextField: RegistrationTextField = {
+    private lazy var emailTextField: RegistrationTextField = {
         let textField = RegistrationTextField(placeholder: "Электронная почта", type: .email)
         textField.addTarget(self, action: #selector(emailDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var passwordTextField: RegistrationTextField = {
+    private lazy var passwordTextField: RegistrationTextField = {
         let textField = RegistrationTextField(placeholder: "Пароль", type: .password)
         textField.addTarget(self, action: #selector(passwordDidChange), for: .editingChanged)
         return textField
     }()  
     
-    lazy var passwordConfirmationTextField: RegistrationTextField = {
+    private lazy var passwordConfirmationTextField: RegistrationTextField = {
         let textField = RegistrationTextField(placeholder: "Повторите пароль", type: .confirmPassword)
         textField.addTarget(self, action: #selector(confirmPasswordDidChange), for: .editingChanged)
         return textField
     }()
     
-    
-    let registrationButton = PrimeOrangeButton(text: "Зарегистрироваться")
-    
-    lazy var agreementLabel: UILabel = {
+    private lazy var agreementLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
@@ -69,8 +68,6 @@ final class RegistrationView: BaseRegistrationView {
         label.attributedText = text
         return label
     }()
-    
-    private var cancellables: Set<AnyCancellable> = []
     
     init(viewModel: RegistrationViewModel) {
         self.viewModel = viewModel
@@ -138,6 +135,16 @@ final class RegistrationView: BaseRegistrationView {
                     passwordConfirmationTextField.hideWarningLabel()
                 } else {
                     passwordConfirmationTextField.showWarningLabel(error)
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$isLoading
+            .sink { [unowned self] isLoading in
+                if isLoading {
+                    loadingIndicator.show()
+                } else {
+                    loadingIndicator.hide()
                 }
             }
             .store(in: &cancellables)

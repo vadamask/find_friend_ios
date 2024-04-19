@@ -14,6 +14,8 @@ final class RegistrationViewModel {
     private let authService: AuthServiceProtocol
     private let coordinator: AuthCoordinatorProtocol
     
+    @Published var isLoading = false
+    
     @Published var allFieldsAreFilling = false
     @Published var personalIsFilling = false
     @Published var passwordIsFilling = false
@@ -49,7 +51,7 @@ final class RegistrationViewModel {
         validateFields()
         if allFieldsAreValidate {
             let user = CreateUserRequestDto(firstName: name, lastName: lastName, email: email, password: confirmPassword)
-            UIBlockingProgressHUD.show()
+            isLoading = true
             usersService.createUser(user) { [unowned self] result in
                 switch result {
                 case .success(let model):
@@ -61,7 +63,7 @@ final class RegistrationViewModel {
                 case .failure(let error):
                     coordinator.showAlert(error.message)
                 }
-                UIBlockingProgressHUD.dismiss()
+                isLoading = false
             }
         }
     }
