@@ -1,36 +1,23 @@
-//
-//  LoginView.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 20.02.2024.
-//
-
 import Combine
+import SnapKit
 import UIKit
 
 final class LoginView: BaseRegistrationView {
 
     private enum Constants {
-        enum BigCircle {
-            static let width: CGFloat = 184
-            static let trailingInset: CGFloat = 48
-            static let topInset: CGFloat = 33
-        }
-        enum SmallCircle {
-            static let width: CGFloat = 133
-            static let leadingInset: CGFloat = 33
-            static let bottomInset: CGFloat = 33
-        }
+        static let bigCircleWidth: CGFloat = 184
+        static let smallCirclewidth: CGFloat = 133
+        static let elementHeight: CGFloat = 48
     }
     
     private var viewModel: LoginViewModel
     private var cancellables: Set<AnyCancellable> = []
     
     private let bigCircleView: UIView = CircleView(
-        cornerRadius: Constants.BigCircle.width / 2
+        cornerRadius: Constants.bigCircleWidth / 2
     )
     private let smallCircleView: UIView = CircleView(
-        cornerRadius: Constants.SmallCircle.width / 2
+        cornerRadius: Constants.smallCirclewidth / 2
     )
     private let emailTextField = RegistrationTextField(
         placeholder: "Электронная почта", type: .email
@@ -85,14 +72,6 @@ final class LoginView: BaseRegistrationView {
     }
     
     private func setupViews() {
-        contentView.addSubviewWithoutAutoresizingMask(bigCircleView)
-        contentView.addSubviewWithoutAutoresizingMask(smallCircleView)
-        contentView.addSubviewWithoutAutoresizingMask(emailTextField)
-        contentView.addSubviewWithoutAutoresizingMask(passwordTextField)
-        contentView.addSubviewWithoutAutoresizingMask(logInButton)
-        contentView.addSubviewWithoutAutoresizingMask(registrationButton)
-        contentView.addSubviewWithoutAutoresizingMask(forgotPasswordButton)
-
         logInButton.addTarget(
             self,
             action: #selector(loginButtonTapped),
@@ -121,41 +100,55 @@ final class LoginView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        NSLayoutConstraint.activate([
-            bigCircleView.widthAnchor.constraint(equalToConstant: Constants.BigCircle.width),
-            bigCircleView.heightAnchor.constraint(equalToConstant: Constants.BigCircle.width),
-            topDecoration.bottomAnchor.constraint(equalTo: bigCircleView.topAnchor, constant: Constants.BigCircle.topInset),
-            bigCircleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.BigCircle.trailingInset),
-
-            emailTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalToConstant: 48),
-            contentView.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor, constant: 36),
-
-            passwordTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalTo: emailTextField.heightAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 48),
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
-
-            forgotPasswordButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 4),
-            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 48),
-
-            smallCircleView.widthAnchor.constraint(equalToConstant: Constants.SmallCircle.width),
-            smallCircleView.heightAnchor.constraint(equalToConstant: Constants.SmallCircle.width),
-            logInButton.topAnchor.constraint(equalTo: smallCircleView.bottomAnchor, constant: Constants.SmallCircle.bottomInset),
-            leadingAnchor.constraint(equalTo: smallCircleView.leadingAnchor, constant: Constants.SmallCircle.leadingInset),
-
-            logInButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            logInButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            logInButton.heightAnchor.constraint(equalToConstant: 48),
-            
-            registrationButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
-            registrationButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            registrationButton.heightAnchor.constraint(equalToConstant: 48),
-            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: registrationButton.bottomAnchor, constant: 21)
-        ])
+        contentView.addSubview(bigCircleView)
+        contentView.addSubview(smallCircleView)
+        contentView.addSubview(emailTextField)
+        contentView.addSubview(passwordTextField)
+        contentView.addSubview(logInButton)
+        contentView.addSubview(registrationButton)
+        contentView.addSubview(forgotPasswordButton)
+        
+        bigCircleView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: Constants.bigCircleWidth, height: Constants.bigCircleWidth))
+            make.top.equalTo(topDecoration.snp.bottom).offset(-33)
+            make.trailing.equalToSuperview().offset(48)
+        }
+        
+        emailTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.elementHeight)
+            make.top.equalTo(bigCircleView.snp.bottom).offset(4)
+        }
+        
+        passwordTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.elementHeight)
+            make.top.equalTo(emailTextField.snp.bottom).offset(24)
+        }
+        
+        forgotPasswordButton.snp.makeConstraints { make in
+            make.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.elementHeight)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(4)
+        }
+        
+        smallCircleView.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: Constants.smallCirclewidth, height: Constants.smallCirclewidth))
+            make.bottom.equalTo(logInButton.snp.top).offset(-32)
+            make.leading.equalToSuperview().offset(-33)
+        }
+        
+        logInButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.elementHeight)
+            make.bottom.equalTo(registrationButton.snp.top).offset(-16)
+        }
+        
+        registrationButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 148, height: Constants.elementHeight))
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-21)
+        }
     }
 
     @objc private func loginButtonTapped() {
