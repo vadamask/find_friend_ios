@@ -17,7 +17,6 @@ protocol AuthCoordinatorProtocol: Coordinator {
     func popToLoginVC()
     func popToRoot()
     func showPage(_ page: SFSafariViewController)
-    func showAlert(_ message: String)
 }
 
 final class AuthCoordinator: AuthCoordinatorProtocol {
@@ -35,10 +34,6 @@ final class AuthCoordinator: AuthCoordinatorProtocol {
         loginVC = viewController
         self.navigationController.navigationItem.backButtonTitle = nil
         navigationController.pushViewController(viewController, animated: false)
-    }
-    
-    func showAlert(_ message: String) {
-        AlertPresenter.show(in: navigationController, model: AlertModel(message: message))
     }
 }
 
