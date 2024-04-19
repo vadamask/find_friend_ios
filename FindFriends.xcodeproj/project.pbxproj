@@ -17,7 +17,6 @@
 		8445676E2B9740CB00114604 /* GenderSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445676D2B9740CB00114604 /* GenderSelectionButton.swift */; };
 		84531D152B94C38E002289C6 /* FillProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84531D142B94C38E002289C6 /* FillProfilePageViewController.swift */; };
 		84531D1A2B94C450002289C6 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84531D192B94C450002289C6 /* GenderViewController.swift */; };
-		84CCA1BD2B95B6A6000BDC28 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 84CCA1BC2B95B6A6000BDC28 /* ProgressHUD */; };
 		84CCA1BF2B96409D000BDC28 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCA1BE2B96409D000BDC28 /* GenderView.swift */; };
 		84CCA1C12B9640A4000BDC28 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCA1C02B9640A4000BDC28 /* GenderViewModel.swift */; };
 		CE07C5B42BBC3E7F001EEF0F /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C5B32BBC3E7F001EEF0F /* EditMyProfileViewController.swift */; };
@@ -73,6 +72,7 @@
 		DD0EE6B82BCA7D1F00E2E3AB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6B72BCA7D1F00E2E3AB /* AppCoordinator.swift */; };
 		DD0EE6BA2BCA86B500E2E3AB /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */; };
 		DD0EE6BC2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */; };
+		DD0EE6BE2BD1A4EE00E2E3AB /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6BD2BD1A4EE00E2E3AB /* LoadingIndicator.swift */; };
 		DD3A2E9F2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */; };
 		DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */; };
 		DD3A2EA82B7E9836006A3B8E /* CaptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */; };
@@ -118,7 +118,6 @@
 		F301707E2B8CF32500A6921A /* AlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301707D2B8CF32500A6921A /* AlertButton.swift */; };
 		F30170812B8CF57800A6921A /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170802B8CF57800A6921A /* SplashViewController.swift */; };
 		F30170832B8CF6EB00A6921A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170822B8CF6EB00A6921A /* SplashView.swift */; };
-		F30170892B8D290700A6921A /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170882B8D290700A6921A /* UIBlockingProgressHUD.swift */; };
 		F30DA5A22B8E7B2100E6571B /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30DA5A12B8E7B2100E6571B /* ResetPasswordViewModel.swift */; };
 		F30DA5A42B8E862300E6571B /* NewPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30DA5A32B8E862300E6571B /* NewPasswordViewModel.swift */; };
 		F31111272B968D5D00A97B80 /* BaseRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31111262B968D5D00A97B80 /* BaseRegistrationViewController.swift */; };
@@ -204,6 +203,7 @@
 		DD0EE6B72BCA7D1F00E2E3AB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordSuccessViewModel.swift; sourceTree = "<group>"; };
+		DD0EE6BD2BD1A4EE00E2E3AB /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoresizingMask.swift"; sourceTree = "<group>"; };
 		DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeOrangeButton.swift; sourceTree = "<group>"; };
 		DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionButton.swift; sourceTree = "<group>"; };
@@ -248,7 +248,6 @@
 		F301707D2B8CF32500A6921A /* AlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertButton.swift; sourceTree = "<group>"; };
 		F30170802B8CF57800A6921A /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		F30170822B8CF6EB00A6921A /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		F30170882B8D290700A6921A /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		F30DA5A12B8E7B2100E6571B /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		F30DA5A32B8E862300E6571B /* NewPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewModel.swift; sourceTree = "<group>"; };
 		F31111262B968D5D00A97B80 /* BaseRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRegistrationViewController.swift; sourceTree = "<group>"; };
@@ -274,7 +273,6 @@
 			files = (
 				DDFA4A672BC6F82E00AEF3D0 /* SnapKit in Frameworks */,
 				D86387D72B8A7ECA00692535 /* SwiftKeychainWrapper in Frameworks */,
-				84CCA1BD2B95B6A6000BDC28 /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,11 +452,11 @@
 				DDCAC7C32B83C0BF00EC7D15 /* WhiteBorderButton.swift */,
 				DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */,
 				DDCAC7CB2B851EF500EC7D15 /* RegistrationTextField.swift */,
-				F30170882B8D290700A6921A /* UIBlockingProgressHUD.swift */,
 				D854012D2B93125A0088C1E9 /* CellReusingUtils.swift */,
 				CE07C5BF2BBDA149001EEF0F /* ProfileCustomView.swift */,
 				CE07C5D92BC3263B001EEF0F /* DashedView.swift */,
 				CE07C5DD2BC43B49001EEF0F /* SettingProfileView.swift */,
+				DD0EE6BD2BD1A4EE00E2E3AB /* LoadingIndicator.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -744,7 +742,6 @@
 			name = FindFriends;
 			packageProductDependencies = (
 				D86387D62B8A7ECA00692535 /* SwiftKeychainWrapper */,
-				84CCA1BC2B95B6A6000BDC28 /* ProgressHUD */,
 				DDFA4A662BC6F82E00AEF3D0 /* SnapKit */,
 			);
 			productName = FindFriends;
@@ -777,7 +774,6 @@
 			mainGroup = D853CC192B7567AF00DA58D5;
 			packageReferences = (
 				D86387D52B8A7ECA00692535 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
-				84CCA1BB2B95B6A6000BDC28 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				DDFA4A652BC6F82E00AEF3D0 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = D853CC232B7567AF00DA58D5 /* Products */;
@@ -819,6 +815,7 @@
 				DD0EE6B12BCA76B500E2E3AB /* MessagesViewController.swift in Sources */,
 				CECC80EA2B98988200F4312B /* SelectCityTableViewCell.swift in Sources */,
 				D86387D42B8A7E4F00692535 /* TokenStorageService.swift in Sources */,
+				DD0EE6BE2BD1A4EE00E2E3AB /* LoadingIndicator.swift in Sources */,
 				DD64AB9A2BC1273F0011E7D4 /* UserResponse.swift in Sources */,
 				DD0EE6AF2BCA76AD00E2E3AB /* MessagesView.swift in Sources */,
 				D86387C72B87A16400692535 /* NetworkRequest.swift in Sources */,
@@ -838,7 +835,6 @@
 				4C7BC3102BC6EC8300465C0F /* SegmentView.swift in Sources */,
 				DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */,
 				D854012A2B91F6940088C1E9 /* SelectInterestsViewController.swift in Sources */,
-				F30170892B8D290700A6921A /* UIBlockingProgressHUD.swift in Sources */,
 				DD0412DE2B90E31E00984BA7 /* SearchFriendsViewController.swift in Sources */,
 				DD0EE6B62BCA77B400E2E3AB /* Coordinator.swift in Sources */,
 				F301707C2B8CF2FF00A6921A /* AlertModel.swift in Sources */,
@@ -1155,14 +1151,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		84CCA1BB2B95B6A6000BDC28 /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/relatedcode/ProgressHUD.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 13.8.6;
-			};
-		};
 		D86387D52B8A7ECA00692535 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper.git";
@@ -1182,11 +1170,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		84CCA1BC2B95B6A6000BDC28 /* ProgressHUD */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 84CCA1BB2B95B6A6000BDC28 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
-			productName = ProgressHUD;
-		};
 		D86387D62B8A7ECA00692535 /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D86387D52B8A7ECA00692535 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
