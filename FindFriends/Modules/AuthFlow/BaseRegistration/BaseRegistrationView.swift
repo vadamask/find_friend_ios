@@ -1,14 +1,9 @@
-//
-//  BaseRegistrationView.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 20.02.2024.
-//
-
+import SnapKit
 import UIKit
 
 class BaseRegistrationView: UIView {
-
+    let loadingIndicator = LoadingIndicator()
+    
     let topDecoration: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .topDecoration
@@ -47,31 +42,27 @@ class BaseRegistrationView: UIView {
 
     private func setupViews() {
         backgroundColor = .white
-        addSubviewWithoutAutoresizingMask(scrollView)
-        scrollView.addSubviewWithoutAutoresizingMask(contentView)
-        contentView.addSubviewWithoutAutoresizingMask(topDecoration)
+        addSubview(scrollView)
+        addSubview(loadingIndicator)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(topDecoration)
     }
 
     private func setupLayout() {
-        NSLayoutConstraint.activate([
-            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: widthAnchor),
-            scrollView.contentLayoutGuide.heightAnchor.constraint(equalTo: heightAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-
-            topDecoration.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            topDecoration.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topDecoration.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: Constants.topDecorationInset
-            )
-        ])
+        scrollView.contentLayoutGuide.snp.makeConstraints { make in
+            make.width.height.equalToSuperview()
+        }
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+        }
+        topDecoration.snp.makeConstraints { make in
+            make.leading.top.trailing.equalTo(contentView)
+        }
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
 }
