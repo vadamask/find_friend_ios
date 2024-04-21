@@ -1,7 +1,14 @@
 import Combine
+import SnapKit
 import UIKit
 
 final class RegistrationView: BaseRegistrationView {
+    
+    private enum Constants {
+        static let height = 48
+        static let spacing = 24
+    }
+    
     private let viewModel: RegistrationViewModel
     private let registrationButton = PrimeOrangeButton(text: "Зарегистрироваться")
     private var cancellables: Set<AnyCancellable> = []
@@ -161,48 +168,54 @@ final class RegistrationView: BaseRegistrationView {
     }
     
     private func setupLayout() {
-        contentView.addSubviewWithoutAutoresizingMask(nameTextField)
-        contentView.addSubviewWithoutAutoresizingMask(lastnameTextField)
-        contentView.addSubviewWithoutAutoresizingMask(emailTextField)
-        contentView.addSubviewWithoutAutoresizingMask(passwordTextField)
-        contentView.addSubviewWithoutAutoresizingMask(passwordConfirmationTextField)
-        contentView.addSubviewWithoutAutoresizingMask(registrationButton)
-        contentView.addSubviewWithoutAutoresizingMask(agreementLabel)
+        contentView.addSubview(nameTextField)
+        contentView.addSubview(lastnameTextField)
+        contentView.addSubview(emailTextField)
+        contentView.addSubview(passwordTextField)
+        contentView.addSubview(passwordConfirmationTextField)
+        contentView.addSubview(agreementLabel)
+        contentView.addSubview(registrationButton)
         
-        NSLayoutConstraint.activate([
-            nameTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            nameTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            nameTextField.topAnchor.constraint(equalTo: topDecoration.bottomAnchor, constant: 32),
-            nameTextField.heightAnchor.constraint(equalToConstant: 48),
-            
-            lastnameTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            lastnameTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            lastnameTextField.heightAnchor.constraint(equalTo: nameTextField.heightAnchor),
-            lastnameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
-            
-            emailTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalTo: lastnameTextField.heightAnchor),
-            emailTextField.topAnchor.constraint(equalTo: lastnameTextField.bottomAnchor, constant: 24),
-            
-            passwordTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalTo: emailTextField.heightAnchor),
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
-            
-            passwordConfirmationTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            passwordConfirmationTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            passwordConfirmationTextField.heightAnchor.constraint(equalTo: passwordTextField.heightAnchor),
-            passwordConfirmationTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 24),
-            
-            agreementLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            agreementLabel.topAnchor.constraint(equalTo: passwordConfirmationTextField.bottomAnchor, constant: 74),
-            
-            registrationButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            registrationButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            registrationButton.heightAnchor.constraint(equalToConstant: 48),
-            registrationButton.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: 16)
-        ])
+        nameTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.top.equalTo(topDecoration.snp.bottom).offset(32)
+            make.height.equalTo(Constants.height)
+        }
+        
+        lastnameTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.top.equalTo(nameTextField.snp.bottom).offset(Constants.spacing)
+            make.height.equalTo(Constants.height)
+        } 
+        
+        emailTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.top.equalTo(lastnameTextField.snp.bottom).offset(Constants.spacing)
+            make.height.equalTo(Constants.height)
+        } 
+        
+        passwordTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.top.equalTo(emailTextField.snp.bottom).offset(Constants.spacing)
+            make.height.equalTo(Constants.height)
+        }
+        
+        passwordConfirmationTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(Constants.spacing)
+            make.height.equalTo(Constants.height)
+        }
+        
+        agreementLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(passwordConfirmationTextField.snp.bottom).offset(74)
+        }
+      
+        registrationButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.height)
+            make.top.equalTo(agreementLabel.snp.bottom).offset(16)
+        }
     }
 }
 
