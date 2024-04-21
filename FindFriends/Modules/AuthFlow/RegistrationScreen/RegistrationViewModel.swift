@@ -1,9 +1,3 @@
-//
-//  RegistrationViewModel.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 20.02.2024.
-//
 import Combine
 import Foundation
 import SafariServices

@@ -1,10 +1,3 @@
-//
-//  SelectInterestsView.swift
-//  FindFriends
-//
-//  Created by Vitaly on 01.03.2024.
-//
-
 import UIKit
 
 class SelectInterestsViewController: UIViewController {

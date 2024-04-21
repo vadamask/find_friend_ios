@@ -1,10 +1,3 @@
-//
-//  BaseFillProfileView.swift
-//  FindFriends
-//
-//  Created by Vitaly on 04.03.2024.
-//
-
 import UIKit
 
 class BaseFillProfileView: UIView {

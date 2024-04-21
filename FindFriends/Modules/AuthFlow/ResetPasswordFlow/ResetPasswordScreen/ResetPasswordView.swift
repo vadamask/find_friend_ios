@@ -1,10 +1,3 @@
-//
-//  ResetPasswordView.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 21.02.2024.
-//
-
 import Combine
 import UIKit
 

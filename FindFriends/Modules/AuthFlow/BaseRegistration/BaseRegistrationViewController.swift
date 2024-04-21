@@ -1,10 +1,3 @@
-//
-//  BaseRegistrationViewController.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 04.03.2024.
-//
-
 import UIKit
 
 class BaseRegistrationViewController: UIViewController {

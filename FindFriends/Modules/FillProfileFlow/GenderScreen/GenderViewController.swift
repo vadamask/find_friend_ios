@@ -1,10 +1,3 @@
-//
-//  GenderSelectionViewController.swift
-//  FindFriends
-//
-//  Created by Ognerub on 3/3/24.
-//
-
 import UIKit
 
 final class GenderViewController: UIViewController {

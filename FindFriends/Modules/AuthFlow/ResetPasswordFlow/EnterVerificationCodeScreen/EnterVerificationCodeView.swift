@@ -1,9 +1,3 @@
-//
-//  EnterVerificationCodeView.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 22.03.2024.
-//
 import Combine
 import UIKit
 

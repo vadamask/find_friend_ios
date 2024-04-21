@@ -1,10 +1,3 @@
-//
-//  SelectInterestsView+tagCollectionViewExtensions.swift
-//  FindFriends
-//
-//  Created by Vitaly on 07.03.2024.
-//
-
 import UIKit
 
 class CustomViewFlowLayout: UICollectionViewFlowLayout {

@@ -1,10 +1,3 @@
-//
-//  TagsCollectionView.swift
-//  FindFriends
-//
-//  Created by Vitaly on 02.03.2024.
-//
-
 import Combine
 import UIKit
 

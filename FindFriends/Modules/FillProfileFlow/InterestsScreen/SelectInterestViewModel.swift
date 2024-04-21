@@ -1,10 +1,3 @@
-//
-//  SelectInterestViewModel.swift
-//  FindFriends
-//
-//  Created by Vitaly on 06.03.2024.
-//
-
 import Combine
 import Foundation
 

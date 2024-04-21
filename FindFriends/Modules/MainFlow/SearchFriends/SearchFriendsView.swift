@@ -1,9 +1,3 @@
-//
-//  SearchFriendsView.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 29.02.2024.
-//
 import Combine
 import UIKit
 

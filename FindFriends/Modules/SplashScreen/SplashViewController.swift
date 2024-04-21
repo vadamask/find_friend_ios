@@ -1,10 +1,3 @@
-//
-//  SplashViewController.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 26.02.2024.
-//
-
 import UIKit
 
 final class SplashViewController: UIViewController {

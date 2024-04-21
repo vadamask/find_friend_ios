@@ -1,10 +1,3 @@
-//
-//  SplashView.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 26.02.2024.
-//
-
 import Combine
 import SnapKit
 import UIKit

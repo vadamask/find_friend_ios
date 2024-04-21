@@ -1,10 +1,3 @@
-//
-//  PhotoView.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 05.04.2024.
-//
-
 import UIKit
 
 protocol PhotoViewDelegate: AnyObject {

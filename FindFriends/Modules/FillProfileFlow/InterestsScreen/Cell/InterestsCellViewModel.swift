@@ -1,10 +1,3 @@
-//
-//  CellViewModel.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 28.03.2024.
-//
-
 import Combine
 import Foundation
 

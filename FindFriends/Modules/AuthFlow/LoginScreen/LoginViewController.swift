@@ -1,10 +1,3 @@
-//
-//  LoginViewController.swift
-//  FindFriends
-//
-//  Created by Artem Novikov on 20.02.2024.
-//
-
 import UIKit
 
 final class LoginViewController: UIViewController {

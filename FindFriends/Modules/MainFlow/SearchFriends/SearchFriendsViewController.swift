@@ -1,10 +1,3 @@
-//
-//  SearchFriendsViewController.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 29.02.2024.
-//
-
 import UIKit
 
 final class SearchFriendsViewController: UIViewController {

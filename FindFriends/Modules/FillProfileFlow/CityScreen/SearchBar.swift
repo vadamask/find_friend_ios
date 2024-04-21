@@ -1,10 +1,3 @@
-//
-//  SearchBar.swift
-//  FindFriends
-//
-//  Created by Victoria Isaeva on 28.03.2024.
-//
-
 import UIKit
 
 final class SearchBar: UISearchBar {

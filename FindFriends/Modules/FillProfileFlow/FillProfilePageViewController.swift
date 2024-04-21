@@ -1,10 +1,3 @@
-//
-//  CustomUIPageViewController.swift
-//  FindFriends
-//
-//  Created by Ognerub on 3/3/24.
-//
-
 import UIKit
 
 protocol FillProfileDelegate: AnyObject {
