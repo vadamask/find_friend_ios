@@ -1,16 +1,9 @@
-//
-//  LoadingIndicator.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 18.04.2024.
-//
-
 import UIKit
 
 final class LoadingIndicator: UIImageView {
     
     init() {
-        super.init(image: UIImage(resource: .loadingIndicator))
+        super.init(image: .Symbols.loadingIndicator)
         isHidden = true
     }
     

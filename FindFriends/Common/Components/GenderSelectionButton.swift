@@ -39,6 +39,6 @@ final class GenderSelectionButton: UIButton {
         isSelected = enabled
         setTitleColor(enabled ?.black: .black, for: .selected)
         configuration?.image?.withTintColor(.lightOrange)
-        setImage(enabled ? .selectCity : .cityUnselected, for: .selected)
+        setImage(enabled ? .Symbols.orangeFillCircle : .Symbols.orangeEmptyCircle, for: .selected)
     }
 }

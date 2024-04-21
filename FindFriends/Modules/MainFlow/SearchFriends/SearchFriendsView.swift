@@ -18,7 +18,7 @@ final class SearchFriendsView: UIView {
         textField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
         
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
-        let leftImageView = UIImageView(image: UIImage(resource: .loupe))
+        let leftImageView = UIImageView(image: .Symbols.smallLoupe)
         leftView.addSubview(leftImageView)
         leftImageView.center = leftView.center
         leftView.tintColor = .searchTextFieldTint
@@ -26,7 +26,7 @@ final class SearchFriendsView: UIView {
         textField.leftViewMode = .always
         
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
-        let rightImageView = UIImageView(image: UIImage(resource: .filter))
+        let rightImageView = UIImageView(image: .Symbols.filter)
         rightView.addSubview(rightImageView)
         rightImageView.center = rightView.center
         rightView.tintColor = .searchTextFieldTint

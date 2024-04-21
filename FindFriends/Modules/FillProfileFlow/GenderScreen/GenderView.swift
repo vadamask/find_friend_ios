@@ -12,8 +12,8 @@ final class GenderView: BaseFillProfileView {
         return stack
     }()
     
-    private lazy var genderManImageView: UIImageView = UIImageView(image: .genderMan)
-    private lazy var genderWomanImageView: UIImageView = UIImageView(image: .genderWoman)
+    private lazy var genderManImageView: UIImageView = UIImageView(image: .Images.boyFace)
+    private lazy var genderWomanImageView: UIImageView = UIImageView(image: .Images.girlFace)
     private let genderManButton = GenderSelectionButton(text: "Мужской")
     private let genderWomanButton = GenderSelectionButton(text: "Женский")
     

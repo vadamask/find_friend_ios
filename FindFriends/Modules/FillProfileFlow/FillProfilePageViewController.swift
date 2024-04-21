@@ -50,7 +50,7 @@ final class FillProfilePageViewController: UIPageViewController {
         let button = UIButton()
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         button.isHidden = true
-        button.setImage(.back, for: .normal)
+        button.setImage(.Symbols.leftChevron, for: .normal)
         return button
     }()
 

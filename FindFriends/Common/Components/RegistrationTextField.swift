@@ -1,10 +1,3 @@
-//
-//  RegistrationTextField.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 20.02.2024.
-//
-
 import UIKit
 
 enum TextFieldType {
@@ -37,7 +30,7 @@ final class RegistrationTextField: UITextField {
     private lazy var showPasswordButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
         button.imageView?.tintColor = .primeDark
-        button.setImage(.closedEye, for: .normal)
+        button.setImage(.Symbols.closedEye, for: .normal)
         button.addTarget(self, action: #selector(showPassword), for: .touchUpInside)
         button.isHidden = true
         return button
@@ -116,7 +109,7 @@ final class RegistrationTextField: UITextField {
     @objc private func showPassword() {
         isSecureTextEntry.toggle()
         showPasswordButton.setImage(
-            isSecureTextEntry ? .closedEye : .openEye,
+            isSecureTextEntry ? .Symbols.closedEye : .Symbols.openEye,
             for: .normal
         )
     }

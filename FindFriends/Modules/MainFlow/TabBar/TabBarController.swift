@@ -114,10 +114,10 @@ open class TabBarController: UITabBarController  {
         let myProfileVC = MyProfileViewController(viewModel: myProfileViewModel)
         
         viewControllers = [
-            generateVC(UIViewController(), "Сообщения", UIImage(resource: .messagesWithoutNotification)),
-            generateVC(searchFriendsVC, "Поиск друзей", UIImage(resource: .searchFriends)),
-            generateVC(EventViewController(), "Мероприятия", UIImage(resource: .events)),
-            generateVC(myProfileVC, "Мой профиль", UIImage(resource: .myProfile))
+            generateVC(UIViewController(), "Сообщения", .Symbols.messagesWithoutNotification),
+            generateVC(searchFriendsVC, "Поиск друзей", .Symbols.bigLoupe),
+            generateVC(EventViewController(), "Мероприятия", .Symbols.events),
+            generateVC(myProfileVC, "Мой профиль", .Symbols.smallPersonTab)
         ]
     }
 }

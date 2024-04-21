@@ -51,7 +51,7 @@ final class MyProfileViewController: UIViewController {
     
     private lazy var editButton: UIButton = {
         let button = UIButton()
-        button.setImage(.edit, for: .normal)
+        button.setImage(.Symbols.pencil, for: .normal)
         button.addTarget(self, action: #selector(didTapEditButton), for: .touchUpInside)
         return button
     }()
@@ -90,7 +90,7 @@ final class MyProfileViewController: UIViewController {
     
     private lazy var locationLogo: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .location
+        imageView.image = .Symbols.location
         return imageView
     }()
     
@@ -111,7 +111,7 @@ final class MyProfileViewController: UIViewController {
     
     private lazy var descroptionLogo: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .user
+        imageView.image = .Symbols.smallPerson
         return imageView
     }()
     
@@ -189,7 +189,7 @@ final class MyProfileViewController: UIViewController {
     
     private lazy var createMeeting: PrimeOrangeButton = {
         let button = PrimeOrangeButton(text: "Создать событие", isEnabled: true)
-        button.setImage(UIImage(resource: .addMeeting), for: .normal)
+        button.setImage(.Symbols.whitePlus, for: .normal)
         button.isHighlighted = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
@@ -236,7 +236,7 @@ final class MyProfileViewController: UIViewController {
     private lazy var vkView: CustomView = {
         let view = CustomView()
         view.secondLabel.text = "id:123456789"
-        view.secondLabel.addImage(.vk, toStartWith: 25)
+        view.secondLabel.addImage(.Social.vk, toStartWith: 25)
         view.firstLabel.isHidden = true
         view.isHidden = false
         return view
@@ -245,7 +245,7 @@ final class MyProfileViewController: UIViewController {
     private lazy var tgView: CustomView = {
         let view = CustomView()
         view.secondLabel.text = "@Nastya_0101"
-        view.secondLabel.addImage(.telegram, toStartWith: 25)
+        view.secondLabel.addImage(.Social.telegram, toStartWith: 25)
         view.firstLabel.isHidden = true
         view.isHidden = false
         return view

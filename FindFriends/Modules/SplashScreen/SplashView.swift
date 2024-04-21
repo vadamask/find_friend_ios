@@ -9,7 +9,7 @@ final class SplashView: UIView {
 
     private var logoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .welcomeLogo
+        imageView.image = .Images.logo
         return imageView
     }()
 

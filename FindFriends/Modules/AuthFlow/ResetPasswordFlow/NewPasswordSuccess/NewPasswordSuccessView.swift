@@ -25,7 +25,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .success
+        imageView.image = .Images.greenCheckmark
         return imageView
     }()
 

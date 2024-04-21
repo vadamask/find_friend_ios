@@ -12,7 +12,7 @@ final class SelectCityTableViewCell: UITableViewCell {
     
     lazy var checkMark: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .cityUnselected), for: .normal)
+        button.setImage(.Symbols.orangeEmptyCircle, for: .normal)
         button.tintColor = UIColor.black
         return button
     }()
@@ -24,10 +24,10 @@ final class SelectCityTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
-            checkMark.setImage(UIImage(resource: .citySelected), for: .normal)
+            checkMark.setImage(.Symbols.orangeFillCircle, for: .normal)
             checkMark.tintColor = UIColor.lightOrange
         } else {
-            checkMark.setImage(UIImage(resource: .cityUnselected), for: .normal)
+            checkMark.setImage(.Symbols.orangeEmptyCircle, for: .normal)
             checkMark.tintColor = UIColor.black
         }
     }

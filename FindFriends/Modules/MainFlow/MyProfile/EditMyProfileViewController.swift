@@ -43,7 +43,7 @@ final class EditMyProfileViewController: UIViewController {
     
     private lazy var editProfilePhotoButton: UIButton = {
         let button = UIButton()
-        button.setImage(.edit, for: .normal)
+        button.setImage(.Symbols.pencil, for: .normal)
         button.imageView?.tintColor = .white
         button.backgroundColor = .mainOrange
         button.layer.bounds.size.height = 44
@@ -144,14 +144,14 @@ final class EditMyProfileViewController: UIViewController {
     
     private lazy var genderManButton: GenderSelectionButton = {
         let button = GenderSelectionButton(text: "Мужской")
-        button.setImage(.cityUnselected, for: .normal)
+        button.setImage(.Symbols.orangeEmptyCircle, for: .normal)
         button.addTarget(self, action: #selector(genderManSelected), for: .touchUpInside)
         return button
     }()
     
     private lazy var genderWomanButton: GenderSelectionButton = {
         let button = GenderSelectionButton(text: "Женский")
-        button.setImage(.cityUnselected, for: .normal)
+        button.setImage(.Symbols.orangeEmptyCircle, for: .normal)
         button.addTarget(self, action: #selector(genderWomanSelected), for: .touchUpInside)
         return button
     }()
@@ -306,7 +306,7 @@ final class EditMyProfileViewController: UIViewController {
     private lazy var editInterestButton: UIButton = {
         let button = UIButton()
         button.imageView?.tintColor = .black
-        button.setImage(.edit, for: .normal)
+        button.setImage(.Symbols.pencil, for: .normal)
         return button
     }()
     

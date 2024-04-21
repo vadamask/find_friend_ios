@@ -6,7 +6,7 @@ class BaseRegistrationView: UIView {
     
     let topDecoration: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .topDecoration
+        imageView.image = .Images.orangeWave
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
