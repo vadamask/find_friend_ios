@@ -1,20 +1,11 @@
 import Combine
+import SnapKit
 import UIKit
 
 final class ResetPasswordView: BaseRegistrationView {
 
     private enum Constants {
-        enum Label {
-            static let topInset: CGFloat = 32
-        }
-        enum TextField {
-            static let height: CGFloat = 48
-            static let topInset: CGFloat = 12
-        }
-        enum Button {
-            static let height: CGFloat = 48
-            static let bottomInset: CGFloat = 85
-        }
+        static let height: CGFloat = 48
     }
     
     private let viewModel: ResetPasswordViewModel
@@ -67,21 +58,17 @@ final class ResetPasswordView: BaseRegistrationView {
             .store(in: &cancellables)
         
         viewModel.$isLoading
-            .sink { isLoading in
+            .sink { [unowned self] isLoading in
                 if isLoading {
-                    UIBlockingProgressHUD.show()
+                    loadingIndicator.show()
                 } else {
-                    UIBlockingProgressHUD.dismiss()
+                    loadingIndicator.hide()
                 }
             }
             .store(in: &cancellables)
     }
     
     private func setupViews() {
-        contentView.addSubviewWithoutAutoresizingMask(label)
-        contentView.addSubviewWithoutAutoresizingMask(emailTextField)
-        contentView.addSubviewWithoutAutoresizingMask(sendCodeButton)
-
         sendCodeButton.addTarget(
             self,
             action: #selector(sendCodeTapped),
@@ -95,21 +82,26 @@ final class ResetPasswordView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            label.topAnchor.constraint(equalTo: topDecoration.bottomAnchor, constant: Constants.Label.topInset),
-
-            emailTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
-            emailTextField.topAnchor.constraint(equalTo: label.bottomAnchor, constant: Constants.TextField.topInset),
-
-            sendCodeButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            sendCodeButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            sendCodeButton.heightAnchor.constraint(equalToConstant: Constants.Button.height),
-            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: sendCodeButton.bottomAnchor, constant: Constants.Button.bottomInset)
-        ])
+        contentView.addSubview(label)
+        contentView.addSubview(emailTextField)
+        contentView.addSubview(sendCodeButton)
+        
+        label.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.top.equalTo(topDecoration.snp.bottom).offset(32)
+        }
+        
+        emailTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.height)
+            make.top.equalTo(label.snp.bottom).offset(12)
+        }
+        
+        sendCodeButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(Constants.height)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-85)
+        }
     }
 
     @objc private func sendCodeTapped() {

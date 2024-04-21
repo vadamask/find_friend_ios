@@ -4,8 +4,8 @@ import Foundation
 final class ResetPasswordViewModel {
 
     @Published var emailIsEmpty = true
-    @Published var isLoading = false
     @Published var emailError: String?
+    @Published var isLoading = false
     
     var email = CurrentValueSubject<String, Never>("")
     
@@ -25,6 +25,7 @@ final class ResetPasswordViewModel {
     func sendCodeTapped() {
         validateEmail()
         if emailError == nil {
+            isLoading = true
             resetPasswordService.resetPassword(ResetPasswordRequestDto(email: email.value)) { [unowned self] result in
                 switch result {
                 case .success(let response):
@@ -36,6 +37,7 @@ final class ResetPasswordViewModel {
                 case .failure(let error):
                     coordinator.showAlert(error.message)
                 }
+                isLoading = false
             }
         }
     }
