@@ -1,10 +1,3 @@
-//
-//  SplashViewModel.swift
-//  FindFriends
-//
-//  Created by Вадим Шишков on 06.04.2024.
-//
-
 import Combine
 import Foundation
 
