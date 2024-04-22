@@ -85,6 +85,8 @@ final class NewPasswordView: BaseAuthView {
     }
 
     private func setupViews() {
+        backgroundColor = .white
+        
         primeButton.addTarget(
             self,
             action: #selector(savePasswordButtonTapped),

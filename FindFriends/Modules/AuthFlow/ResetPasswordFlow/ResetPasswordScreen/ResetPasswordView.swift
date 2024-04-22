@@ -67,6 +67,8 @@ final class ResetPasswordView: BaseAuthView {
     }
     
     private func setupViews() {
+        backgroundColor = .white
+        
         primeButton.addTarget(
             self,
             action: #selector(sendCodeTapped),

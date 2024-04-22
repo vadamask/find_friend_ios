@@ -36,6 +36,10 @@ class BaseAuthView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func setupViews() {
+        backgroundColor = .white
+    }
 
     private func setupLayout() {
         addSubview(scrollView)
@@ -50,6 +54,7 @@ class BaseAuthView: UIView {
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide)
         }
         
         topDecoration.snp.makeConstraints { make in
@@ -63,13 +68,13 @@ class BaseAuthView: UIView {
         primeButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(layoutMarginsGuide)
             make.height.equalTo(48)
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-68)
+            make.bottom.equalTo(scrollView).offset(-68)
         }
         
         captionButton.snp.makeConstraints { make in
             make.height.equalTo(48)
             make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-4)
+            make.bottom.equalTo(scrollView).offset(-4)
         }
     }
 }

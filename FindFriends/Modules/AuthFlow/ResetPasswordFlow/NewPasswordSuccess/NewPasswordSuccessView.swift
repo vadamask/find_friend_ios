@@ -42,6 +42,7 @@ final class NewPasswordSuccessView: BaseAuthView {
     }
 
     private func setupViews() {
+        backgroundColor = .white
         primeButton.setEnabled(true)
         primeButton.addTarget(
             self,

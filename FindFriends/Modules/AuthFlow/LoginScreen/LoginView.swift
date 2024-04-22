@@ -70,6 +70,8 @@ final class LoginView: BaseAuthView {
     }
     
     private func setupViews() {
+        backgroundColor = .white
+        
         primeButton.addTarget(
             self,
             action: #selector(loginButtonTapped),
