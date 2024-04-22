@@ -1,25 +1,11 @@
 import Combine
+import SnapKit
 import UIKit
 
 final class NewPasswordView: BaseRegistrationView {
     
     private let viewModel: NewPasswordViewModel
     private var cancellables: Set<AnyCancellable> = []
-    
-    private enum Constants {
-        enum Label {
-            static let topInset: CGFloat = 32
-        }
-        enum TextField {
-            static let height: CGFloat = 48
-            static let topInset: CGFloat = 16
-            static let bottomInset: CGFloat = 24
-        }
-        enum Button {
-            static let height: CGFloat = 48
-            static let bottomInset: CGFloat = 85
-        }
-    }
 
     private let label: UILabel = {
         let label = UILabel()
@@ -94,22 +80,17 @@ final class NewPasswordView: BaseRegistrationView {
             .store(in: &cancellables)
         
         viewModel.$isLoading
-            .sink { isLoading in
+            .sink { [unowned self] isLoading in
                 if isLoading {
-                    UIBlockingProgressHUD.show()
+                    loadingIndicator.show()
                 } else {
-                    UIBlockingProgressHUD.dismiss()
+                    loadingIndicator.hide()
                 }
             }
             .store(in: &cancellables)
     }
 
     private func setupViews() {
-        contentView.addSubviewWithoutAutoresizingMask(label)
-        contentView.addSubviewWithoutAutoresizingMask(passwordTextField)
-        contentView.addSubviewWithoutAutoresizingMask(passwordConfirmationTextField)
-        contentView.addSubviewWithoutAutoresizingMask(savePasswordButton)
-
         savePasswordButton.addTarget(
             self,
             action: #selector(savePasswordButtonTapped),
@@ -125,38 +106,33 @@ final class NewPasswordView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            label.topAnchor.constraint(
-                equalTo: topDecoration.bottomAnchor,
-                constant: Constants.Label.topInset
-            ),
-
-            passwordTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
-            passwordTextField.topAnchor.constraint(
-                equalTo: label.bottomAnchor,
-                constant: Constants.TextField.topInset
-            ),
-
-            passwordConfirmationTextField.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            passwordConfirmationTextField.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            passwordConfirmationTextField.heightAnchor.constraint(equalToConstant: Constants.TextField.height),
-            passwordConfirmationTextField.topAnchor.constraint(
-                equalTo: passwordTextField.bottomAnchor,
-                constant: Constants.TextField.bottomInset
-            ),
-
-            savePasswordButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            savePasswordButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            savePasswordButton.heightAnchor.constraint(equalToConstant: Constants.Button.height),
-            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(
-                equalTo: savePasswordButton.bottomAnchor,
-                constant: Constants.Button.bottomInset
-            )
-        ])
+        contentView.addSubview(label)
+        contentView.addSubview(passwordTextField)
+        contentView.addSubview(passwordConfirmationTextField)
+        contentView.addSubview(savePasswordButton)
+        
+        label.snp.makeConstraints { make in
+            make.top.equalTo(topDecoration.snp.bottom).offset(32)
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+        }
+        
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(label.snp.bottom).offset(16)
+            make.height.equalTo(44)
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+        }
+        
+        passwordConfirmationTextField.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(24)
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(44)
+        }
+        
+        savePasswordButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-68)
+            make.height.equalTo(48)
+        }
     }
 
     @objc private func savePasswordButtonTapped() {
