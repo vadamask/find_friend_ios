@@ -1,6 +1,6 @@
 import UIKit
 
-final class NewPasswordViewController: BaseRegistrationViewController {
+final class NewPasswordViewController: BaseAuthViewController {
 
     private let newPasswordView: NewPasswordView
 

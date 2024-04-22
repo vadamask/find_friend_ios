@@ -1,18 +1,18 @@
 import UIKit
 
-class BaseRegistrationViewController: UIViewController {
+class BaseAuthViewController: UIViewController {
 
     private enum Constants {
         static let topDecorationInset: CGFloat = -0.3
         static let navBarContentHideMaxOffset: CGFloat = 100
     }
 
-    private let baseRegistrationView: BaseRegistrationView
+    private let baseRegistrationView: BaseAuthView
     private var notificationCenter: NotificationCenter {
         NotificationCenter.default
     }
 
-    init(baseRegistrationView: BaseRegistrationView) {
+    init(baseRegistrationView: BaseAuthView) {
         self.baseRegistrationView = baseRegistrationView
         super.init(nibName: nil, bundle: nil)
     }
@@ -86,7 +86,7 @@ class BaseRegistrationViewController: UIViewController {
 
 // MARK: - UIScrollViewDelegate
 
-extension BaseRegistrationViewController: UIScrollViewDelegate {
+extension BaseAuthViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         navigationController?.setNavigationBarHidden(
             scrollView.contentOffset.y >= Constants.navBarContentHideMaxOffset,

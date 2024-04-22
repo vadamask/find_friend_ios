@@ -1,6 +1,6 @@
 import UIKit
 
-final class ResetPasswordViewController: BaseRegistrationViewController {
+final class ResetPasswordViewController: BaseAuthViewController {
     
     private let resetPasswordView: ResetPasswordView
 

@@ -2,7 +2,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class NewPasswordView: BaseRegistrationView {
+final class NewPasswordView: BaseAuthView {
     
     private let viewModel: NewPasswordViewModel
     private var cancellables: Set<AnyCancellable> = []
@@ -23,12 +23,10 @@ final class NewPasswordView: BaseRegistrationView {
     private let passwordConfirmationTextField = RegistrationTextField(
         placeholder: "Повторите пароль", type: .password
     )
-    
-    private let savePasswordButton = PrimeOrangeButton(text: "Сохранить пароль")
 
     init(viewModel: NewPasswordViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(primeButton: "Сохранить пароль")
         setupViews()
         setupLayout()
         bind()
@@ -38,10 +36,6 @@ final class NewPasswordView: BaseRegistrationView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func setSavePasswordButton(enabled: Bool) {
-        savePasswordButton.setEnabled(enabled)
     }
 
     func setPasswordTextFieldError(message: String) {
@@ -63,7 +57,7 @@ final class NewPasswordView: BaseRegistrationView {
     private func bind() {
         viewModel.$fieldsAreFilling
             .sink { [unowned self] isFilling in
-                setSavePasswordButton(enabled: isFilling)
+                primeButton.setEnabled(isFilling)
             }
             .store(in: &cancellables)
 
@@ -91,7 +85,7 @@ final class NewPasswordView: BaseRegistrationView {
     }
 
     private func setupViews() {
-        savePasswordButton.addTarget(
+        primeButton.addTarget(
             self,
             action: #selector(savePasswordButtonTapped),
             for: .touchUpInside
@@ -106,10 +100,9 @@ final class NewPasswordView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        contentView.addSubview(label)
-        contentView.addSubview(passwordTextField)
-        contentView.addSubview(passwordConfirmationTextField)
-        contentView.addSubview(savePasswordButton)
+        scrollView.addSubview(label)
+        scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(passwordConfirmationTextField)
         
         label.snp.makeConstraints { make in
             make.top.equalTo(topDecoration.snp.bottom).offset(32)
@@ -126,12 +119,6 @@ final class NewPasswordView: BaseRegistrationView {
             make.top.equalTo(passwordTextField.snp.bottom).offset(24)
             make.leading.trailing.equalTo(layoutMarginsGuide)
             make.height.equalTo(44)
-        }
-        
-        savePasswordButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-68)
-            make.height.equalTo(48)
         }
     }
 

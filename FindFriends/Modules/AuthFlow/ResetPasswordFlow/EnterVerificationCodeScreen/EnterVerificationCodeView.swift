@@ -2,24 +2,9 @@ import Combine
 import SnapKit
 import UIKit
 
-final class EnterVerificationCodeView: BaseRegistrationView {
+final class EnterVerificationCodeView: BaseAuthView {
     
     private let viewModel: EnterVerificationCodeViewModel
-    private let confirmButton = PrimeOrangeButton(text: "Подтвердить")
-    
-    private let sendCodeAgainButton: UIButton = {
-        let button = UIButton()
-        
-        let attrString = NSAttributedString(string: "Отправить код еще раз", attributes: [
-            .foregroundColor: UIColor.primeDark,
-            .font: UIFont.systemFont(ofSize: 15, weight: .medium),
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ])
-
-        button.setAttributedTitle(attrString, for: .normal)
-        return button
-    }()
-    
     private var fields: [UITextField] = []
     private var cancellables: Set<AnyCancellable> = []
     
@@ -65,7 +50,7 @@ final class EnterVerificationCodeView: BaseRegistrationView {
 
     init(viewModel: EnterVerificationCodeViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(primeButton: "Подтвердить", captionButton: "Отправить код еще раз")
         
         setupViews()
         setupLayout()
@@ -78,16 +63,14 @@ final class EnterVerificationCodeView: BaseRegistrationView {
     
     private func setupViews() {
         backgroundColor = .white
-        confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for:  .touchUpInside)
-        sendCodeAgainButton.addTarget(self, action: #selector(sendCodeAgainButtonTapped), for: .touchUpInside)
+        primeButton.addTarget(self, action: #selector(confirmButtonTapped), for:  .touchUpInside)
+        captionButton.addTarget(self, action: #selector(sendCodeAgainButtonTapped), for: .touchUpInside)
     }
     
     private func setupLayout() {
-        contentView.addSubview(header)
-        contentView.addSubview(caption)
-        contentView.addSubview(sendCodeAgainButton)
-        contentView.addSubview(confirmButton)
-        contentView.addSubview(stackView)
+        scrollView.addSubview(header)
+        scrollView.addSubview(caption)
+        scrollView.addSubview(stackView)
         
         header.snp.makeConstraints { make in
             make.top.equalTo(topDecoration.snp.bottom).offset(104)
@@ -105,24 +88,13 @@ final class EnterVerificationCodeView: BaseRegistrationView {
             make.leading.equalToSuperview().offset(33)
             make.trailing.equalToSuperview().offset(-33)
         }
-        
-        sendCodeAgainButton.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-8)
-            make.centerX.equalToSuperview()
-        }
-        
-        confirmButton.snp.makeConstraints { make in
-            make.bottom.equalTo(sendCodeAgainButton.snp.top).offset(-16)
-            make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.height.equalTo(48)
-        }
     }
     
     private func bind() {
         viewModel.$isFullfill
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] isFullfill in
-                confirmButton.setEnabled(isFullfill)
+                primeButton.setEnabled(isFullfill)
             }
             .store(in: &cancellables)
         

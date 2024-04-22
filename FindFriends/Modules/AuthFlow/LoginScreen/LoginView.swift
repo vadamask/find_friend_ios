@@ -2,7 +2,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class LoginView: BaseRegistrationView {
+final class LoginView: BaseAuthView {
 
     private enum Constants {
         static let bigCircleWidth: CGFloat = 184
@@ -25,13 +25,11 @@ final class LoginView: BaseRegistrationView {
     private let passwordTextField = RegistrationTextField(
         placeholder: "Пароль", type: .password
     )
-    private let logInButton = PrimeOrangeButton(text: "Войти")
-    private let registrationButton = CaptionButton(text: "Регистрация")
     private let forgotPasswordButton = UnderlinedButton(text: "Забыли пароль?")
 
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(primeButton: "Войти", captionButton: "Регистрация")
         setupViews()
         setupLayout()
         bind()
@@ -46,7 +44,7 @@ final class LoginView: BaseRegistrationView {
     private func bind() {
         viewModel.$emptyFields
             .sink { [unowned self] isEmpty in
-                logInButton.setEnabled(!isEmpty)
+                primeButton.setEnabled(!isEmpty)
             }
             .store(in: &cancellables)
         
@@ -72,12 +70,12 @@ final class LoginView: BaseRegistrationView {
     }
     
     private func setupViews() {
-        logInButton.addTarget(
+        primeButton.addTarget(
             self,
             action: #selector(loginButtonTapped),
             for: .touchUpInside
         )
-        registrationButton.addTarget(
+        captionButton.addTarget(
             self,
             action: #selector(registrationButtonTapped),
             for: .touchUpInside
@@ -100,13 +98,11 @@ final class LoginView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        contentView.addSubview(bigCircleView)
-        contentView.addSubview(smallCircleView)
-        contentView.addSubview(emailTextField)
-        contentView.addSubview(passwordTextField)
-        contentView.addSubview(logInButton)
-        contentView.addSubview(registrationButton)
-        contentView.addSubview(forgotPasswordButton)
+        scrollView.addSubview(bigCircleView)
+        scrollView.addSubview(smallCircleView)
+        scrollView.addSubview(emailTextField)
+        scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(forgotPasswordButton)
         
         bigCircleView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: Constants.bigCircleWidth, height: Constants.bigCircleWidth))
@@ -134,20 +130,8 @@ final class LoginView: BaseRegistrationView {
         
         smallCircleView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: Constants.smallCirclewidth, height: Constants.smallCirclewidth))
-            make.bottom.equalTo(logInButton.snp.top).offset(-32)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(52)
             make.leading.equalToSuperview().offset(-33)
-        }
-        
-        logInButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.height.equalTo(Constants.elementHeight)
-            make.bottom.equalTo(registrationButton.snp.top).offset(-16)
-        }
-        
-        registrationButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 148, height: Constants.elementHeight))
-            make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-21)
         }
     }
 
@@ -196,29 +180,6 @@ fileprivate class CircleView: UIView {
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = true
         backgroundColor = .mainOrange.withAlphaComponent(0.2)
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: - UnderlinedButton
-
-fileprivate class UnderlinedButton: UIButton {
-    init(text: String) {
-        super.init(frame: .zero)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.semibold15,
-            .foregroundColor: UIColor.primeDark,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        let attributeString = NSMutableAttributedString(
-            string: text,
-            attributes: attributes
-        )
-        titleLabel?.font = .regular12
-        setAttributedTitle(attributeString, for: .normal)
-        backgroundColor = .clear
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

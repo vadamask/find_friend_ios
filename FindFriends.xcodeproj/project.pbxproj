@@ -73,6 +73,7 @@
 		DD0EE6BA2BCA86B500E2E3AB /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */; };
 		DD0EE6BC2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */; };
 		DD0EE6BE2BD1A4EE00E2E3AB /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6BD2BD1A4EE00E2E3AB /* LoadingIndicator.swift */; };
+		DD0EE6C02BD6EB2700E2E3AB /* UnderlinedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0EE6BF2BD6EB2700E2E3AB /* UnderlinedButton.swift */; };
 		DD3A2E9F2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */; };
 		DD3A2EA62B7E9447006A3B8E /* PrimeOrangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */; };
 		DD3A2EA82B7E9836006A3B8E /* CaptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */; };
@@ -120,7 +121,7 @@
 		F30170832B8CF6EB00A6921A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30170822B8CF6EB00A6921A /* SplashView.swift */; };
 		F30DA5A22B8E7B2100E6571B /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30DA5A12B8E7B2100E6571B /* ResetPasswordViewModel.swift */; };
 		F30DA5A42B8E862300E6571B /* NewPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30DA5A32B8E862300E6571B /* NewPasswordViewModel.swift */; };
-		F31111272B968D5D00A97B80 /* BaseRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31111262B968D5D00A97B80 /* BaseRegistrationViewController.swift */; };
+		F31111272B968D5D00A97B80 /* BaseAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31111262B968D5D00A97B80 /* BaseAuthViewController.swift */; };
 		F311112A2B9692CC00A97B80 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31111292B9692CC00A97B80 /* ResetPasswordViewController.swift */; };
 		F33B4C8C2B8FBA0C002D27B5 /* ResetPasswordDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33B4C8B2B8FBA0C002D27B5 /* ResetPasswordDto.swift */; };
 		F33B4C8E2B8FBA19002D27B5 /* NewPasswordDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33B4C8D2B8FBA19002D27B5 /* NewPasswordDto.swift */; };
@@ -131,7 +132,7 @@
 		F36F408E2B86435500B2082B /* NewPasswordSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F408D2B86435500B2082B /* NewPasswordSuccessViewController.swift */; };
 		F36F40912B864B1E00B2082B /* NewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F40902B864B1E00B2082B /* NewPasswordView.swift */; };
 		F36F40932B864B2300B2082B /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F40922B864B2300B2082B /* NewPasswordViewController.swift */; };
-		F3BC5D392B8514D700562C08 /* BaseRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC5D382B8514D700562C08 /* BaseRegistrationView.swift */; };
+		F3BC5D392B8514D700562C08 /* BaseAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC5D382B8514D700562C08 /* BaseAuthView.swift */; };
 		F3BC5D3D2B8514F700562C08 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC5D3C2B8514F700562C08 /* LoginView.swift */; };
 		F3BC5D402B853D1C00562C08 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC5D3F2B853D1C00562C08 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
@@ -204,6 +205,7 @@
 		DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		DD0EE6BB2BD191F900E2E3AB /* NewPasswordSuccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordSuccessViewModel.swift; sourceTree = "<group>"; };
 		DD0EE6BD2BD1A4EE00E2E3AB /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		DD0EE6BF2BD6EB2700E2E3AB /* UnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedButton.swift; sourceTree = "<group>"; };
 		DD3A2E9E2B7D2F65006A3B8E /* UIView+AutoresizingMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoresizingMask.swift"; sourceTree = "<group>"; };
 		DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeOrangeButton.swift; sourceTree = "<group>"; };
 		DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionButton.swift; sourceTree = "<group>"; };
@@ -250,7 +252,7 @@
 		F30170822B8CF6EB00A6921A /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		F30DA5A12B8E7B2100E6571B /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		F30DA5A32B8E862300E6571B /* NewPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewModel.swift; sourceTree = "<group>"; };
-		F31111262B968D5D00A97B80 /* BaseRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRegistrationViewController.swift; sourceTree = "<group>"; };
+		F31111262B968D5D00A97B80 /* BaseAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAuthViewController.swift; sourceTree = "<group>"; };
 		F31111292B9692CC00A97B80 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		F33B4C8B2B8FBA0C002D27B5 /* ResetPasswordDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordDto.swift; sourceTree = "<group>"; };
 		F33B4C8D2B8FBA19002D27B5 /* NewPasswordDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordDto.swift; sourceTree = "<group>"; };
@@ -261,7 +263,7 @@
 		F36F408D2B86435500B2082B /* NewPasswordSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordSuccessViewController.swift; sourceTree = "<group>"; };
 		F36F40902B864B1E00B2082B /* NewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordView.swift; sourceTree = "<group>"; };
 		F36F40922B864B2300B2082B /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
-		F3BC5D382B8514D700562C08 /* BaseRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRegistrationView.swift; sourceTree = "<group>"; };
+		F3BC5D382B8514D700562C08 /* BaseAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAuthView.swift; sourceTree = "<group>"; };
 		F3BC5D3C2B8514F700562C08 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F3BC5D3F2B853D1C00562C08 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -457,6 +459,7 @@
 				CE07C5D92BC3263B001EEF0F /* DashedView.swift */,
 				CE07C5DD2BC43B49001EEF0F /* SettingProfileView.swift */,
 				DD0EE6BD2BD1A4EE00E2E3AB /* LoadingIndicator.swift */,
+				DD0EE6BF2BD6EB2700E2E3AB /* UnderlinedButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -495,11 +498,12 @@
 		DD0EE6AD2BCA736B00E2E3AB /* AuthFlow */ = {
 			isa = PBXGroup;
 			children = (
-				F31111282B9690F800A97B80 /* BaseRegistration */,
+				F31111262B968D5D00A97B80 /* BaseAuthViewController.swift */,
+				F3BC5D382B8514D700562C08 /* BaseAuthView.swift */,
+				DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */,
 				F3BC5D3E2B853D0E00562C08 /* LoginScreen */,
 				F36F407B2B855FAE00B2082B /* RegistrationScreen */,
 				DD5F38132BAB7017004AF6B2 /* ResetPasswordFlow */,
-				DD0EE6B92BCA86B500E2E3AB /* AuthCoordinator.swift */,
 			);
 			path = AuthFlow;
 			sourceTree = "<group>";
@@ -650,15 +654,6 @@
 			path = SplashScreen;
 			sourceTree = "<group>";
 		};
-		F31111282B9690F800A97B80 /* BaseRegistration */ = {
-			isa = PBXGroup;
-			children = (
-				F31111262B968D5D00A97B80 /* BaseRegistrationViewController.swift */,
-				F3BC5D382B8514D700562C08 /* BaseRegistrationView.swift */,
-			);
-			path = BaseRegistration;
-			sourceTree = "<group>";
-		};
 		F33B4C8A2B8FB9EE002D27B5 /* Dto */ = {
 			isa = PBXGroup;
 			children = (
@@ -677,8 +672,8 @@
 		F36F407B2B855FAE00B2082B /* RegistrationScreen */ = {
 			isa = PBXGroup;
 			children = (
-				DDCAC7D12B852B7B00EC7D15 /* RegistrationViewController.swift */,
 				DDCAC7D32B852B8600EC7D15 /* RegistrationView.swift */,
+				DDCAC7D12B852B7B00EC7D15 /* RegistrationViewController.swift */,
 				DDCAC7D52B8531EC00EC7D15 /* RegistrationViewModel.swift */,
 			);
 			path = RegistrationScreen;
@@ -804,7 +799,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F31111272B968D5D00A97B80 /* BaseRegistrationViewController.swift in Sources */,
+				F31111272B968D5D00A97B80 /* BaseAuthViewController.swift in Sources */,
 				D87ED92A2B97C44B00B185FB /* SelectInterestViewModel.swift in Sources */,
 				CECC81062BA319F400F4312B /* TabBarController.swift in Sources */,
 				DDCAC7D42B852B8600EC7D15 /* RegistrationView.swift in Sources */,
@@ -881,6 +876,7 @@
 				CECC80EC2B98988200F4312B /* SelectCityViewController.swift in Sources */,
 				D87ED9282B97BDDD00B185FB /* InterestsResponse.swift in Sources */,
 				DD64AB8C2BBDC4510011E7D4 /* FriendsResponse.swift in Sources */,
+				DD0EE6C02BD6EB2700E2E3AB /* UnderlinedButton.swift in Sources */,
 				CE07C5C02BBDA149001EEF0F /* ProfileCustomView.swift in Sources */,
 				DDCAC7C42B83C0BF00EC7D15 /* WhiteBorderButton.swift in Sources */,
 				D87ED9262B97BC8C00B185FB /* InterestsService.swift in Sources */,
@@ -918,7 +914,7 @@
 				F30170812B8CF57800A6921A /* SplashViewController.swift in Sources */,
 				DD0412E02B90E32B00984BA7 /* SearchFriendsView.swift in Sources */,
 				F30DA5A42B8E862300E6571B /* NewPasswordViewModel.swift in Sources */,
-				F3BC5D392B8514D700562C08 /* BaseRegistrationView.swift in Sources */,
+				F3BC5D392B8514D700562C08 /* BaseAuthView.swift in Sources */,
 				84531D152B94C38E002289C6 /* FillProfilePageViewController.swift in Sources */,
 				F36F40872B86287D00B2082B /* UITapGestureRecognizer+Extensions.swift in Sources */,
 				CE07C5B42BBC3E7F001EEF0F /* EditMyProfileViewController.swift in Sources */,

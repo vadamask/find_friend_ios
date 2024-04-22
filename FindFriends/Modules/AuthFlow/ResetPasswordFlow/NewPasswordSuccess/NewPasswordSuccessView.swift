@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-final class NewPasswordSuccessView: BaseRegistrationView {
+final class NewPasswordSuccessView: BaseAuthView {
 
     private let viewModel: NewPasswordSuccessViewModel
 
@@ -30,11 +30,9 @@ final class NewPasswordSuccessView: BaseRegistrationView {
         return label
     }()
 
-    private let returnButton = PrimeOrangeButton(text: "Войти", isEnabled: true)
-
     init(viewModel: NewPasswordSuccessViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(primeButton: "Вернуться ко входу")
         setupViews()
         setupLayout()
     }
@@ -44,7 +42,8 @@ final class NewPasswordSuccessView: BaseRegistrationView {
     }
 
     private func setupViews() {
-        returnButton.addTarget(
+        primeButton.setEnabled(true)
+        primeButton.addTarget(
             self,
             action: #selector(logInButtonTapped),
             for: .touchUpInside
@@ -52,10 +51,9 @@ final class NewPasswordSuccessView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        contentView.addSubview(imageView)
-        contentView.addSubview(header)
-        contentView.addSubview(caption)
-        contentView.addSubview(returnButton)
+        scrollView.addSubview(imageView)
+        scrollView.addSubview(header)
+        scrollView.addSubview(caption)
         
         imageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -72,13 +70,6 @@ final class NewPasswordSuccessView: BaseRegistrationView {
             make.top.equalTo(header.snp.bottom).offset(16)
             make.leading.trailing.equalTo(layoutMarginsGuide)
         }
-        
-        returnButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-68)
-            make.height.equalTo(48)
-        }
-
     }
 
     @objc private func logInButtonTapped() {

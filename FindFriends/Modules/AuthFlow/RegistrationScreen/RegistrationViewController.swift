@@ -1,7 +1,7 @@
 import SafariServices
 import UIKit
 
-final class RegistrationViewController: BaseRegistrationViewController {
+final class RegistrationViewController: BaseAuthViewController {
     private var registrationView: RegistrationView
 
     override func loadView() {

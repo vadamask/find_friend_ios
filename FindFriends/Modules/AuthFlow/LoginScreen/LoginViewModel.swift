@@ -47,7 +47,7 @@ final class LoginViewModel {
     
     private func bind() {
         email.combineLatest(password)
-            .map { $0.0.isEmpty && $0.1.isEmpty }
+            .map { $0.0.isEmpty || $0.1.isEmpty }
             .assign(to: &$emptyFields)
     }
     

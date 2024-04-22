@@ -1,12 +1,12 @@
 import UIKit
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: BaseAuthViewController {
 
     private let loginView: LoginView
 
     init(loginView: LoginView) {
         self.loginView = loginView
-        super.init(nibName: nil, bundle: nil)
+        super.init(baseRegistrationView: loginView)
     }
 
     required init?(coder: NSCoder) {

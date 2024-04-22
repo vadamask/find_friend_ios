@@ -2,7 +2,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class RegistrationView: BaseRegistrationView {
+final class RegistrationView: BaseAuthView {
     
     private enum Constants {
         static let height = 48
@@ -10,7 +10,6 @@ final class RegistrationView: BaseRegistrationView {
     }
     
     private let viewModel: RegistrationViewModel
-    private let registrationButton = PrimeOrangeButton(text: "Зарегистрироваться")
     private var cancellables: Set<AnyCancellable> = []
     
     private lazy var nameTextField: RegistrationTextField = {
@@ -71,7 +70,7 @@ final class RegistrationView: BaseRegistrationView {
     
     init(viewModel: RegistrationViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(primeButton: "Зарегистрироваться")
         setupViews()
         setupLayout()
         bind()
@@ -84,8 +83,8 @@ final class RegistrationView: BaseRegistrationView {
     private func bind() {
         
         viewModel.$allFieldsAreFilling
-            .sink { [weak self] isFilling in
-                self?.registrationButton.setEnabled(isFilling)
+            .sink { [unowned self] isFilling in
+                primeButton.setEnabled(isFilling)
             }
             .store(in: &cancellables)
         
@@ -159,7 +158,7 @@ final class RegistrationView: BaseRegistrationView {
         passwordTextField.delegate = self
         passwordConfirmationTextField.delegate = self
         
-        registrationButton
+        primeButton
             .addTarget(
                 self,
                 action: #selector(registrationButtonTapped),
@@ -168,13 +167,12 @@ final class RegistrationView: BaseRegistrationView {
     }
     
     private func setupLayout() {
-        contentView.addSubview(nameTextField)
-        contentView.addSubview(lastnameTextField)
-        contentView.addSubview(emailTextField)
-        contentView.addSubview(passwordTextField)
-        contentView.addSubview(passwordConfirmationTextField)
-        contentView.addSubview(agreementLabel)
-        contentView.addSubview(registrationButton)
+        scrollView.addSubview(nameTextField)
+        scrollView.addSubview(lastnameTextField)
+        scrollView.addSubview(emailTextField)
+        scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(passwordConfirmationTextField)
+        scrollView.addSubview(agreementLabel)
         
         nameTextField.snp.makeConstraints { make in
             make.leading.trailing.equalTo(layoutMarginsGuide)
@@ -208,13 +206,7 @@ final class RegistrationView: BaseRegistrationView {
         
         agreementLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(passwordConfirmationTextField.snp.bottom).offset(74)
-        }
-      
-        registrationButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.height.equalTo(Constants.height)
-            make.top.equalTo(agreementLabel.snp.bottom).offset(16)
+            make.bottom.equalTo(primeButton.snp.top).offset(-16)
         }
     }
 }

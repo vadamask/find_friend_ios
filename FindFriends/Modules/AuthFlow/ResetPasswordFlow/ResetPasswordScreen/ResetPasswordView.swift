@@ -2,7 +2,7 @@ import Combine
 import SnapKit
 import UIKit
 
-final class ResetPasswordView: BaseRegistrationView {
+final class ResetPasswordView: BaseAuthView {
 
     private enum Constants {
         static let height: CGFloat = 48
@@ -24,12 +24,10 @@ final class ResetPasswordView: BaseRegistrationView {
     private let emailTextField = RegistrationTextField(
         placeholder: "Электронная почта", type: .email
     )
-    
-    private let sendCodeButton = PrimeOrangeButton(text: "Отправить код")
 
     init(viewModel: ResetPasswordViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
+        super.init(primeButton: "Отправить код")
         setupViews()
         setupLayout()
         bind()
@@ -43,7 +41,7 @@ final class ResetPasswordView: BaseRegistrationView {
     private func bind() {
         viewModel.$emailIsEmpty
             .sink { [unowned self] isEmpty in
-                sendCodeButton.setEnabled(!isEmpty)
+                primeButton.setEnabled(!isEmpty)
             }
             .store(in: &cancellables)
         
@@ -69,7 +67,7 @@ final class ResetPasswordView: BaseRegistrationView {
     }
     
     private func setupViews() {
-        sendCodeButton.addTarget(
+        primeButton.addTarget(
             self,
             action: #selector(sendCodeTapped),
             for: .touchUpInside
@@ -82,9 +80,8 @@ final class ResetPasswordView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        contentView.addSubview(label)
-        contentView.addSubview(emailTextField)
-        contentView.addSubview(sendCodeButton)
+        scrollView.addSubview(label)
+        scrollView.addSubview(emailTextField)
         
         label.snp.makeConstraints { make in
             make.leading.trailing.equalTo(layoutMarginsGuide)
@@ -95,12 +92,6 @@ final class ResetPasswordView: BaseRegistrationView {
             make.leading.trailing.equalTo(layoutMarginsGuide)
             make.height.equalTo(Constants.height)
             make.top.equalTo(label.snp.bottom).offset(12)
-        }
-        
-        sendCodeButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(layoutMarginsGuide)
-            make.height.equalTo(Constants.height)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-85)
         }
     }
 

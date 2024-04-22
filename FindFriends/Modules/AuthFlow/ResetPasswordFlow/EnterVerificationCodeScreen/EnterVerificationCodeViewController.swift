@@ -1,6 +1,6 @@
 import UIKit
 
-final class EnterVerificationCodeViewController: BaseRegistrationViewController {
+final class EnterVerificationCodeViewController: BaseAuthViewController {
     private let enterVerficationCodeView: EnterVerificationCodeView
     
     override func loadView() {
@@ -9,8 +9,7 @@ final class EnterVerificationCodeViewController: BaseRegistrationViewController 
     
     init(enterVerficationCodeView: EnterVerificationCodeView) {
         self.enterVerficationCodeView = enterVerficationCodeView
-        super.init(baseRegistrationView: BaseRegistrationView())
-        
+        super.init(baseRegistrationView: enterVerficationCodeView)
         setupNavigationItem()
     }
     
