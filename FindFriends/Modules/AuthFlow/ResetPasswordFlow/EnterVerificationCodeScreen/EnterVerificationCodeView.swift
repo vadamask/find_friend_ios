@@ -1,4 +1,5 @@
 import Combine
+import SnapKit
 import UIKit
 
 final class EnterVerificationCodeView: BaseRegistrationView {
@@ -82,36 +83,39 @@ final class EnterVerificationCodeView: BaseRegistrationView {
     }
     
     private func setupLayout() {
-        contentView.addSubviewWithoutAutoresizingMask(header)
-        contentView.addSubviewWithoutAutoresizingMask(caption)
-        contentView.addSubviewWithoutAutoresizingMask(sendCodeAgainButton)
-        contentView.addSubviewWithoutAutoresizingMask(confirmButton)
-        contentView.addSubviewWithoutAutoresizingMask(stackView)
+        contentView.addSubview(header)
+        contentView.addSubview(caption)
+        contentView.addSubview(sendCodeAgainButton)
+        contentView.addSubview(confirmButton)
+        contentView.addSubview(stackView)
         
-        NSLayoutConstraint.activate([
-            confirmButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            confirmButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            confirmButton.bottomAnchor.constraint(equalTo: sendCodeAgainButton.topAnchor, constant: -16),
-            confirmButton.heightAnchor.constraint(equalToConstant: 48),
-            
-            sendCodeAgainButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            sendCodeAgainButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            
-            header.centerXAnchor.constraint(equalTo: centerXAnchor),
-            header.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            header.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            header.topAnchor.constraint(equalTo: topDecoration.bottomAnchor, constant: 104),
-            
-            caption.centerXAnchor.constraint(equalTo: centerXAnchor),
-            caption.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            caption.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            caption.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 16),
-            
-            stackView.topAnchor.constraint(equalTo: caption.bottomAnchor, constant: 24),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 33),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -33),
-            stackView.heightAnchor.constraint(equalToConstant: 44)
-        ])
+        header.snp.makeConstraints { make in
+            make.top.equalTo(topDecoration.snp.bottom).offset(104)
+            make.centerX.equalToSuperview()
+        }
+        
+        caption.snp.makeConstraints { make in
+            make.top.equalTo(header.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(caption.snp.bottom).offset(24)
+            make.height.equalTo(44)
+            make.leading.equalToSuperview().offset(33)
+            make.trailing.equalToSuperview().offset(-33)
+        }
+        
+        sendCodeAgainButton.snp.makeConstraints { make in
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-8)
+            make.centerX.equalToSuperview()
+        }
+        
+        confirmButton.snp.makeConstraints { make in
+            make.bottom.equalTo(sendCodeAgainButton.snp.top).offset(-16)
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(48)
+        }
     }
     
     private func bind() {
@@ -123,11 +127,11 @@ final class EnterVerificationCodeView: BaseRegistrationView {
             .store(in: &cancellables)
         
         viewModel.$isLoading
-            .sink { isLoading in
+            .sink { [unowned self] isLoading in
                 if isLoading {
-                    UIBlockingProgressHUD.show()
+                    loadingIndicator.show()
                 } else {
-                    UIBlockingProgressHUD.dismiss()
+                    loadingIndicator.hide()
                 }
             }
             .store(in: &cancellables)
