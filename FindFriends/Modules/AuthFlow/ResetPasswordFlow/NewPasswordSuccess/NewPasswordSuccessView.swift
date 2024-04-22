@@ -1,27 +1,9 @@
+import SnapKit
 import UIKit
 
 final class NewPasswordSuccessView: BaseRegistrationView {
 
     private let viewModel: NewPasswordSuccessViewModel
-    
-    private enum Constants {
-        enum ImageView {
-            static let topInset: CGFloat = 74
-            static let widthAndHeight: CGFloat = 120
-        }
-        enum Label {
-            enum Title {
-                static let topInset: CGFloat = 32
-            }
-            enum Subtitle {
-                static let topInset: CGFloat = 16
-            }
-        }
-        enum Button {
-            static let height: CGFloat = 48
-            static let bottomInset: CGFloat = 85
-        }
-    }
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,7 +11,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
         return imageView
     }()
 
-    private let titleLabel: UILabel = {
+    private let header: UILabel = {
         let label = UILabel()
         label.textColor = .primeDark
         label.font = .bold34
@@ -38,7 +20,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
         return label
     }()
 
-    private let subtitleLabel: UILabel = {
+    private let caption: UILabel = {
         let label = UILabel()
         label.textColor = .primeDark
         label.numberOfLines = 0
@@ -48,7 +30,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
         return label
     }()
 
-    private let logInButton = PrimeOrangeButton(text: "Войти", isEnabled: true)
+    private let returnButton = PrimeOrangeButton(text: "Войти", isEnabled: true)
 
     init(viewModel: NewPasswordSuccessViewModel) {
         self.viewModel = viewModel
@@ -62,12 +44,7 @@ final class NewPasswordSuccessView: BaseRegistrationView {
     }
 
     private func setupViews() {
-        contentView.addSubviewWithoutAutoresizingMask(imageView)
-        contentView.addSubviewWithoutAutoresizingMask(titleLabel)
-        contentView.addSubviewWithoutAutoresizingMask(subtitleLabel)
-        contentView.addSubviewWithoutAutoresizingMask(logInButton)
-
-        logInButton.addTarget(
+        returnButton.addTarget(
             self,
             action: #selector(logInButtonTapped),
             for: .touchUpInside
@@ -75,37 +52,33 @@ final class NewPasswordSuccessView: BaseRegistrationView {
     }
 
     private func setupLayout() {
-        NSLayoutConstraint.activate([
-            contentView.centerYAnchor.constraint(
-                equalTo: imageView.centerYAnchor,
-                constant: Constants.ImageView.widthAndHeight / 2
-            ),
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: Constants.ImageView.widthAndHeight),
-            imageView.heightAnchor.constraint(equalToConstant: Constants.ImageView.widthAndHeight),
+        contentView.addSubview(imageView)
+        contentView.addSubview(header)
+        contentView.addSubview(caption)
+        contentView.addSubview(returnButton)
+        
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-66)
+            make.size.equalTo(CGSize(width: 120, height: 120))
+        }
+        
+        header.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(32)
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+        }
+        
+        caption.snp.makeConstraints { make in
+            make.top.equalTo(header.snp.bottom).offset(16)
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+        }
+        
+        returnButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-68)
+            make.height.equalTo(48)
+        }
 
-            titleLabel.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            titleLabel.topAnchor.constraint(
-                equalTo: imageView.bottomAnchor,
-                constant: Constants.Label.Title.topInset
-            ),
-
-            subtitleLabel.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            subtitleLabel.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            subtitleLabel.topAnchor.constraint(
-                equalTo: titleLabel.bottomAnchor,
-                constant: Constants.Label.Subtitle.topInset
-            ),
-
-            logInButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            logInButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            logInButton.heightAnchor.constraint(equalToConstant: Constants.Button.height),
-            contentView.safeAreaLayoutGuide.bottomAnchor.constraint(
-                equalTo: logInButton.bottomAnchor,
-                constant: Constants.Button.bottomInset
-            )
-        ])
     }
 
     @objc private func logInButtonTapped() {
