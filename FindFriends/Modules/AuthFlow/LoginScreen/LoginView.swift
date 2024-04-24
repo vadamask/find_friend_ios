@@ -181,7 +181,7 @@ fileprivate class CircleView: UIView {
         super.init(frame: .zero)
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = true
-        backgroundColor = .mainOrange.withAlphaComponent(0.2)
+        backgroundColor = .Buttons.active.withAlphaComponent(0.2)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

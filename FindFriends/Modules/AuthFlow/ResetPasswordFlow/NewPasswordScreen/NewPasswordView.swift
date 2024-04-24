@@ -9,7 +9,7 @@ final class NewPasswordView: BaseAuthView {
 
     private let label: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.numberOfLines = 0
         label.font = .regular17
         label.text = "Придумайте новый пароль. Он должен отличаться от вашего старого пароля."

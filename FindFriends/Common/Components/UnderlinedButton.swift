@@ -5,7 +5,7 @@ final class UnderlinedButton: UIButton {
         super.init(frame: .zero)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.semibold15,
-            .foregroundColor: UIColor.primeDark,
+            .foregroundColor: UIColor.Text.primary,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
         let attributeString = NSMutableAttributedString(

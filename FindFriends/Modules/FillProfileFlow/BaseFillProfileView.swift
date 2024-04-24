@@ -5,14 +5,14 @@ class BaseFillProfileView: UIView {
     lazy var screenHeader: UILabel = {
         let label = UILabel()
         label.font = .medium24
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         return label
     }()
     
     lazy var screenSubheader: UILabel = {
         let label = UILabel()
         label.font = .regular16
-        label.textColor = .standardGreyWireframe
+        label.textColor = .Text.caption
         label.numberOfLines = 2
         label.textAlignment = .center
         return label
@@ -24,7 +24,7 @@ class BaseFillProfileView: UIView {
         var button = UIButton()
         button.setTitle("Пропустить", for: .normal)
         button.titleLabel?.font = .semibold17
-        button.setTitleColor(.buttonBlack, for: .normal)
+        button.setTitleColor(.Text.primary, for: .normal)
         return button
     }()
     

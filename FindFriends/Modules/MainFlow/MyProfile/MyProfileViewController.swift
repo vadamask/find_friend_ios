@@ -457,7 +457,7 @@ extension MyProfileViewController: UICollectionViewDataSource {
         cell.isUserInteractionEnabled = false
         cell.contentView.layer.borderWidth = 0
         cell.isSelected = false
-        cell.contentView.backgroundColor = .selectedTag
+        cell.contentView.backgroundColor = .Background.interest
         return cell
     }
 }

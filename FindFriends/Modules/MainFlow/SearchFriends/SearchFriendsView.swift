@@ -13,7 +13,7 @@ final class SearchFriendsView: UIView {
     lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Поиск"
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 10
         textField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
         
@@ -21,7 +21,7 @@ final class SearchFriendsView: UIView {
         let leftImageView = UIImageView(image: .Symbols.smallLoupe)
         leftView.addSubview(leftImageView)
         leftImageView.center = leftView.center
-        leftView.tintColor = .searchTextFieldTint
+        leftView.tintColor = .Text.placeholder
         textField.leftView = leftView
         textField.leftViewMode = .always
         
@@ -29,14 +29,14 @@ final class SearchFriendsView: UIView {
         let rightImageView = UIImageView(image: .Symbols.filter)
         rightView.addSubview(rightImageView)
         rightImageView.center = rightView.center
-        rightView.tintColor = .searchTextFieldTint
+        rightView.tintColor = .Text.placeholder
         textField.rightView = rightView
         textField.rightViewMode = .always
         
         let placeholder = NSAttributedString(
             string: "Поиск",
             attributes: [
-                .foregroundColor: UIColor.searchTextFieldTint
+                .foregroundColor: UIColor.Text.placeholder
             ]
         )
         textField.attributedPlaceholder = placeholder
@@ -45,7 +45,7 @@ final class SearchFriendsView: UIView {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .backgroundMain
+        tableView.backgroundColor = .Background.screen
         tableView.separatorStyle = .none
         tableView.clipsToBounds = false
         tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -13)
@@ -88,7 +88,7 @@ final class SearchFriendsView: UIView {
     }
     
     private func setupViews() {
-        backgroundColor = .backgroundMain
+        backgroundColor = .Background.screen
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(SearchFriendCell.self, forCellReuseIdentifier: SearchFriendCell.reuseIdentifier)

@@ -17,7 +17,7 @@ final class CityView: UIView {
     private lazy var warningLabel: UILabel = {
         let label = UILabel()
         label.font = .regular11
-        label.textColor = .warning
+        label.textColor = .App.error
         label.text = "Не найдено"
         label.numberOfLines = 0
         label.isHidden = true
@@ -26,7 +26,7 @@ final class CityView: UIView {
     
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .customLightGray
+        view.backgroundColor = .App.separator
         return view
     }()
     
@@ -110,9 +110,9 @@ final class CityView: UIView {
                     self.tableView.reloadData()
                     if cities.isEmpty {
                         self.warningLabel.isHidden = false
-                        self.searchCityTextField.layer.borderColor = UIColor.warning.cgColor
+                        self.searchCityTextField.layer.borderColor = UIColor.App.error.cgColor
                         self.searchCityTextField.layer.borderWidth = 1
-                        self.searchCityTextField.searchTextField.textColor = .warning
+                        self.searchCityTextField.searchTextField.textColor = .App.error
                     } else {
                         self.warningLabel.isHidden = true
                         self.searchCityTextField.layer.borderColor = UIColor.clear.cgColor

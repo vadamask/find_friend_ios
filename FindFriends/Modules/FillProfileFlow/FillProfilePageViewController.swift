@@ -17,11 +17,11 @@ final class FillProfilePageViewController: UIPageViewController {
         didSet {
             backButton.isHidden = !(1...4 ~= currentIndex)
             for i in 0...currentIndex {
-                progressStackView.arrangedSubviews[i].backgroundColor = .mainOrange
+                progressStackView.arrangedSubviews[i].backgroundColor = .Progress.current
             }
             if currentIndex < 4 {
                 for i in (currentIndex + 1)...4 {
-                    progressStackView.arrangedSubviews[i].backgroundColor = .veryLightOrange
+                    progressStackView.arrangedSubviews[i].backgroundColor = .Progress.remaining
                 }
             }
         }
@@ -29,7 +29,7 @@ final class FillProfilePageViewController: UIPageViewController {
 
     private lazy var progressStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = .veryLightOrange
+        stackView.backgroundColor = .Progress.remaining
         stackView.layer.cornerRadius = 2
         stackView.axis = .horizontal
         stackView.spacing = 8.46
@@ -38,11 +38,11 @@ final class FillProfilePageViewController: UIPageViewController {
         
         for _ in 1...5 {
             let view = UIView()
-            view.backgroundColor = .veryLightOrange
+            view.backgroundColor = .Progress.remaining
             view.layer.cornerRadius = 2
             stackView.addArrangedSubview(view)
         }
-        stackView.arrangedSubviews[0].backgroundColor = .mainOrange
+        stackView.arrangedSubviews[0].backgroundColor = .Progress.current
         return stackView
     }()
     

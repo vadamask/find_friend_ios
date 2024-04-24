@@ -4,7 +4,7 @@ final class SettingProfileView: UIView {
     
     private lazy var separatorLine: DashedView = {
         let line = DashedView()
-        line.config = .init(color: .borderGray, dashLength: 2, dashGap: 2)
+        line.config = .init(color: .App.separator, dashLength: 2, dashGap: 2)
         return line
     }()
     
@@ -17,7 +17,7 @@ final class SettingProfileView: UIView {
     private lazy var secondLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .borderGray
+        label.textColor = .Text.caption
         label.numberOfLines = 4
         return label
     }()
@@ -26,7 +26,7 @@ final class SettingProfileView: UIView {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView

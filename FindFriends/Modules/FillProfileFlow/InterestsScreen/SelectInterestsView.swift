@@ -19,12 +19,12 @@ final class  SelectInterestsView: BaseFillProfileView {
         var bar  = UISearchBar()
         bar.placeholder = "Поиск интересов"
         bar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск интересов", attributes: [
-            .foregroundColor: UIColor.searchBar,
+            .foregroundColor: UIColor.Text.placeholder,
             .font: UIFont.regular17
         ])
         bar.backgroundColor = .white
         bar.searchTextField.backgroundColor = .white
-        bar.searchTextField.textColor = .primeDark
+        bar.searchTextField.textColor = .Text.primary
         return bar
     }()
     

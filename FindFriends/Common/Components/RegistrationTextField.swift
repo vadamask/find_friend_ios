@@ -16,20 +16,20 @@ final class RegistrationTextField: UITextField {
     private lazy var warningLabel: UILabel = {
         let label = UILabel()
         label.font = .regular11
-        label.textColor = .warning
+        label.textColor = .App.error
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .borderGray
+        view.backgroundColor = .App.separator
         return view
     }()
     
     private lazy var showPasswordButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
-        button.imageView?.tintColor = .primeDark
+        button.imageView?.tintColor = .Text.primary
         button.setImage(.Symbols.closedEye, for: .normal)
         button.addTarget(self, action: #selector(showPassword), for: .touchUpInside)
         button.isHidden = true
@@ -51,29 +51,29 @@ final class RegistrationTextField: UITextField {
     func showWarningLabel(_ text: String) {
         warningLabel.text = text
         warningLabel.isHidden = false
-        separator.backgroundColor = .warning
-        textColor = .warning
-        attributedPlaceholder = attributedText(attributedPlaceholder?.string ?? "", with: .warning)
+        separator.backgroundColor = .App.error
+        textColor = .App.error
+        attributedPlaceholder = attributedText(attributedPlaceholder?.string ?? "", with: .App.error)
     }
     
     func hideWarningLabel() {
         warningLabel.text = ""
         warningLabel.isHidden = true
-        separator.backgroundColor = .borderGray
-        textColor = .primeDark
-        attributedPlaceholder = attributedText(attributedPlaceholder?.string ?? "", with: .placeholder)
+        separator.backgroundColor = .App.separator
+        textColor = .Text.primary
+        attributedPlaceholder = attributedText(attributedPlaceholder?.string ?? "", with: .Text.placeholder)
     }
     
     func showWarningForDate(_ text: String) {
         warningLabel.text = text
         warningLabel.isHidden = false
-        separator.backgroundColor = .warning
+        separator.backgroundColor = .App.error
     }
 
     private func setupViews(placeholder text: String, type: TextFieldType) {
         font = .regular17
-        textColor = .primeDark
-        attributedPlaceholder = attributedText(text, with: .placeholder)
+        textColor = .Text.primary
+        attributedPlaceholder = attributedText(text, with: .Text.placeholder)
         
         if type == .password || type == .confirmPassword {
             isSecureTextEntry = true

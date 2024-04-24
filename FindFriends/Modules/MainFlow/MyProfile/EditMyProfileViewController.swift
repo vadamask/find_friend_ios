@@ -45,7 +45,7 @@ final class EditMyProfileViewController: UIViewController {
         let button = UIButton()
         button.setImage(.Symbols.pencil, for: .normal)
         button.imageView?.tintColor = .white
-        button.backgroundColor = .mainOrange
+        button.backgroundColor = .Buttons.active
         button.layer.bounds.size.height = 44
         button.layer.cornerRadius = button.layer.bounds.height / 2
         button.clipsToBounds = true
@@ -67,7 +67,7 @@ final class EditMyProfileViewController: UIViewController {
         let asterix = "*"
         let range = (text as NSString).range(of: asterix)
         let attributedText = NSMutableAttributedString.init(string: text)
-        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.mainOrange , range: range)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.Text.primary, range: range)
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.attributedText = attributedText
         return label
@@ -77,7 +77,7 @@ final class EditMyProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -94,7 +94,7 @@ final class EditMyProfileViewController: UIViewController {
         let asterix = "*"
         let range = (text as NSString).range(of: asterix)
         let attributedText = NSMutableAttributedString.init(string: text)
-        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.mainOrange , range: range)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.Text.primary, range: range)
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.attributedText = attributedText
         return label
@@ -104,7 +104,7 @@ final class EditMyProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -121,7 +121,7 @@ final class EditMyProfileViewController: UIViewController {
         let asterix = "*"
         let range = (text as NSString).range(of: asterix)
         let attributedText = NSMutableAttributedString.init(string: text)
-        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.mainOrange , range: range)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.Text.primary, range: range)
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.attributedText = attributedText
         return label
@@ -189,7 +189,7 @@ final class EditMyProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -210,7 +210,7 @@ final class EditMyProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -232,7 +232,7 @@ final class EditMyProfileViewController: UIViewController {
             view.firstLabel.text = "Вконтакте"
             view.firstLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
             view.secondLabel.text = "Вставьте сюда ID вашего аккаунта в ВК."
-            view.secondLabel.textColor = .borderGray
+            view.secondLabel.textColor = .Text.caption
             return view
     }()
     
@@ -240,7 +240,7 @@ final class EditMyProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -255,7 +255,7 @@ final class EditMyProfileViewController: UIViewController {
         view.firstLabel.text = "Телеграм"
         view.firstLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         view.secondLabel.text = "Вставьте сюда ссылку на ваш Telegram."
-        view.secondLabel.textColor = .borderGray
+        view.secondLabel.textColor = .Text.caption
         return view
     }()
     
@@ -263,7 +263,7 @@ final class EditMyProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .searchTextFieldBackground
+        textField.backgroundColor = .Background.field
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -281,7 +281,7 @@ final class EditMyProfileViewController: UIViewController {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textView.textColor = .label
-        textView.backgroundColor = .searchTextFieldBackground
+        textView.backgroundColor = .Background.field
         textView.layer.cornerRadius = 12
         textView.contentInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         return textView
@@ -510,7 +510,7 @@ extension EditMyProfileViewController: UICollectionViewDataSource {
         cell.setupCell(with: InterestsCellViewModel(id: 0, name: "Спорт"))
         cell.contentView.layer.borderWidth = 0
         cell.isSelected = false
-        cell.contentView.backgroundColor = .selectedTag
+        cell.contentView.backgroundColor = .Background.interest
         return cell
     }
 }

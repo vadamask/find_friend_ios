@@ -26,9 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func setupNavController() -> UINavigationController {
         let controller = UINavigationController()
         controller.navigationBar.prefersLargeTitles = true
-        controller.navigationBar.tintColor = .primeDark
+        controller.navigationBar.tintColor = .Text.primary
         controller.navigationBar.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.primeDark
+            .foregroundColor: UIColor.Text.primary
         ]
         return controller
     }

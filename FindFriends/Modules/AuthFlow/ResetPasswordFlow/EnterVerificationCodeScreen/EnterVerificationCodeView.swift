@@ -10,7 +10,7 @@ final class EnterVerificationCodeView: BaseAuthView {
     
     private lazy var header: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.font = .bold34
         label.text = "Введите код"
         label.textAlignment = .center
@@ -19,7 +19,7 @@ final class EnterVerificationCodeView: BaseAuthView {
     
     private lazy var caption: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.numberOfLines = 0
         label.font = .regular17
         label.textAlignment = .center
@@ -31,7 +31,7 @@ final class EnterVerificationCodeView: BaseAuthView {
         let stackView = UIStackView()
         for _ in 1...6 {
             let textField = UITextField()
-            textField.backgroundColor = UIColor(resource: .searchTextFieldBackground)
+            textField.backgroundColor = .Background.field
             textField.layer.cornerRadius = 10
             textField.textAlignment = .center
             textField.keyboardType = .numberPad

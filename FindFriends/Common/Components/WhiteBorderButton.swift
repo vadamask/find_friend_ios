@@ -11,11 +11,11 @@ final class WhiteBorderButton: UIButton {
     init(text: String) {
         super.init(frame: .zero)
         titleLabel?.font = .regular17
-        setTitleColor(.primeDark, for: .normal)
+        setTitleColor(.Text.primary, for: .normal)
         backgroundColor = .white
         setTitle(text, for: .normal)
         layer.borderWidth = 1
-        layer.borderColor = UIColor.mainOrange.cgColor
+        layer.borderColor = UIColor.Buttons.active.cgColor
         layer.cornerRadius = 10
     }
     

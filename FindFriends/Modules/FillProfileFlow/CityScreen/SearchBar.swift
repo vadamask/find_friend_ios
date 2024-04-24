@@ -15,13 +15,13 @@ final class SearchBar: UISearchBar {
         self.placeholder = "Поиск"
         self.searchBarStyle = .minimal
         self.searchTextField.attributedPlaceholder = NSAttributedString(string: "Поиск", attributes: [
-            .foregroundColor: UIColor.searchBar,
+            .foregroundColor: UIColor.Text.placeholder,
             .font: UIFont.regular17
         ])
         self.layer.cornerRadius = 12
         self.layer.masksToBounds = true
         self.searchTextField.textColor = .black
-        self.backgroundColor = .searchTextFieldBackground
+        self.backgroundColor = .Background.field
         for subview in self.searchTextField.subviews {
             subview.backgroundColor = .clear
             subview.alpha = 0

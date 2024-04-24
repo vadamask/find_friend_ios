@@ -31,9 +31,9 @@ final class SearchFriendsViewController: UIViewController {
         navigationItem.title = "Рекомендации"
         navigationItem.titleView = searchFriendsView.searchTextField
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .backgroundMain
+        appearance.backgroundColor = .Background.screen
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.primeDark,
+            .foregroundColor: UIColor.Text.primary,
             .font: UIFont.medium24
         ]
         navigationItem.standardAppearance = appearance

@@ -57,7 +57,7 @@ final class RegistrationView: BaseAuthView {
         text.addAttributes(
             [
                 .font: UIFont.systemFont(ofSize: 13, weight: .regular),
-                .foregroundColor: UIColor.primeDark,
+                .foregroundColor: UIColor.Text.primary,
                 .paragraphStyle: paragraphStyle
             ],
             range: NSRange(location: 0, length: text.length)

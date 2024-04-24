@@ -22,7 +22,7 @@ final class SearchFriendCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 1
         label.textAlignment = .left
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.font = .regular16
         return label
     }()
@@ -31,14 +31,14 @@ final class SearchFriendCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.font = .regular12
         return label
     }()
     
     private lazy var age: UILabel = {
         let label = UILabel()
-        label.textColor = .placeholder
+        label.textColor = .Text.caption
         label.font = .regular12
         return label
     }()

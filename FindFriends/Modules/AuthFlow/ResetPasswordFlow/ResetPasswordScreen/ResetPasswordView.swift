@@ -13,7 +13,7 @@ final class ResetPasswordView: BaseAuthView {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.numberOfLines = 0
         label.font = .regular17
         label.text = "Укажите электронную почту, связанную с вашей учетной записью. " +

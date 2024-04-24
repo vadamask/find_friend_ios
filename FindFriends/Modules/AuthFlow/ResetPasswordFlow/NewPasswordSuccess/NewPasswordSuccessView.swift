@@ -13,7 +13,7 @@ final class NewPasswordSuccessView: BaseAuthView {
 
     private let header: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.font = .bold34
         label.text = "Пароль сохранён"
         label.textAlignment = .center
@@ -22,7 +22,7 @@ final class NewPasswordSuccessView: BaseAuthView {
 
     private let caption: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.numberOfLines = 0
         label.font = .regular17
         label.text = "Поздравляем. Теперь вы можете войти в свой профиль, используя новый пароль."

@@ -53,7 +53,7 @@ open class TabBar: UITabBar {
     private func configure() {
         backgroundColor = .systemBackground
         isTranslucent = false
-        tintColor = .lightOrange
+        tintColor = .Background.tabBarItem
         
         addSubview(container)
         container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true

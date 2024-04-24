@@ -15,7 +15,7 @@ final class SplashView: UIView {
 
     private let label: UILabel = {
         let label = UILabel()
-        label.textColor = .primeDark
+        label.textColor = .Text.primary
         label.font = UIFont(name: "Montserrat-SemiBold", size: 20)
         return label
     }()
@@ -39,7 +39,7 @@ final class SplashView: UIView {
     }
 
     private func setupViews() {
-        backgroundColor = .backgroundLaunchScreen
+        backgroundColor = .Background.screen
     }
 
     private func setupLayout() {

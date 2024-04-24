@@ -31,7 +31,7 @@ final class InterestsCell: UICollectionViewCell, ReuseIdentifying  {
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.borderGray.cgColor
+        contentView.layer.borderColor = UIColor.App.border.cgColor
         contentView.layoutMargins  = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         tagLabel.textAlignment = .center
@@ -51,7 +51,7 @@ final class InterestsCell: UICollectionViewCell, ReuseIdentifying  {
     private func bind() {
         viewModel?.isSelected
             .sink { [weak self] isSelected in
-                self?.contentView.backgroundColor = isSelected ? .selectedTag : .white
+                self?.contentView.backgroundColor = isSelected ? .Background.selectedTag : .clear
                 self?.contentView.layer.borderWidth = isSelected ? 0 : 1
             }
             .store(in: &cancellables)
