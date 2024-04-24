@@ -1,75 +1,80 @@
+import SnapKit
 import UIKit
 
 class BaseFillProfileView: UIView {
     
-    lazy var screenHeader: UILabel = {
+    var header: UILabel = {
         let label = UILabel()
         label.font = .medium24
         label.textColor = .Text.primary
         return label
     }()
     
-    lazy var screenSubheader: UILabel = {
-        let label = UILabel()
-        label.font = .regular16
-        label.textColor = .Text.caption
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
-    }()
+    var caption: UILabel?
+    var nextButton = PrimeOrangeButton(text: "Продолжить")
+    var captionButton: CaptionButton?
     
-    lazy var nextButton = PrimeOrangeButton(text: "Продолжить")
-    
-    lazy var passButton: UIButton = {
-        var button = UIButton()
-        button.setTitle("Пропустить", for: .normal)
-        button.titleLabel?.font = .semibold17
-        button.setTitleColor(.Text.primary, for: .normal)
-        return button
-    }()
-    
-    init(header: String, subheader: String = "", passButtonHidden: Bool) {
+    init(header: String, caption: String? = nil, captionButton: String? = nil) {
         super.init(frame: .zero)
+        self.header.text = header
+        
+        if let caption {
+            self.caption = {
+                let label = UILabel()
+                label.text = caption
+                label.font = .regular16
+                label.textColor = .Text.caption
+                label.numberOfLines = 2
+                label.textAlignment = .center
+                return label
+            }()
+        }
     
-        backgroundColor = .white
-        screenHeader.text = header
-        screenSubheader.text = subheader
-        passButton.isHidden = passButtonHidden
-        setConstraits()
+        if let captionButton {
+            self.captionButton = CaptionButton(text: captionButton)
+        }
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setConstraits() {
-        self.addSubviewWithoutAutoresizingMask(screenHeader)
-        self.addSubviewWithoutAutoresizingMask(nextButton)
-        self.addSubviewWithoutAutoresizingMask(passButton)
+    private func setupViews() {
+        backgroundColor = .white
+    }
+    
+    private func setupLayout() {
+        addSubview(header)
+        addSubview(nextButton)
         
-        if screenSubheader.text?.isEmpty != nil  {
-            self.addSubviewWithoutAutoresizingMask(screenSubheader)
-            NSLayoutConstraint.activate([
-                screenSubheader.topAnchor.constraint(equalTo: screenHeader.bottomAnchor),
-                screenSubheader.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 46.5),
-                screenSubheader.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -46.5)
-            ])
+        header.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(36)
+            make.centerX.equalToSuperview()
         }
         
-        NSLayoutConstraint.activate([
-            screenHeader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            screenHeader.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 36),
-            screenHeader.heightAnchor.constraint(equalToConstant: 41),
+        nextButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(layoutMarginsGuide)
+            make.height.equalTo(48)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-68)
+        }
+        
+        if let caption {
+            addSubview(caption)
             
-            nextButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -64),
-            nextButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            nextButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            nextButton.heightAnchor.constraint(equalToConstant: 48),
+            caption.snp.makeConstraints { make in
+                make.top.equalTo(header.snp.bottom)
+                make.centerX.equalToSuperview()
+            }
+        }
+        
+        if let captionButton {
+            addSubview(captionButton)
             
-            passButton.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 16),
-            passButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 125.5),
-            passButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -125.5),
-            passButton.heightAnchor.constraint(equalToConstant: 48)
-        ])
+            captionButton.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.bottom.equalTo(safeAreaLayoutGuide).offset(-4)
+            }
+        }
     }
 }
