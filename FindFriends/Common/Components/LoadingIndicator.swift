@@ -12,8 +12,10 @@ final class LoadingIndicator: UIImageView {
     }
     
     func show() {
-        isHidden = false
-        window?.isUserInteractionEnabled = false
+        DispatchQueue.main.async {
+            self.isHidden = false
+            self.window?.isUserInteractionEnabled = false
+        }
         
         UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: [.repeat, .calculationModeLinear]) {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.25) {
@@ -33,9 +35,11 @@ final class LoadingIndicator: UIImageView {
     }
     
     func hide() {
-        isHidden = true
-        window?.isUserInteractionEnabled = true
-        stopAnimating()
-        self.transform = .identity
+        DispatchQueue.main.async {
+            self.isHidden = true
+            self.window?.isUserInteractionEnabled = true
+            self.stopAnimating()
+            self.transform = .identity
+        }
     }
 }

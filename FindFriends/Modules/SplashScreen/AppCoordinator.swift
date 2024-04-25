@@ -34,6 +34,7 @@ final class AppCoordinator: AppCoordinatorProtocol {
     
     func presentFillProfileFlow() {
         let fillProfileVC = FillProfilePageViewController()
-        self.navigationController.pushViewController(fillProfileVC, animated: true)
+        fillProfileVC.modalPresentationStyle = .fullScreen
+        self.navigationController.present(fillProfileVC, animated: true)
     }
 }

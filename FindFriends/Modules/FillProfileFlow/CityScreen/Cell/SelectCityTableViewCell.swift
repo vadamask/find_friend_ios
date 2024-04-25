@@ -25,10 +25,8 @@ final class SelectCityTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
             checkMark.setImage(.Symbols.orangeFillCircle, for: .normal)
-            checkMark.tintColor = UIColor.lightOrange
         } else {
             checkMark.setImage(.Symbols.orangeEmptyCircle, for: .normal)
-            checkMark.tintColor = UIColor.black
         }
     }
     

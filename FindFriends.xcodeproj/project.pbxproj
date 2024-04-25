@@ -14,7 +14,6 @@
 		4C7BC30E2BC6EC7E00465C0F /* Segment3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */; };
 		4C7BC3102BC6EC8300465C0F /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */; };
 		4C81E09D2BB5A963007FCB4E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81E09C2BB5A963007FCB4E /* SearchBar.swift */; };
-		8445676E2B9740CB00114604 /* GenderSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445676D2B9740CB00114604 /* GenderSelectionButton.swift */; };
 		84531D152B94C38E002289C6 /* FillProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84531D142B94C38E002289C6 /* FillProfilePageViewController.swift */; };
 		84531D1A2B94C450002289C6 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84531D192B94C450002289C6 /* GenderViewController.swift */; };
 		84CCA1BF2B96409D000BDC28 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCA1BE2B96409D000BDC28 /* GenderView.swift */; };
@@ -145,7 +144,6 @@
 		4C7BC30D2BC6EC7E00465C0F /* Segment3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment3View.swift; sourceTree = "<group>"; };
 		4C7BC30F2BC6EC8300465C0F /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		4C81E09C2BB5A963007FCB4E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		8445676D2B9740CB00114604 /* GenderSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSelectionButton.swift; sourceTree = "<group>"; };
 		84531D142B94C38E002289C6 /* FillProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillProfilePageViewController.swift; sourceTree = "<group>"; };
 		84531D192B94C450002289C6 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		84CCA1BE2B96409D000BDC28 /* GenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderView.swift; sourceTree = "<group>"; };
@@ -450,7 +448,6 @@
 			isa = PBXGroup;
 			children = (
 				DD3A2EA52B7E9447006A3B8E /* PrimeOrangeButton.swift */,
-				8445676D2B9740CB00114604 /* GenderSelectionButton.swift */,
 				DDCAC7C32B83C0BF00EC7D15 /* WhiteBorderButton.swift */,
 				DD3A2EA72B7E9836006A3B8E /* CaptionButton.swift */,
 				DDCAC7CB2B851EF500EC7D15 /* RegistrationTextField.swift */,
@@ -824,7 +821,6 @@
 				DDFA4A602BC3259C00AEF3D0 /* InterestDto.swift in Sources */,
 				DD64AB8E2BBF227C0011E7D4 /* AuthService.swift in Sources */,
 				CE07C5E02BC4414C001EEF0F /* MyProfileViewModel.swift in Sources */,
-				8445676E2B9740CB00114604 /* GenderSelectionButton.swift in Sources */,
 				D86387C42B87A16400692535 /* NetworkTask.swift in Sources */,
 				D5E980BE2B8F0D7800A17E0A /* BirthdayViewModel.swift in Sources */,
 				4C7BC3102BC6EC8300465C0F /* SegmentView.swift in Sources */,
