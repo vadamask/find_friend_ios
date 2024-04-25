@@ -8,6 +8,7 @@ protocol SearchFriendsViewDelegate: AnyObject {
 final class SearchFriendsView: UIView {
     weak var delegate: SearchFriendsViewDelegate?
     private let viewModel: SearchFriendsViewModel
+    private let loadingIndicator = LoadingIndicator()
     private var cancellables: Set<AnyCancellable> = []
     
     lazy var searchTextField: UITextField = {
@@ -74,12 +75,12 @@ final class SearchFriendsView: UIView {
                 DispatchQueue.main.async {
                     switch state {
                     case .finishLoading:
-                        UIBlockingProgressHUD.dismiss()
+                        self.loadingIndicator.hide()
                         self.tableView.reloadData()
                     case .loading:
-                        UIBlockingProgressHUD.show()
+                        self.loadingIndicator.show()
                     case .error(let error):
-                        UIBlockingProgressHUD.dismiss()
+                        self.loadingIndicator.show()
                         self.delegate?.showAlert(error.message)
                     }
                 }

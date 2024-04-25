@@ -4,7 +4,7 @@ import Combine
 final class MyProfileViewController: UIViewController {
     
     private let loginService = AuthService()
-    
+    private let loadingIndicator = LoadingIndicator()
     private let viewModel: MyProfileViewModel
     private var cancellables: Set<AnyCancellable> = []
     
@@ -346,17 +346,15 @@ final class MyProfileViewController: UIViewController {
     
     private func bind() {
         viewModel.$state
-            .sink { state in
-                DispatchQueue.main.async {
-                    switch state {
-                    case .finishLoading:
-                        UIBlockingProgressHUD.dismiss()
-                    case .loading:
-                        UIBlockingProgressHUD.show()
-                    case .error(let error):
-                        print(error)
-                        UIBlockingProgressHUD.dismiss()
-                    }
+            .sink { [unowned self] state in
+                switch state {
+                case .finishLoading:
+                    loadingIndicator.hide()
+                case .loading:
+                    loadingIndicator.show()
+                case .error(let error):
+                    print(error)
+                    loadingIndicator.hide()
                 }
             }
             .store(in: &cancellables)
