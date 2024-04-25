@@ -7,6 +7,7 @@ final class SplashViewModel {
         case login
         case unlogin
         case unfinishedRegistration
+        case loading
     }
     
     let fillingProfileKey = "fillingProfile"
@@ -36,13 +37,14 @@ final class SplashViewModel {
     }
     
     func fetchUsername() {
+        state.send(.loading)
         service.loadMyInfo { [unowned self] result in
             switch result {
             case .success(let user):
                 self.username.send(user.firstName)
                 state.send(.login)
             case .failure(let error):
-                print(error.localizedDescription)
+                coordinator?.showAlert(error.message)
             }
         }
     }

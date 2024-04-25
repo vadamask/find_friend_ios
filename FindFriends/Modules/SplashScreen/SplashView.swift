@@ -20,6 +20,8 @@ final class SplashView: UIView {
         return label
     }()
     
+    private let loadingIndicator = LoadingIndicator()
+    
     init(viewModel: SplashViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -45,6 +47,7 @@ final class SplashView: UIView {
     private func setupLayout() {
         addSubview(logoImageView)
         addSubview(label)
+        addSubview(loadingIndicator)
         
         logoImageView.snp.makeConstraints { make in
             make.width.equalTo(137)
@@ -57,6 +60,10 @@ final class SplashView: UIView {
             make.centerX.equalToSuperview()
             make.top.equalTo(logoImageView.snp.bottom).offset(20)
         }
+        
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func bind() {
@@ -64,11 +71,14 @@ final class SplashView: UIView {
             .sink { [unowned self] state in
                 switch state {
                 case .login:
+                    loadingIndicator.hide()
                     animateWelcomeViewEntrance()
                 case .unlogin:
                     viewModel.presentAuthFlow()
                 case .unfinishedRegistration:
                     viewModel.presentFillProfileFlow()
+                case .loading:
+                    loadingIndicator.show()
                 }
             }
             .store(in: &cancellables)
