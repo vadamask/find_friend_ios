@@ -410,8 +410,8 @@ final class MyProfileViewController: UIViewController {
     }
     
     @objc private func didTapEditButton() {
-        let vc = EditMyProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
+//        let vc = EditMyProfileViewController()
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func didTapFriendsLabel() {
