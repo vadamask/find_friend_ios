@@ -41,8 +41,8 @@ final class  SelectInterestsView: BaseFillProfileView {
         self.viewModel = viewModel
         super.init(
             header: "Интересы",
-            subheader: "Выберете свои увлечения, чтобы найти единомышленников",
-            passButtonHidden: false
+            caption: "Выберете свои увлечения, чтобы найти единомышленников",
+            captionButton: "Пропустить"
         )
         setupViews()
         setupConstraints()
@@ -76,7 +76,7 @@ final class  SelectInterestsView: BaseFillProfileView {
         backgroundColor = .white
         tagsSearchBar.delegate = self
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        passButton.addTarget(self, action: #selector(passButtonTapped), for: .touchUpInside)
+        captionButton?.addTarget(self, action: #selector(passButtonTapped), for: .touchUpInside)
     }
     
     private func setupCollectionView() {
@@ -101,7 +101,7 @@ final class  SelectInterestsView: BaseFillProfileView {
             
             tagsSearchBar.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             tagsSearchBar.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            tagsSearchBar.topAnchor.constraint(equalTo: self.screenSubheader.bottomAnchor, constant: 24),
+            tagsSearchBar.topAnchor.constraint(equalTo: self.caption!.bottomAnchor, constant: 24),
             tagsSearchBar.heightAnchor.constraint(equalToConstant: 40)
         ])
     }

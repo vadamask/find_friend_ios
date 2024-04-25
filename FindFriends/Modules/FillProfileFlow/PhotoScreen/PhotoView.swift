@@ -49,15 +49,15 @@ final class PhotoView: BaseFillProfileView {
         self.viewModel = viewModel
         super.init(
             header: "Фото профиля",
-            subheader: "Добавьте фото, чтобы другим было\n проще вас узнать",
-            passButtonHidden: false
+            caption: "Добавьте фото, чтобы другим было\n проще вас узнать",
+            captionButton: "Пропустить"
         )
         setupLayout()
         updateUI()
         imagePickerController.delegate = self
         backgroundColor = .white
         nextButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
-        passButton.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
+        captionButton?.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -70,13 +70,13 @@ final class PhotoView: BaseFillProfileView {
             avatarView.layer.borderWidth = 0
             clearPhotoButton.isHidden = false
             addPhotoButton.isHidden = true
-            screenSubheader.text = "Отлично! Все готово для поиска\n новых друзей"
+            caption?.text = "Отлично! Все готово для поиска\n новых друзей"
         } else {
             nextButton.setEnabled(false)
             avatarView.layer.borderWidth = 4
             clearPhotoButton.isHidden = true
             addPhotoButton.isHidden = false
-            screenSubheader.text = "Добавьте фото, чтобы другим было\n проще вас узнать"
+            caption?.text = "Добавьте фото, чтобы другим было\n проще вас узнать"
         }
     }
     
@@ -84,7 +84,7 @@ final class PhotoView: BaseFillProfileView {
         [avatarView, addPhotoButton, clearPhotoButton].forEach(addSubviewWithoutAutoresizingMask(_:))
         
         NSLayoutConstraint.activate([
-            avatarView.topAnchor.constraint(equalTo: screenSubheader.bottomAnchor, constant: 20),
+            avatarView.topAnchor.constraint(equalTo: caption!.bottomAnchor, constant: 20),
             avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: avatarView.frame.width),
             avatarView.heightAnchor.constraint(equalToConstant: avatarView.frame.height),

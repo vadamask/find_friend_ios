@@ -22,13 +22,13 @@ final class SelectCityView: BaseFillProfileView {
         self.viewModel = viewModel
         super.init(
             header: "Выберите город",
-            subheader: "Чтобы видеть события и друзей",
-            passButtonHidden: false
+            caption: "Чтобы видеть события и друзей",
+            captionButton: "Пропустить"
         )
         setupLayout()
         bind()
         nextButton.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
-        passButton.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
+        captionButton?.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -54,7 +54,7 @@ final class SelectCityView: BaseFillProfileView {
         NSLayoutConstraint.activate([
             searchCityTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             searchCityTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            searchCityTextField.topAnchor.constraint(equalTo: screenSubheader.bottomAnchor, constant: 20),
+            searchCityTextField.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 43),
             searchCityTextField.heightAnchor.constraint(equalToConstant: 36)
         ])
     }

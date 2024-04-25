@@ -13,7 +13,7 @@ final class BirthdayView: BaseFillProfileView {
     
     init(viewModel: BirthdayViewModel) {
         self.viewModel = viewModel
-        super.init(header: "Введите дату рождения", passButtonHidden: true)
+        super.init(header: "Введите дату рождения")
         
         bind()
         setupViews()
@@ -42,7 +42,7 @@ private extension BirthdayView {
         addSubviewWithoutAutoresizingMask(datePickTextField)
         
         NSLayoutConstraint.activate([
-            datePickTextField.topAnchor.constraint(equalTo: screenHeader.bottomAnchor, constant: 52),
+            datePickTextField.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 52),
             datePickTextField.heightAnchor.constraint(equalToConstant: 44),
             datePickTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             datePickTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
@@ -54,10 +54,10 @@ private extension BirthdayView {
             .sink { [weak self] dateIsCorrect in
                 if dateIsCorrect {
                     self?.datePickTextField.hideWarningLabel()
-                    self?.nextButtonOn()
+                    self?.nextButton.setEnabled(true)
                 } else {
                     self?.datePickTextField.showWarningForDate("Недопустимое значение")
-                    self?.nextButtonOff()
+                    self?.nextButton.setEnabled(false)
                 }
             }
             .store(in: &cancellables)
@@ -66,16 +66,6 @@ private extension BirthdayView {
                 self?.datePickTextField.text = text
             }
             .store(in: &cancellables)
-    }
-    
-    func nextButtonOff() {
-        nextButton.isEnabled = false
-        nextButton.backgroundColor = .lightOrange
-    }
-    
-    func nextButtonOn() {
-        nextButton.isEnabled = true
-        nextButton.backgroundColor = .mainOrange
     }
     
     @objc
@@ -103,7 +93,7 @@ extension BirthdayView: UITextFieldDelegate {
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         datePickTextField.hideWarningLabel()
-        nextButtonOff()
+        nextButton.setEnabled(false)
         return true
     }
 }
